@@ -77,6 +77,11 @@ class TimeCalculatorGUI:
             url = "http://www.initiative3n.ne/"
             webbrowser.open_new_tab(url)
 
+        # function to open folder
+        def open_folder():
+            folder_to_open = filedialog.askdirectory(title='Select Folder to open')
+            os.startfile(folder_to_open)
+
         # function to open a file
         def open_file():
             # selecting the file using the askopenfilename() method of filedialog
@@ -94,7 +99,7 @@ class TimeCalculatorGUI:
         menubar = tk.Menu(self.root)
         menu01 = Menu(menubar, tearoff=0)
         menu01.add_command(label='Nouveau', compound='right', command='', underline=0)
-        menu01.add_command(label='Ouvrir ', compound='right', command=open_file, underline=0, accelerator='Ctrl+O')
+        menu01.add_command(label='Ouvrir', compound='right', command=open_file, underline=0, accelerator='Ctrl+O')
         menu01.add_command(label='Enregistrer', compound='right', command='', underline=0, accelerator='Ctrl+S')
         menu01.add_command(label='Enregistrer Sous', compound='right', command=on_click)
         menu01.add_separator(background='')
