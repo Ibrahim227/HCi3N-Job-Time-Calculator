@@ -13,7 +13,7 @@ class TimeCalculatorGUI:
         # self.root.config(background="#40826d", width=12, relief='flat', highlightthickness=0)
 
         self.input_frame0 = ttk.Frame(self.root)
-        self.input_frame0.pack(side="left")
+        self.input_frame0.pack()
 
         self.start_labelnom = ttk.Label(self.input_frame0, text="Entrer Nom & Prenom:", underline=0)
         self.start_labelnom.grid(row=0, column=0, padx=5, pady=5)
@@ -22,7 +22,7 @@ class TimeCalculatorGUI:
         self.start_labelnom_entry.grid(row=0, column=1, padx=5, pady=5)
 
         self.input_frame = ttk.Frame(self.root)
-        self.input_frame.pack(side="left")
+        self.input_frame.pack()
 
         self.start_label = ttk.Label(self.input_frame, text="Heure de Debut (HH:MM:SS AM/PM):", underline=0, foreground="green")
         self.start_label.grid(row=0, column=0, padx=5, pady=5)
@@ -43,10 +43,10 @@ class TimeCalculatorGUI:
         self.break_checkbutton.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
 
         self.calculate_button = ttk.Button(self.root, text="Calculer", command=self.calculate)
-        self.calculate_button.pack(padx=5, pady=5, side="left")
+        self.calculate_button.pack(padx=5, pady=5)
 
         self.result_label = ttk.Label(self.root)
-        self.result_label.pack(padx=5, pady=5, expand=False, side='left')
+        self.result_label.pack(padx=5, pady=5, expand=False, side='bottom')
 
         def exit_01():
             if messagebox.askokcancel(title='Quitter', message='Voulez-vous quitter ?'):
