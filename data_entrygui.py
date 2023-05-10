@@ -1,9 +1,11 @@
+import datetime
 from tkinter import ttk, messagebox
 import tkinter as tk
 
 
 class JobTimeCalculator(object):
     def __init__(self):
+        super().__init__()
         self.window = tk.Tk()
         self.window.title("HCi3N")
         self.window.geometry()
@@ -45,9 +47,9 @@ class JobTimeCalculator(object):
             widget.grid_configure(padx=10, pady=15, ipadx=10)
 
         # Create the second LabelFrame: breakCheck and calculation
-        self.reg_status_var = tk.StringVar()
+        self.reg_status_var = tk.StringVar(value='Pause Ok')
         self.registered_check = ttk.Checkbutton(self.frame, text="Pause", variable=self.reg_status_var, onvalue="Pause Ok", offvalue="Pause No")
-        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Calcule')
+        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Calcule', underline=0)
         self.registration_frame.grid(row=1, column=0, sticky='news', padx=20, pady=20)
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=True)
@@ -60,23 +62,63 @@ class JobTimeCalculator(object):
         self.result_label = ttk.Label(self.registration_frame, background='lightgreen')
         self.result_label.grid(row=2, column=2, sticky='news')
 
+        for widget in self.registration_frame.winfo_children():
+            widget.grid_configure(padx=10, pady=15, ipadx=10)
+
         # Create generate Button
         self.entry_button = ttk.Button(self.frame, text='Generer', command=self.generate)
         self.entry_button.grid(row=3, column=0, sticky='news', padx=20, pady=5)
 
         # Calculate function
     def calculate(self):
-        pass
-        # pause = self.reg_status_var.get(value='Pause Ok')
+        # pause = self.reg_status_var.get()
+        start_time_str = self.time_start_entry.get()
+        end_time_str = self.time_end_entry.get()
+        # name_str = self.first_name_entry.get()
+        # last_name_str = self.last_name_entry.get()
+
+        start_time = datetime.datetime.strptime(start_time_str, "%I:%M:%S %p").time()
+        end_time = datetime.datetime.strptime(end_time_str, "%I:%M:%S %p").time()
+
+        # totaltime = datetime.timedelta()
+        if end_time < start_time:
+            end_time += datetime.timedelta(days=1)
+
+        if self.break_check_button_var.get():
+            break_start_time = datetime.time(hour=13)
+            break_end_time = datetime.time(hour=15)
+
+            if start_time < break_start_time and end_time >= break_end_time:
+                total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(hours=2)
+            elif start_time >= break_end_time:
+                total_time = datetime.timedelta(hours=8, minutes=30)
+            elif end_time <= break_end_time:
+                total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(hours=2)
+            else:
+                time_before_break = datetime.datetime.combine(datetime.datetime.today(), break_start_time) - datetime.datetime.combine(datetime.datetime.today(), start_time)
+                time_after_break = datetime.datetime.combine(datetime.datetime.today(), end_time) - datetime.datetime.combine(datetime.datetime.today(), break_end_time)
+
+                total_time = time_before_break + time_after_break - datetime.timedelta(hours=2)
+        else:
+            total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(datetime.date.today(), start_time)
+
+        total_time_str = str(total_time)
+        self.result_label.config(text=f"Temps Total: %s" % total_time_str, background='lightgreen')
 
     # Excel file generator
     def generate(self):
-        firstname = self.first_name_entry.get()
-        lastname = self.last_name_entry.get()
-        title = self.title_combox.get()
-        pause = self.reg_status_var.get()
+        accepted = self.reg_status_var.get()
 
-        print("titre:", title,"firstname: ", firstname,"lastname: ", lastname, "pause:", pause)
+        if accepted == "Pause Ok":
+            firstname = self.first_name_entry.get()
+            lastname = self.last_name_entry.get()
+            title = self.title_combox.get()
+
+            print("titre:", title, "firstname: ", firstname, "lastname: ", lastname, "pause:", accepted)
+
+        else:
+            tk.messagebox.showwarning(title='Warning', message='Warning')
+
     def run(self):
         self.window.mainloop()
 
