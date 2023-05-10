@@ -98,7 +98,7 @@ class TimeCalculatorGUI:
         # Fichier Menu configuration.
         menubar = tk.Menu(self.root)
         menu01 = Menu(menubar, tearoff=0)
-        menu01.add_command(label='Nouveau', compound='right', command='', underline=0)
+        menu01.add_command(label='Nouveau', compound='right', command=open_folder, underline=0)
         menu01.add_command(label='Ouvrir', compound='right', command=open_file, underline=0, accelerator='Ctrl+O')
         menu01.add_command(label='Enregistrer', compound='right', command='', underline=0, accelerator='Ctrl+S')
         menu01.add_command(label='Enregistrer Sous', compound='right', command=on_click)
