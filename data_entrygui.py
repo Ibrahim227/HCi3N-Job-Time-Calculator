@@ -192,12 +192,11 @@ class JobTimeCalculator:
                 datetime.date.today(), start_time)
 
         total_time_str = str(total_time)
-        self.result_label.config(text=f"Temps Total: %s" % total_time_str, background='lightgreen')
+        self.result_label.config(text=f"Temps Total:  {total_time_str}", background='lightgreen')
 
     # Excel file generator
     def save_to_excel(self):
 
-        # accepted = self.reg_status_var.get()
         Nom = self.first_name_entry.get()
         Prenom = self.last_name_entry.get()
         Fonction = self.title_combox.get()
@@ -217,12 +216,12 @@ class JobTimeCalculator:
             if not os.path.exists(file_path):
 
                 workbook = openpyxl.Workbook()
-                sheet = workbook.active()
-                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Arrivee", "Pause", "Descente", "Site"])
+                sheet = workbook.active
+                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Arrivee", "Pause", "Descente", "Site", "Temps Total"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
-            sheet = workbook.active()
+            sheet = workbook.active
             sheet.append([Nom, Prenom, Fonction, departement, Arrivee, pause, Descente, Site])
             workbook.save(file_path)
             workbook.close()
