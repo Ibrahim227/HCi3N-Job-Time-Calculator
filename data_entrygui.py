@@ -1,6 +1,6 @@
 import datetime
-from tkinter import ttk, messagebox, END
 import tkinter as tk
+from tkinter import ttk, messagebox, END
 
 
 class JobTimeCalculator(object):
@@ -12,11 +12,11 @@ class JobTimeCalculator(object):
         self.window.iconbitmap('images\\logoHCi3N.ico')
 
         self.frame = ttk.Frame(self.window)
-        self.frame.pack()
+        self.frame.pack(anchor='center')
 
         # Saving user Information
         self.user_info_frame = ttk.Labelframe(self.frame, text='Information Employee', underline=0)
-        self.user_info_frame.grid(row=0, column=0, padx=20, pady=20)
+        self.user_info_frame.grid(row=0, column=0, padx=20, pady=10, sticky='news')
 
         # Create name and last name  labels
         self.first_name_label = ttk.Label(self.user_info_frame, text='Nom:', background="lightgrey", underline=0)
@@ -38,13 +38,28 @@ class JobTimeCalculator(object):
 
         # Create the title combo box
         self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
-        self.title_combox = ttk.Combobox(self.user_info_frame, values=["", "HAUT-COMMISSAIRE", "SECRETAIRE GENERAL", "SECRETAIRE GENERAL ADJOINT",
-                                                                       "CONSEILLER TECHNIQUE", "DFC", ""])
+        self.title_combox = ttk.Combobox(self.user_info_frame, values=["HAUT-COMMISSAIRE", "SECRETAIRE GENERAL", "SECRETAIRE GENERAL ADJOINT",
+                                                                       "DIRECTRICE DAFC", "SECRETAIRE DE DIRECTION", "SECRETAIRE DE DIRECTION/BO", "CONSEILLER TECHNIQUE",
+                                                                       "CHEF DE CABINET", "PROTOCOLE", "DIRECTEUR DPSFCI", "CHEF DIV INFORMATIQUE", "CHEF DIV FINANCE", "CHEF DIV. MARCHES PUBLIC/DSP",
+                                                                       "GESTIONNAIRE DES CONVENTIONS", "CHEF DIV PATRIMOINE LOGISTIQUE", "APPELEE SERV CIVIQUE", "STAGIARE",
+                                                                       "CHEF DIV RH", "DIRECTEUR DMRC", "CHEF DIV RENFORCEMENT CAPACITE", "CHEF DIV MOBILISATION SOCIAL",
+                                                                       "DIRECTEUR DSEC", "CHEF DIV CAPITALISATION", "CHEF DIV SISAN", "CHEF DIV SUIVI-EVALUATION STATISTIQUE",
+                                                                       "DIRECTEUR DPEP", "CHEF DIV PROGRAMMATION", "COORDINATEUR", "CHEF SERV CARTOGRAPHY", "CHEF SERV COM/CELLULE NUTRITION",
+                                                                       "CHEF SERV BIO-STATISTIQUE", "ING STATISTICIEN ECONOMISTE P", "MEDECIN NUTRITIONISTE", "COORDINATRICE Proj NEXUS",
+                                                                       "Resp ADMINISTRATIF FINANCE", "Resp SUIVI-EVALUATION", "SECRETAIRE COMPTABLE", "CR/TAHOUA", "AT CRi3N NIAMEY",
+                                                                       "ASSISTANTE SG", "ASSISTANTE SGA", "Resp SECURITY", "AGENT SECURITY", "CHAUFFEUR", "PLANTON"])
         self.title.grid(row=0, column=2)
         self.title_combox.grid(row=1, column=2)
 
-        self.time_start_label = ttk.Label(self.user_info_frame, text="Heure Arrivee (HH:MM:SS AM/PM):", background="lightgreen", underline=0)
-        self.time_end_label = ttk.Label(self.user_info_frame, text="Heure De Fin (HH:MM:SS AM/PM):", background="red", underline=0)
+        self.department_label = ttk.Label(self.user_info_frame, text="Departement", background='lightgrey', underline=0)
+        self.department_combobox = ttk.Combobox(self.user_info_frame, values=["CABINET", "SECRETARIAT GENERAL", "DAFC", "DEPARTMENT PARTENARIAT",
+                                                                              "CELLULE NUTRITION", "NEXUS", "COORDINATION REGIONALE",
+                                                                              "DMRC", "DSEC", "DPEP", "GARDES-SECURITY", "AUXILIARES"])
+        self.department_label.grid(row=2, column=3)
+        self.department_combobox.grid(row=3, column=3, sticky='news')
+
+        self.time_start_label = ttk.Label(self.user_info_frame, text="Entree (HH:MM:SS AM/PM):", background="lightgreen", underline=0)
+        self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM:SS AM/PM):", background="red", underline=0)
         self.time_start_label.grid(row=2, column=0)
         self.time_end_label.grid(row=2, column=1)
 
@@ -55,11 +70,11 @@ class JobTimeCalculator(object):
         self.time_end_entry.grid(row=3, column=1)
 
         for widget in self.user_info_frame.winfo_children():
-            widget.grid_configure(padx=10, pady=10,)
+            widget.grid_configure(padx=50, pady=20,)
 
         # Create the second LabelFrame: breakCheck and calculation
         self.reg_status_var = tk.StringVar(value='Pause Ok')
-        self.registered_check = ttk.Checkbutton(self.frame, text="Pause", variable=self.reg_status_var, onvalue="Pause Ok", offvalue="Pause No")
+        self.registered_check = ttk.Checkbutton(self.frame, text="Pause", variable=self.reg_status_var, onvalue="Pause Ok", offvalue="Pause Non")
         self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Affichage', underline=0)
         self.registration_frame.grid(row=1, column=0, sticky='news', padx=20, pady=20)
 
@@ -94,6 +109,7 @@ class JobTimeCalculator(object):
         self.title_combox.delete(0, END)
         self.time_start_entry.delete(0, END)
         self.time_end_entry.delete(0, END)
+        self.department_combobox.delete(0, END)
 
         # Calculate function
     def calculate(self):
