@@ -12,8 +12,10 @@ def on_click():
 
 
 class JobTimeCalculator:
+    # Initialize the class
     def __init__(self):
-        # super().__init__()  # Allows to inherit from the tkinter object
+        super().__init__()  # Allows to inherit from the tkinter object
+        # Main window
         self.window = tk.Tk()
         self.window.title("HCi3N")
         self.window.geometry()
@@ -32,18 +34,11 @@ class JobTimeCalculator:
         self.last_name_label = ttk.Label(self.user_info_frame, text='Prenom:', background="lightgrey", underline=0)
         self.last_name_label.grid(row=0, column=1)
 
-        # create entry
+        # create  first name and last name entry widgets
         self.first_name_entry = ttk.Entry(self.user_info_frame)
         self.last_name_entry = ttk.Entry(self.user_info_frame)
         self.first_name_entry.grid(row=1, column=0)
         self.last_name_entry.grid(row=1, column=1)
-
-        # The place combobox
-        self.place_label = ttk.Label(self.user_info_frame, text='Site', background='lightgrey', underline=0)
-        self.place_label.grid(row=2, column=2)
-        self.place_combobox = ttk.Combobox(self.user_info_frame, values=['SIEGE', 'ANNEXE 1', 'ANNEXE 2'],
-                                           validate='focus')
-        self.place_combobox.grid(row=3, column=2)
 
         # Create the title combo box
         self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
@@ -71,31 +66,49 @@ class JobTimeCalculator:
         self.title.grid(row=0, column=2)
         self.title_combox.grid(row=1, column=2)
 
+        # Create department label and combobox
         self.department_label = ttk.Label(self.user_info_frame, text="Departement", background='lightgrey', underline=0)
         self.department_combobox = ttk.Combobox(self.user_info_frame, values=["CABINET", "SECRETARIAT GENERAL", "DAFC",
                                                                               "DEPARTMENT PARTENARIAT",
                                                                               "CELLULE NUTRITION", "NEXUS",
                                                                               "COORDINATION REGIONALE",
-                                                                              "DMRC", "DSEC", "DPEP", "GARDES-SECURITY",
-                                                                              "AUXILIARES"])
-        self.department_label.grid(row=2, column=3)
-        self.department_combobox.grid(row=3, column=3, sticky='news')
+                                                                              "DMRC", "DSEC", "DPEP", "GNN-SECURITY",
+                                                                              "AUXILIAIRES"])
+        self.department_label.grid(row=0, column=3)
+        self.department_combobox.grid(row=1, column=3, sticky='news')
 
-        self.time_start_label = ttk.Label(self.user_info_frame, text="Entree (HH:MM:SS AM/PM):",
-                                          background="lightgreen", underline=0)
-        self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM:SS AM/PM):", background="red",
-                                        underline=0)
+        # The place/site combobox
+        self.place_label = ttk.Label(self.user_info_frame, text='Site', background='lightgrey', underline=0)
+        self.place_label.grid(row=0, column=4)
+        self.place_combobox = ttk.Combobox(self.user_info_frame, values=['SIEGE', 'ANNEXE 1', 'ANNEXE 2'], validate='focus')
+        self.place_combobox.grid(row=1, column=4)
+
+        # Create break time start and end labels
+        self.break_start_label = ttk.Label(self.user_info_frame, text="Debut Pause (HH:MM:SS AM/PM):", background="lightgrey", underline=0)
+        self.break_end_label = ttk.Label(self.user_info_frame, text="Retour Pause (HH:MM:SS AM/PM):", background="lightgrey", underline=0)
+        self.break_start_label.grid(row=2, column=1)
+        self.break_end_label.grid(row=2, column=2)
+
+        # Create  start and end time labels
+        self.time_start_label = ttk.Label(self.user_info_frame, text="Entree (HH:MM:SS AM/PM):", background="lightgreen", underline=0)
+        self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM:SS AM/PM):", background="red", underline=0)
         self.time_start_label.grid(row=2, column=0)
-        self.time_end_label.grid(row=2, column=1)
+        self.time_end_label.grid(row=2, column=3)
 
-        # Create Entry widgets
+        # Create Entry widgets for arrival and departure time entries
         self.time_start_entry = ttk.Entry(self.user_info_frame)
         self.time_end_entry = ttk.Entry(self.user_info_frame)
         self.time_start_entry.grid(row=3, column=0)
-        self.time_end_entry.grid(row=3, column=1)
+        self.time_end_entry.grid(row=3, column=3)
+
+        # Create entry widget for break starts and break ends time entries
+        self.break_start_entry = ttk.Entry(self.user_info_frame)
+        self.break_end_entry = ttk.Entry(self.user_info_frame)
+        self.break_start_entry.grid(row=3, column=1)
+        self.break_end_entry.grid(row=3, column=2)
 
         for widget in self.user_info_frame.winfo_children():
-            widget.grid_configure(padx=50, pady=20, )
+            widget.grid_configure(padx=40, pady=25)
 
         # Create the second LabelFrame: breakCheck and calculation
         self.reg_status_var = tk.StringVar(value='Pause Ok')
@@ -105,7 +118,7 @@ class JobTimeCalculator:
         self.registration_frame.grid(row=1, column=0, sticky='news', padx=20, pady=20)
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=True)
-        self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:00 PM et 15:00 PM",
+        self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:00 PM et 13:45 PM",
                                                   variable=self.break_check_button_var)
         self.break_check_button.grid(row=2, column=0)
 
@@ -135,7 +148,7 @@ class JobTimeCalculator:
         self.menu_bar.add_separator()
         self.menu_bar.add_command(label="Quitter", accelerator='Alt+F4', command=self.exit_01)
 
-        self.menu_.add_cascade(label="HCi3N", menu=self.menu_bar)
+        self.menu_.add_cascade(label="Menu", menu=self.menu_bar)
         self.window.config(menu=self.menu_)
 
     # Exit function
@@ -154,12 +167,16 @@ class JobTimeCalculator:
         self.time_start_entry.delete(0, END)
         self.time_end_entry.delete(0, END)
         self.department_combobox.delete(0, END)
+        self.break_start_entry.delete(0, END)
+        self.break_end_entry.delete(0, END)
 
         # Calculate function
 
     def calculate(self):
         start_time_str = self.time_start_entry.get()
         end_time_str = self.time_end_entry.get()
+        break_start_time_str = self.break_start_entry.get()
+        break_stop_time_str = self.break_end_entry.get()
 
         start_time = datetime.datetime.strptime(start_time_str, "%I:%M:%S %p").time()
         end_time = datetime.datetime.strptime(end_time_str, "%I:%M:%S %p").time()
@@ -170,7 +187,7 @@ class JobTimeCalculator:
 
         if self.break_check_button_var.get():
             break_start_time = datetime.time(hour=13)
-            break_end_time = datetime.time(hour=15)
+            break_end_time = datetime.time(hour=13, minute=45)
 
             if start_time < break_start_time and end_time >= break_end_time:
                 total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(hours=2)
@@ -203,11 +220,13 @@ class JobTimeCalculator:
         departement = self.department_combobox.get()
         Arrivee = self.time_start_entry.get()
         pause = self.break_check_button_var.get()
+        debut_pause = self.break_start_entry.get()
+        retour_pause = self.break_end_entry.get()
         Descente = self.time_end_entry.get()
         Site = self.place_combobox.get()
 
         # Validate input
-        if not (Nom and Prenom and Fonction and departement and Arrivee and Descente and Site):
+        if not (Nom and Prenom and Fonction and departement and Site and Arrivee and debut_pause and retour_pause and Descente):
             messagebox.showerror("Error", "Please fill out all fields.")
             return
         # Save data to Excel file
@@ -217,12 +236,12 @@ class JobTimeCalculator:
 
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
-                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Arrivee", "Pause", "Descente", "Site", "Temps Total"])
+                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Arrivee", "Pause", "Debut Pause", "Retour Pause", "Descente", "Site", "Temps Total"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([Nom, Prenom, Fonction, departement, Arrivee, pause, Descente, Site])
+            sheet.append([Nom, Prenom, Fonction, departement, Site, Arrivee, pause, debut_pause, retour_pause, Descente])
             workbook.save(file_path)
             workbook.close()
 
