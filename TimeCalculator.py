@@ -1,7 +1,7 @@
 import datetime
 import tkinter as tk
 import webbrowser
-from tkinter import Menu, ttk, messagebox, X, BOTH
+from tkinter import Menu, ttk, messagebox
 
 
 class TimeCalculatorGUI:
@@ -120,3 +120,14 @@ class TimeCalculatorGUI:
 if __name__ == "__main__":
     gui = TimeCalculatorGUI()
     gui.run()
+#
+# if accepted == "Pause Ok":
+#     firstname = self.first_name_entry.get()
+#     lastname = self.last_name_entry.get()
+#     title = self.title_combox.get()
+#
+#     print("titre:", title, "firstname: ", firstname, "lastname: ", lastname, "pause:", accepted)
+#
+# else:
+#     tk.messagebox.showwarning(title='Warning', message='Warning')
+#
