@@ -37,8 +37,8 @@ class JobTimeCalculator:
         # create  first name and last name entry widgets
         self.first_name_entry = ttk.Entry(self.user_info_frame)
         self.last_name_entry = ttk.Entry(self.user_info_frame)
-        self.first_name_entry.grid(row=1, column=0)
-        self.last_name_entry.grid(row=1, column=1)
+        self.first_name_entry.grid(row=1, column=0, ipadx=10)
+        self.last_name_entry.grid(row=1, column=1, ipadx=10)
 
         # Create the title combo box
         self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
@@ -64,7 +64,7 @@ class JobTimeCalculator:
                                                  "ASSISTANTE SG", "ASSISTANTE SGA", "Resp SECURITY", "AGENT SECURITY",
                                                  "CHAUFFEUR", "PLANTON"])
         self.title.grid(row=0, column=2)
-        self.title_combox.grid(row=1, column=2)
+        self.title_combox.grid(row=1, column=2, ipadx=20)
 
         # Create department label and combobox
         self.department_label = ttk.Label(self.user_info_frame, text="Departement", background='lightgrey', underline=0)
@@ -75,7 +75,7 @@ class JobTimeCalculator:
                                                                               "DMRC", "DSEC", "DPEP", "GNN-SECURITY",
                                                                               "AUXILIAIRES"])
         self.department_label.grid(row=0, column=3)
-        self.department_combobox.grid(row=1, column=3, sticky='news')
+        self.department_combobox.grid(row=1, column=3, ipadx=20)
 
         # The place/site combobox
         self.place_label = ttk.Label(self.user_info_frame, text='Site', background='lightgrey', underline=0)
@@ -107,8 +107,13 @@ class JobTimeCalculator:
         self.break_start_entry.grid(row=3, column=1)
         self.break_end_entry.grid(row=3, column=2)
 
+        # Week days
+        self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine", underline=0, background="lightgrey")
+        self.week_combobox = ttk.Combobox(self.user_info_frame, values=["Lundi", "Mardi", "Mercred", "Jeudi", "Vendredi"])
+        self.week_label.grid(row=2, column=4)
+        self.week_combobox.grid(row=3, column=4)
         for widget in self.user_info_frame.winfo_children():
-            widget.grid_configure(padx=40, pady=25)
+            widget.grid_configure(padx=40, pady=20, sticky="news")
 
         # Create the second LabelFrame: breakCheck and calculation
         self.reg_status_var = tk.StringVar(value='Pause Ok')
@@ -123,7 +128,7 @@ class JobTimeCalculator:
         self.break_check_button.grid(row=2, column=0)
 
         # create calculate button
-        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer", command=self.calculate)
+        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer", command=self.calculate_total_time)
         self.calculate_button.grid(row=2, column=1, sticky='news')
 
         # result view label
@@ -172,44 +177,47 @@ class JobTimeCalculator:
 
         # Calculate function
 
-    def calculate(self):
+    def calculate_total_time(self):
         start_time_str = self.time_start_entry.get()
         end_time_str = self.time_end_entry.get()
-        break_start_time_str = self.break_start_entry.get()
-        break_stop_time_str = self.break_end_entry.get()
+        break_start_time_str = self.break_start_entry.get()  # fixed break start time
+        break_end_time_str = self.break_end_entry.get()  # fixed break end time
+        break_taken = self.break_check_button_var.get()
 
         start_time = datetime.datetime.strptime(start_time_str, "%I:%M:%S %p").time()
         end_time = datetime.datetime.strptime(end_time_str, "%I:%M:%S %p").time()
+        break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M:%S %p").time()
+        break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M:%S %p").time()
 
-        # totaltime = datetime.timedelta()
+        # total_time = datetime.timedelta()
+
         if end_time < start_time:
             end_time += datetime.timedelta(days=1)
 
-        if self.break_check_button_var.get():
-            break_start_time = datetime.time(hour=13)
-            break_end_time = datetime.time(hour=13, minute=45)
-
+        if break_taken:
             if start_time < break_start_time and end_time >= break_end_time:
-                total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(hours=2)
+                total_time = datetime.timedelta(hours=9, minutes=30) - datetime.timedelta(minutes=45)
             elif start_time >= break_end_time:
-                total_time = datetime.timedelta(hours=8, minutes=30)
-            elif end_time <= break_end_time:
-                total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(hours=2)
+                total_time = datetime.timedelta(hours=9, minutes=30)
+            elif end_time <= break_start_time:
+                total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(minutes=45)
+            # elif not break_taken:
+            #     total_time = datetime.timedelta(hours=9, minutes=30) + datetime.timedelta(hours=45)
             else:
-                time_before_break = datetime.datetime.combine(datetime.datetime.today(),
+                time_before_break = datetime.datetime.combine(datetime.date.today(),
                                                               break_start_time) - datetime.datetime.combine(
-                    datetime.datetime.today(), start_time)
-                time_after_break = datetime.datetime.combine(datetime.datetime.today(),
+                    datetime.date.today(), start_time)
+                time_after_break = datetime.datetime.combine(datetime.date.today(),
                                                              end_time) - datetime.datetime.combine(
-                    datetime.datetime.today(), break_end_time)
-
-                total_time = time_before_break + time_after_break - datetime.timedelta(hours=2)
+                    datetime.date.today(), break_end_time)
+                total_time = time_before_break + time_after_break - datetime.timedelta(minutes=45)
         else:
             total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                 datetime.date.today(), start_time)
-
         total_time_str = str(total_time)
-        self.result_label.config(text=f"Temps Total:  {total_time_str}", background='lightgreen')
+        self.result_label.config(text=f"Total time worked: {total_time_str}")
+
+        # self.result_label.config(text=f"Temps Total:  {total_time_str}", background='lightgreen')
 
     # Excel file generator
     def save_to_excel(self):
@@ -227,7 +235,7 @@ class JobTimeCalculator:
 
         # Validate input
         if not (Nom and Prenom and Fonction and departement and Site and Arrivee and debut_pause and retour_pause and Descente):
-            messagebox.showerror("Error", "Please fill out all fields.")
+            messagebox.showerror("Erreur", "Veuillez remplir tout les champs.")
             return
         # Save data to Excel file
         try:
@@ -236,7 +244,7 @@ class JobTimeCalculator:
 
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
-                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Arrivee", "Pause", "Debut Pause", "Retour Pause", "Descente", "Site", "Temps Total"])
+                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Site",  "Arrivee", "Pause", "Debut Pause", "Retour Pause", "Descente", "Temps Total"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
