@@ -84,8 +84,8 @@ class JobTimeCalculator:
         self.place_combobox.grid(row=1, column=4)
 
         # Create break time start and end labels
-        self.break_start_label = ttk.Label(self.user_info_frame, text="Debut Pause (HH:MM:SS AM/PM):", background="lightgrey", underline=0)
-        self.break_end_label = ttk.Label(self.user_info_frame, text="Retour Pause (HH:MM:SS AM/PM):", background="lightgrey", underline=0)
+        self.break_start_label = ttk.Label(self.user_info_frame, text="Debut Pause (HH:MM:SS AM/PM):", background="orange", underline=0)
+        self.break_end_label = ttk.Label(self.user_info_frame, text="Retour Pause (HH:MM:SS AM/PM):", background="orange", underline=0)
         self.break_start_label.grid(row=2, column=1)
         self.break_end_label.grid(row=2, column=2)
 
@@ -108,8 +108,8 @@ class JobTimeCalculator:
         self.break_end_entry.grid(row=3, column=2)
 
         # Week days
-        self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine", underline=0, background="lightgrey")
-        self.week_combobox = ttk.Combobox(self.user_info_frame, values=["Lundi", "Mardi", "Mercred", "Jeudi", "Vendredi"])
+        self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
+        self.week_combobox = ttk.Combobox(self.user_info_frame, values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"])
         self.week_label.grid(row=2, column=4)
         self.week_combobox.grid(row=3, column=4)
         for widget in self.user_info_frame.winfo_children():
@@ -118,7 +118,7 @@ class JobTimeCalculator:
         # Create the second LabelFrame: breakCheck and calculation
         self.reg_status_var = tk.StringVar(value='Pause Ok')
         self.registered_check = ttk.Checkbutton(self.frame, text="Pause", variable=self.reg_status_var,
-                                                onvalue="Pause Ok", offvalue="Pause Non")
+                                                onvalue=True, offvalue=False)
         self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Affichage', underline=0)
         self.registration_frame.grid(row=1, column=0, sticky='news', padx=20, pady=20)
 
@@ -129,22 +129,24 @@ class JobTimeCalculator:
 
         # create calculate button
         self.calculate_button = ttk.Button(self.registration_frame, text="Calculer", command=self.calculate_total_time)
-        self.calculate_button.grid(row=2, column=1, sticky='news')
+        self.calculate_button.grid(row=3, column=2, sticky='news')
 
         # result view label
+        self.result_view = ttk.Label(self.registration_frame, text="Le Temps Total est:", underline=0, background="lightgrey")
+        self.result_view.grid(row=2, column=1, sticky='news')
         self.result_label = ttk.Label(self.registration_frame, background='lightgreen')
-        self.result_label.grid(row=2, column=3, sticky='news')
+        self.result_label.grid(row=2, column=2, sticky='news')
 
         for widget in self.registration_frame.winfo_children():
-            widget.grid_configure(padx=10, pady=15, ipadx=7)
+            widget.grid_configure(padx=10, pady=10, sticky="news")
 
         # Create save_to_excel Button
         self.entry_button = ttk.Button(self.frame, text='Sauvegarder', command=self.save_to_excel)
         self.entry_button.grid(row=3, column=0, sticky='news', padx=20, pady=5)
 
         # add a clear button
-        self.clear_button = ttk.Button(self.frame, text='Effacer', command=self.clear)
-        self.clear_button.grid(row=2, column=0, sticky='nw', padx=20, pady=5)
+        self.clear_button = ttk.Button(self.registration_frame, text='Effacer', command=self.clear)
+        self.clear_button.grid(row=3, column=1)
 
         # Create Menu
         self.menu_ = tk.Menu(self.frame, tearoff=0)
@@ -174,9 +176,9 @@ class JobTimeCalculator:
         self.department_combobox.delete(0, END)
         self.break_start_entry.delete(0, END)
         self.break_end_entry.delete(0, END)
+        self.week_combobox.delete(0, END)
 
         # Calculate function
-
     def calculate_total_time(self):
         start_time_str = self.time_start_entry.get()
         end_time_str = self.time_end_entry.get()
@@ -201,8 +203,6 @@ class JobTimeCalculator:
                 total_time = datetime.timedelta(hours=9, minutes=30)
             elif end_time <= break_start_time:
                 total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(minutes=45)
-            # elif not break_taken:
-            #     total_time = datetime.timedelta(hours=9, minutes=30) + datetime.timedelta(hours=45)
             else:
                 time_before_break = datetime.datetime.combine(datetime.date.today(),
                                                               break_start_time) - datetime.datetime.combine(
@@ -215,7 +215,7 @@ class JobTimeCalculator:
             total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                 datetime.date.today(), start_time)
         total_time_str = str(total_time)
-        self.result_label.config(text=f"Total time worked: {total_time_str}")
+        self.result_label.config(text=f"{total_time_str}")
 
         # self.result_label.config(text=f"Temps Total:  {total_time_str}", background='lightgreen')
 
