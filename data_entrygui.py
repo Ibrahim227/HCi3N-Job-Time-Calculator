@@ -64,10 +64,10 @@ class JobTimeCalculator:
                                                  "ASSISTANTE SG", "ASSISTANTE SGA", "Resp SECURITY", "AGENT SECURITY",
                                                  "CHAUFFEUR", "PLANTON"])
         self.title.grid(row=0, column=2)
-        self.title_combox.grid(row=1, column=2, ipadx=20)
+        self.title_combox.grid(row=1, column=2, ipadx=50)
 
         # Create department label and combobox
-        self.department_label = ttk.Label(self.user_info_frame, text="Departement", background='lightgrey', underline=0)
+        self.department_label = ttk.Label(self.user_info_frame, text="Departement:", background='lightgrey', underline=0)
         self.department_combobox = ttk.Combobox(self.user_info_frame, values=["CABINET", "SECRETARIAT GENERAL", "DAFC",
                                                                               "DEPARTMENT PARTENARIAT",
                                                                               "CELLULE NUTRITION", "NEXUS",
@@ -78,20 +78,20 @@ class JobTimeCalculator:
         self.department_combobox.grid(row=1, column=3, ipadx=20)
 
         # The place/site combobox
-        self.place_label = ttk.Label(self.user_info_frame, text='Site', background='lightgrey', underline=0)
+        self.place_label = ttk.Label(self.user_info_frame, text='Site:', background='lightgrey', underline=0)
         self.place_label.grid(row=0, column=4)
         self.place_combobox = ttk.Combobox(self.user_info_frame, values=['SIEGE', 'ANNEXE 1', 'ANNEXE 2'], validate='focus')
         self.place_combobox.grid(row=1, column=4)
 
         # Create break time start and end labels
-        self.break_start_label = ttk.Label(self.user_info_frame, text="Debut Pause (HH:MM:SS AM/PM):", background="orange", underline=0)
-        self.break_end_label = ttk.Label(self.user_info_frame, text="Retour Pause (HH:MM:SS AM/PM):", background="orange", underline=0)
+        self.break_start_label = ttk.Label(self.user_info_frame, text="Debut Pause (HH:MM AM/PM):", background="orange", underline=0)
+        self.break_end_label = ttk.Label(self.user_info_frame, text="Retour Pause (HH:MM AM/PM):", background="orange", underline=0)
         self.break_start_label.grid(row=2, column=1)
         self.break_end_label.grid(row=2, column=2)
 
         # Create  start and end time labels
-        self.time_start_label = ttk.Label(self.user_info_frame, text="Entree (HH:MM:SS AM/PM):", background="lightgreen", underline=0)
-        self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM:SS AM/PM):", background="red", underline=0)
+        self.time_start_label = ttk.Label(self.user_info_frame, text="Entree (HH:MM AM/PM):", background="lightgreen", underline=0)
+        self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM AM/PM):", background="red", underline=0)
         self.time_start_label.grid(row=2, column=0)
         self.time_end_label.grid(row=2, column=3)
 
@@ -116,7 +116,7 @@ class JobTimeCalculator:
             widget.grid_configure(padx=40, pady=20, sticky="news")
 
         # Create the second LabelFrame: breakCheck and calculation
-        self.reg_status_var = tk.StringVar(value='Pause Ok')
+        self.reg_status_var = tk.StringVar(value='Ok')
         self.registered_check = ttk.Checkbutton(self.frame, text="Pause", variable=self.reg_status_var,
                                                 onvalue=True, offvalue=False)
         self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Affichage', underline=0)
@@ -132,7 +132,7 @@ class JobTimeCalculator:
         self.calculate_button.grid(row=3, column=2, sticky='news')
 
         # result view label
-        self.result_view = ttk.Label(self.registration_frame, text="Le Temps Total est:", underline=0, background="lightgrey")
+        self.result_view = ttk.Label(self.registration_frame, text="Le Temps total est:", underline=0, background="lightgrey")
         self.result_view.grid(row=2, column=1, sticky='news')
         self.result_label = ttk.Label(self.registration_frame, background='lightgreen')
         self.result_label.grid(row=2, column=2, sticky='news')
@@ -145,10 +145,10 @@ class JobTimeCalculator:
         self.entry_button.grid(row=3, column=0, sticky='news', padx=20, pady=5)
 
         # add a clear button
-        self.clear_button = ttk.Button(self.registration_frame, text='Effacer', command=self.clear)
+        self.clear_button = ttk.Button(self.registration_frame, text='Effacer Champs', command=self.clear)
         self.clear_button.grid(row=3, column=1)
 
-        # Create Menu
+        # Create Menu menubar
         self.menu_ = tk.Menu(self.frame, tearoff=0)
         self.menu_bar = tk.Menu(self.menu_, tearoff=0)
         self.menu_bar.add_command(label="A propos HCi3N", command=on_click)
@@ -186,10 +186,10 @@ class JobTimeCalculator:
         break_end_time_str = self.break_end_entry.get()  # fixed break end time
         break_taken = self.break_check_button_var.get()
 
-        start_time = datetime.datetime.strptime(start_time_str, "%I:%M:%S %p").time()
-        end_time = datetime.datetime.strptime(end_time_str, "%I:%M:%S %p").time()
-        break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M:%S %p").time()
-        break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M:%S %p").time()
+        start_time = datetime.datetime.strptime(start_time_str, "%I:%M %p").time()
+        end_time = datetime.datetime.strptime(end_time_str, "%I:%M %p").time()
+        break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M %p").time()
+        break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M %p").time()
 
         # total_time = datetime.timedelta()
 
@@ -215,26 +215,30 @@ class JobTimeCalculator:
             total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                 datetime.date.today(), start_time)
         total_time_str = str(total_time)
+
         self.result_label.config(text=f"{total_time_str}")
 
-        # self.result_label.config(text=f"Temps Total:  {total_time_str}", background='lightgreen')
+        # self.result_label.config(text=f"Temps total:  {total_time_str}", background='lightgreen')
 
     # Excel file generator
     def save_to_excel(self):
 
-        Nom = self.first_name_entry.get()
-        Prenom = self.last_name_entry.get()
-        Fonction = self.title_combox.get()
+        nom = self.first_name_entry.get()
+        prenom = self.last_name_entry.get()
+        fonction = self.title_combox.get()
         departement = self.department_combobox.get()
-        Arrivee = self.time_start_entry.get()
+        arrivee = self.time_start_entry.get()
         pause = self.break_check_button_var.get()
         debut_pause = self.break_start_entry.get()
         retour_pause = self.break_end_entry.get()
-        Descente = self.time_end_entry.get()
-        Site = self.place_combobox.get()
+        descente = self.time_end_entry.get()
+        site = self.place_combobox.get()
+        total = str(self.result_label.config())
+        jour_semaine = self.week_combobox.get()
+        daily_date = datetime.date.today()
 
         # Validate input
-        if not (Nom and Prenom and Fonction and departement and Site and Arrivee and debut_pause and retour_pause and Descente):
+        if not (nom and prenom and fonction and departement and site and arrivee and debut_pause and retour_pause and descente and total and jour_semaine and daily_date):
             messagebox.showerror("Erreur", "Veuillez remplir tout les champs.")
             return
         # Save data to Excel file
@@ -244,12 +248,12 @@ class JobTimeCalculator:
 
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
-                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Site",  "Arrivee", "Pause", "Debut Pause", "Retour Pause", "Descente", "Temps Total"])
+                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Site",  "Arrivee", "Pause", "Debut Pause", "Retour Pause", "Descente", "Temps total", "Jour de Semaine", "Date"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([Nom, Prenom, Fonction, departement, Site, Arrivee, pause, debut_pause, retour_pause, Descente])
+            sheet.append([nom, prenom, fonction, departement, site, arrivee, pause, debut_pause, retour_pause, descente, total, jour_semaine, daily_date])
             workbook.save(file_path)
             workbook.close()
 
