@@ -1,11 +1,14 @@
 import datetime
+import os
 import tkinter as tk
 import webbrowser
 from tkinter import ttk, messagebox, END
+
 import openpyxl
-import os
+from PIL.ImageTk import PhotoImage
 
 
+# redirect to HCi3N website
 def on_click():
     url = "http://www.initiative3n.ne/"
     webbrowser.open_new_tab(url)
@@ -148,6 +151,11 @@ class JobTimeCalculator:
         self.clear_button = ttk.Button(self.registration_frame, text='Effacer Champs', command=self.clear)
         self.clear_button.grid(row=3, column=1)
 
+        # image
+        img = PhotoImage(file='images\\zero.png')
+        display = ttk.Label(self.frame, image=img)
+        display.place_configure(x=0, y=0)
+
         # Create Menu menubar
         self.menu_ = tk.Menu(self.frame, tearoff=0)
         self.menu_bar = tk.Menu(self.menu_, tearoff=0)
@@ -162,8 +170,6 @@ class JobTimeCalculator:
     def exit_01(self):
         if messagebox.askokcancel(title='Quitter', message='Voulez-vous quitter ?'):
             self.window.destroy()
-
-    # redirect to HCi3N website
 
     # Clear function
     def clear(self):
@@ -217,7 +223,6 @@ class JobTimeCalculator:
         total_time_str = str(total_time)
 
         self.result_label.config(text=f"{total_time_str}")
-
         # self.result_label.config(text=f"Temps total:  {total_time_str}", background='lightgreen')
 
     # Excel file generator
