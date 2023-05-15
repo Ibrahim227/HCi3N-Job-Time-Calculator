@@ -248,17 +248,18 @@ class JobTimeCalculator:
         retour_pause = self.break_end_entry.get()
         descente = self.time_end_entry.get()
         site = self.place_combobox.get()
-        total = str(self.result_label.config())
+        total = self.calculate_total_time()
         jour_semaine = self.week_combobox.get()
         daily_date = datetime.date.today()
         save_date = datetime.date.today()
+
         # Validate input
         if not (nom and prenom and fonction and departement and site and arrivee and debut_pause and retour_pause and descente and jour_semaine and daily_date and total):
             messagebox.showerror("Erreur", "Veuillez remplir tout les champs.")
             return
         # Save data to Excel file
         try:
-            file_path = f"sauvegarde du {save_date}" + ".xlsx"
+            file_path = f"Sauvegarde du {save_date}" + ".xlsx"
             if not os.path.exists(file_path):
 
                 workbook = openpyxl.Workbook()
