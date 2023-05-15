@@ -1,11 +1,11 @@
 import datetime
 import os
 import tkinter as tk
+# import unittest
 import webbrowser
 from tkinter import ttk, messagebox, END
 
 import openpyxl
-from PIL.ImageTk import PhotoImage
 
 
 # redirect to HCi3N website
@@ -23,7 +23,7 @@ class JobTimeCalculator:
         self.window.title("HCi3N")
         self.window.geometry()
         self.window.iconbitmap('images\\logoHCi3N.ico')
-        self.window.config(background="#DFE7F2")
+        self.window.config(background="#87E990")
 
         self.frame = ttk.Frame(self.window)
         self.frame.pack(anchor='center')
@@ -111,11 +111,12 @@ class JobTimeCalculator:
         self.break_start_entry.grid(row=3, column=1)
         self.break_end_entry.grid(row=3, column=2)
 
-        # Week days
+        # Week days combobox entry
         self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
         self.week_combobox = ttk.Combobox(self.user_info_frame, values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"])
         self.week_label.grid(row=2, column=4)
         self.week_combobox.grid(row=3, column=4)
+
         for widget in self.user_info_frame.winfo_children():
             widget.grid_configure(padx=40, pady=20, sticky="news")
 
@@ -127,7 +128,7 @@ class JobTimeCalculator:
         self.registration_frame.grid(row=1, column=0, sticky='news', padx=20, pady=20)
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=True)
-        self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:00 PM et 13:45 PM",
+        self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:30 PM et 14:15 PM",
                                                   variable=self.break_check_button_var)
         self.break_check_button.grid(row=2, column=0)
 
@@ -146,16 +147,11 @@ class JobTimeCalculator:
 
         # Create save_to_excel Button
         self.entry_button = ttk.Button(self.frame, text='Sauvegarder', command=self.save_to_excel)
-        self.entry_button.grid(row=3, column=0, sticky='news', padx=20, pady=5)
+        self.entry_button.grid(row=3, column=0, sticky='news', padx=20, pady=7)
 
         # add a clear button
         self.clear_button = ttk.Button(self.registration_frame, text='Effacer Champs', command=self.clear)
         self.clear_button.grid(row=3, column=1)
-
-        # image
-        img = PhotoImage(file='images\\zero.png')
-        display = ttk.Label(self.frame, image=img)
-        display.place_configure(x=0, y=0)
 
         # Create Menu menubar
         self.menu_ = tk.Menu(self.frame, tearoff=0)
@@ -284,4 +280,5 @@ class JobTimeCalculator:
 
 if __name__ == "__main__":
     gui = JobTimeCalculator()
+    # unittest.main()
     gui.run()
