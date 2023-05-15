@@ -17,12 +17,13 @@ def on_click():
 class JobTimeCalculator:
     # Initialize the class
     def __init__(self):
-        super().__init__()  # Allows to inherit from the tkinter object
+        super().__init__()  # Allows to inherit from the tkinter class object
         # Main window
         self.window = tk.Tk()
         self.window.title("HCi3N")
         self.window.geometry()
         self.window.iconbitmap('images\\logoHCi3N.ico')
+        self.window.config(background="#DFE7F2")
 
         self.frame = ttk.Frame(self.window)
         self.frame.pack(anchor='center')
@@ -38,7 +39,7 @@ class JobTimeCalculator:
         self.last_name_label.grid(row=0, column=1)
 
         # create  first name and last name entry widgets
-        self.first_name_entry = ttk.Entry(self.user_info_frame)
+        self.first_name_entry = ttk.Entry(self.user_info_frame,)
         self.last_name_entry = ttk.Entry(self.user_info_frame)
         self.first_name_entry.grid(row=1, column=0, ipadx=10)
         self.last_name_entry.grid(row=1, column=1, ipadx=10)
@@ -166,6 +167,12 @@ class JobTimeCalculator:
         self.menu_.add_cascade(label="Menu", menu=self.menu_bar)
         self.window.config(menu=self.menu_)
 
+        # upload_list = ['Ibrahim', 'Niger', 'Mali', 'Burkina Faso', 'Guinea', 'Afghanistan', 'Iraq', 'Jordan', 'Iraq',
+        #                'Kiribati', 'Kazakhstan', 'Russia',
+        #                'United States', 'United kingdom', 'North Africa', 'Morocco', 'Algeria', 'Tunisia', 'Albania']
+        # entry = AutocompleteEntryListbox(self.frame, completevalues=upload_list)
+        # entry.grid(row=2, column=0)
+
     # Exit function
     def exit_01(self):
         if messagebox.askokcancel(title='Quitter', message='Voulez-vous quitter ?'):
@@ -185,6 +192,7 @@ class JobTimeCalculator:
         self.week_combobox.delete(0, END)
 
         # Calculate function
+
     def calculate_total_time(self):
         start_time_str = self.time_start_entry.get()
         end_time_str = self.time_end_entry.get()
@@ -192,23 +200,24 @@ class JobTimeCalculator:
         break_end_time_str = self.break_end_entry.get()  # fixed break end time
         break_taken = self.break_check_button_var.get()
 
-        start_time = datetime.datetime.strptime(start_time_str, "%I:%M %p").time()
-        end_time = datetime.datetime.strptime(end_time_str, "%I:%M %p").time()
+        start_time = datetime.datetime.strptime(start_time_str, "%H:%M %p").time()
+        end_time = datetime.datetime.strptime(end_time_str, "%H:%M %p").time()
         break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M %p").time()
         break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M %p").time()
 
-        # total_time = datetime.timedelta()
+        # total_time = datetime.timedelta()  # Initialize total_time to zero
 
         if end_time < start_time:
             end_time += datetime.timedelta(days=1)
 
         if break_taken:
             if start_time < break_start_time and end_time >= break_end_time:
-                total_time = datetime.timedelta(hours=9, minutes=30) - datetime.timedelta(minutes=45)
+                total_time = datetime.timedelta(hours=9, minutes=30) - (datetime.datetime.combine(datetime.date.today(), break_end_time) -
+                                                                        datetime.datetime.combine(datetime.date.today(), break_start_time))
             elif start_time >= break_end_time:
                 total_time = datetime.timedelta(hours=9, minutes=30)
             elif end_time <= break_start_time:
-                total_time = datetime.timedelta(hours=8, minutes=30) - datetime.timedelta(minutes=45)
+                total_time = datetime.timedelta(hours=8, minutes=30) - (break_end_time - break_start_time)
             else:
                 time_before_break = datetime.datetime.combine(datetime.date.today(),
                                                               break_start_time) - datetime.datetime.combine(
@@ -216,14 +225,15 @@ class JobTimeCalculator:
                 time_after_break = datetime.datetime.combine(datetime.date.today(),
                                                              end_time) - datetime.datetime.combine(
                     datetime.date.today(), break_end_time)
-                total_time = time_before_break + time_after_break - datetime.timedelta(minutes=45)
+                total_time = time_before_break + time_after_break - (break_end_time - break_start_time)
         else:
             total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                 datetime.date.today(), start_time)
+
         total_time_str = str(total_time)
 
-        self.result_label.config(text=f"{total_time_str}")
-        # self.result_label.config(text=f"Temps total:  {total_time_str}", background='lightgreen')
+        self.result_label.config(text=total_time_str)
+        return total_time  # Return the total_time value
 
     # Excel file generator
     def save_to_excel(self):
@@ -241,24 +251,24 @@ class JobTimeCalculator:
         total = str(self.result_label.config())
         jour_semaine = self.week_combobox.get()
         daily_date = datetime.date.today()
-
+        save_date = datetime.date.today()
         # Validate input
-        if not (nom and prenom and fonction and departement and site and arrivee and debut_pause and retour_pause and descente and total and jour_semaine and daily_date):
+        if not (nom and prenom and fonction and departement and site and arrivee and debut_pause and retour_pause and descente and jour_semaine and daily_date and total):
             messagebox.showerror("Erreur", "Veuillez remplir tout les champs.")
             return
         # Save data to Excel file
         try:
-            file_path = "data.xlsx"
+            file_path = f"{save_date}" + ".xlsx"
             if not os.path.exists(file_path):
 
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
-                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Site",  "Arrivee", "Pause", "Debut Pause", "Retour Pause", "Descente", "Temps total", "Jour de Semaine", "Date"])
+                sheet.append(["Nom", "Prenom", "Fonction", "Departement", "Site",  "Arrivee", "Pause", "Debut Pause", "Retour Pause", "Descente", "Jour de Semaine", "Date", "Temps total"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([nom, prenom, fonction, departement, site, arrivee, pause, debut_pause, retour_pause, descente, total, jour_semaine, daily_date])
+            sheet.append([nom, prenom, fonction, departement, site, arrivee, pause, debut_pause, retour_pause, descente, jour_semaine, daily_date, total])
             workbook.save(file_path)
             workbook.close()
 
