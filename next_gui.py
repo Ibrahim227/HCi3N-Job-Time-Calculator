@@ -1,3 +1,4 @@
+
 import datetime
 import os
 import tkinter as tk
@@ -26,8 +27,6 @@ class JobTimeCalculator:
         self.window.geometry()
         self.window.iconbitmap('images\\logoHCi3N.ico')
         self.window.config(background="#87E990")
-
-        ######## Main Frame
 
         self.frame = ttk.Frame(self.window)
         self.frame.pack(anchor='center')
@@ -141,8 +140,8 @@ class JobTimeCalculator:
 
         self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=True)
         self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence Annexe-1",
-                                                         variable=self.exit_entry_status_var_1, onvalue=True,
-                                                         offvalue=False)
+                                                         variable=self.exit_entry_status_var_1, onvalue=False,
+                                                         offvalue=True)
         self.exit_entry_status_check_1.grid(row=0, column=0)
 
         # Create Entry widgets for exit/entry from Site
@@ -162,8 +161,8 @@ class JobTimeCalculator:
 
         self.exit_entry_status_var_2 = tk.BooleanVar(self.exit_entry_frame, value=True)
         self.exit_entry_status_check_2 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence vers Annexe-2",
-                                                         variable=self.exit_entry_status_var_2, onvalue=True,
-                                                         offvalue=False)
+                                                         variable=self.exit_entry_status_var_2, onvalue=False,
+                                                         offvalue=True)
         self.exit_entry_status_check_2.grid(row=0, column=3)
 
         # Create Entry Exit Status from HQ to annexe1-2
@@ -191,7 +190,7 @@ class JobTimeCalculator:
         self.presence_check_var = tk.BooleanVar(self.verify_frame, value=True)
         self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verify Presence Siege",
                                               variable=self.presence_check_var,
-                                              onvalue=True, offvalue=False)
+                                              onvalue=False, offvalue=True)
         self.presence_check.grid(row=0, column=0)
 
         # Verify presence Entry and Exit / label and entry widgets
@@ -211,7 +210,7 @@ class JobTimeCalculator:
         # second check variable, labels and Entries widgets
         self.annexe_to_annexe_var = tk.BooleanVar(self.verify_frame, value=True)
         self.annexe_to_annexe = ttk.Checkbutton(self.verify_frame, text="Verify Presence Annexe",
-                                                variable=self.annexe_to_annexe_var, onvalue=True, offvalue=False)
+                                                variable=self.annexe_to_annexe_var, onvalue=False, offvalue=True)
         self.annexe_to_annexe.grid(row=0, column=3)
 
         self.check_annexe_entry_label = ttk.Label(self.verify_frame, text="Entree (HH:MM AM/PM):",
@@ -242,7 +241,7 @@ class JobTimeCalculator:
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=True)
         self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:30 PM et 14:15 PM",
-                                                  variable=self.break_check_button_var, onvalue=True, offvalue=False)
+                                                  variable=self.break_check_button_var, onvalue=False, offvalue=True)
         self.break_check_button.grid(row=2, column=0)
 
         # create calculate button
