@@ -3,7 +3,7 @@ import os
 import tkinter as tk
 # import unittest
 import webbrowser
-from tkinter import ttk, messagebox, END
+from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
 
@@ -30,7 +30,7 @@ class JobTimeCalculator:
         ######## Main Frame
 
         self.frame = ttk.Frame(self.window)
-        self.frame.pack(anchor='center')
+        self.frame.pack(anchor='center', fill=BOTH)
 
         ################################# Configure First LabelFrame ############################
         # Saving user Information
@@ -136,11 +136,11 @@ class JobTimeCalculator:
         ############################################### Second LabelFrame ###################################################
 
         # Create the exit/entry label and Buttons from HQ to annexe1-2
-        self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe Site vers (ANNEXE1-ANNEXE2)", underline=0)
+        self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE1-ANNEXE2)", underline=0)
         self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=20, pady=20)
 
         self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=True)
-        self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence Annexe-1",
+        self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence ANNEXE-1",
                                                          variable=self.exit_entry_status_var_1, onvalue=True,
                                                          offvalue=False)
         self.exit_entry_status_check_1.grid(row=0, column=0)
@@ -161,7 +161,7 @@ class JobTimeCalculator:
         ############# second entry/exit Entry widget
 
         self.exit_entry_status_var_2 = tk.BooleanVar(self.exit_entry_frame, value=True)
-        self.exit_entry_status_check_2 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence vers Annexe-2",
+        self.exit_entry_status_check_2 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence Annexe-2",
                                                          variable=self.exit_entry_status_var_2, onvalue=True,
                                                          offvalue=False)
         self.exit_entry_status_check_2.grid(row=0, column=3)
@@ -186,10 +186,10 @@ class JobTimeCalculator:
 
         # Create the labelFrame
         ################# first check, entries and labels
-        self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe Annexe vers (Site-Annexe)", underline=0)
+        self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
         self.verify_frame.grid(row=2, column=0, padx=20, pady=20, sticky="news")
         self.presence_check_var = tk.BooleanVar(self.verify_frame, value=True)
-        self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verify Presence Siege",
+        self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verify Presence SIEGE",
                                               variable=self.presence_check_var,
                                               onvalue=True, offvalue=False)
         self.presence_check.grid(row=0, column=0)
@@ -210,7 +210,7 @@ class JobTimeCalculator:
         ####################
         # second check variable, labels and Entries widgets
         self.annexe_to_annexe_var = tk.BooleanVar(self.verify_frame, value=True)
-        self.annexe_to_annexe = ttk.Checkbutton(self.verify_frame, text="Verify Presence Annexe",
+        self.annexe_to_annexe = ttk.Checkbutton(self.verify_frame, text="Verify Presence ANNEXE-2",
                                                 variable=self.annexe_to_annexe_var, onvalue=True, offvalue=False)
         self.annexe_to_annexe.grid(row=0, column=3)
 
@@ -232,13 +232,49 @@ class JobTimeCalculator:
             widget.grid_configure(padx=20, pady=10, sticky="news")
 
         ############################################ Configure Fourth LabelFrame ################################
+        self.third_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-2 vers (SIEGE-ANNEXE-1)", underline=0)
+        self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=10)
 
-        # Create the second LabelFrame: breakCheck and calculation
-        # self.reg_status_var = tk.StringVar(value='Ok')
-        # self.registered_check = ttk.Checkbutton(self.frame, text="Pause", variable=self.reg_status_var,
-        #                                         onvalue=True, offvalue=False)
+        self.verification_button_var = tk.BooleanVar(self.third_frame, value=True)
+        self.verification_button = ttk.Checkbutton(self.third_frame, text="Verify Presence SIEGE", variable=self.verification_button_var,
+                                                   onvalue=True, offvalue=False)
+        self.verification_button.grid(row=0, column=0)
+
+        self.value_entry_label = ttk.Label(self.third_frame, text="Entree (HH:MM AM/PM):", background="lightgreen", underline=0)
+        self.value_exit_label = ttk.Label(self.third_frame, text="Sortie (HH:MM AM/PM):", background="red", underline=0)
+        self.value_entry_widget = ttk.Entry(self.third_frame)
+        self.value_exit_widget = ttk.Entry(self.third_frame)
+
+        self.value_entry_label.grid(row=1, column=0)
+        self.value_exit_label.grid(row=1, column=1)
+        self.value_entry_widget.grid(row=2, column=0)
+        self.value_exit_widget.grid(row=2, column=1)
+
+
+        ###### second verification check button, entries
+
+        self.second_verification_check_var = tk.BooleanVar(self.third_frame, value=True)
+        self.second_verification_check_button = ttk.Checkbutton(self.third_frame, text="Verify Presence ANNEXE-1", variable=self.second_verification_check_var,
+                                                                onvalue=True, offvalue=False)
+        self.second_verification_check_button.grid(row=0, column=3)
+
+        self.second_ver_label1 = ttk.Label(self.third_frame, text="Entree (HH:MM AM/PM):", background="lightgreen", underline=0)
+        self.second_ver_label2 = ttk.Label(self.third_frame, text="Sortie (HH:MM AM/PM):", background="red", underline=0)
+        self.second_annexe_entry = ttk.Entry(self.third_frame)
+        self.second_annexe_exit = ttk.Entry(self.third_frame)
+        self.second_ver_label1.grid(row=1, column=3)
+        self.second_ver_label2.grid(row=1, column=4)
+        self.second_annexe_entry.grid(row=2, column=3)
+        self.second_annexe_exit.grid(row=2, column=4)
+
+
+        for widget in self.third_frame.winfo_children():
+            widget.grid_configure(padx=20, pady=10, sticky="news")
+
+        ############################################ Configure Fifth LabelFrame ################################
+
         self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Affichage', underline=0)
-        self.registration_frame.grid(row=3, column=0, sticky='news', padx=20, pady=20)
+        self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=20)
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=True)
         self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:30 PM et 14:15 PM",
