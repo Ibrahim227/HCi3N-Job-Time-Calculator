@@ -164,7 +164,7 @@ class JobTimeCalculator:
         self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE1 et ANNEXE2)", underline=0)
         self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=20, pady=20)
 
-        self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=True)
+        self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=False)
         self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence ANNEXE-1",
                                                          variable=self.exit_entry_status_var_1, onvalue=True,
                                                          offvalue=False)
@@ -185,7 +185,7 @@ class JobTimeCalculator:
 
         ############# second entry/exit Entry widget #############
 
-        self.exit_entry_status_var_2 = tk.BooleanVar(self.exit_entry_frame, value=True)
+        self.exit_entry_status_var_2 = tk.BooleanVar(self.exit_entry_frame, value=False)
         self.exit_entry_status_check_2 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence Annexe-2",
                                                          variable=self.exit_entry_status_var_2, onvalue=True,
                                                          offvalue=False)
@@ -213,7 +213,7 @@ class JobTimeCalculator:
         ################# first check, entries and labels
         self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
         self.verify_frame.grid(row=2, column=0, padx=20, pady=20, sticky="news")
-        self.presence_check_var = tk.BooleanVar(self.verify_frame, value=True)
+        self.presence_check_var = tk.BooleanVar(self.verify_frame, value=False)
         self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verify Presence SIEGE",
                                               variable=self.presence_check_var,
                                               onvalue=True, offvalue=False)
@@ -235,7 +235,7 @@ class JobTimeCalculator:
 
         ####################
         # second check variable, labels and Entries widgets
-        self.annexe_to_annexe_var = tk.BooleanVar(self.verify_frame, value=True)
+        self.annexe_to_annexe_var = tk.BooleanVar(self.verify_frame, value=False)
         self.annexe_to_annexe = ttk.Checkbutton(self.verify_frame, text="Verify Presence ANNEXE-2",
                                                 variable=self.annexe_to_annexe_var, onvalue=True, offvalue=False)
         self.annexe_to_annexe.grid(row=0, column=3)
@@ -261,7 +261,7 @@ class JobTimeCalculator:
         self.third_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-2 vers (SIEGE-ANNEXE-1)", underline=0)
         self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=10)
 
-        self.verification_button_var = tk.BooleanVar(self.third_frame, value=True)
+        self.verification_button_var = tk.BooleanVar(self.third_frame, value=False)
         self.verification_button = ttk.Checkbutton(self.third_frame, text="Verify Presence SIEGE",
                                                    variable=self.verification_button_var,
                                                    onvalue=True, offvalue=False)
@@ -280,7 +280,7 @@ class JobTimeCalculator:
 
         ###### second verification check button, entries
 
-        self.second_verification_check_var = tk.BooleanVar(self.third_frame, value=True)
+        self.second_verification_check_var = tk.BooleanVar(self.third_frame, value=False)
         self.second_verification_check_button = ttk.Checkbutton(self.third_frame, text="Verify Presence ANNEXE-1",
                                                                 variable=self.second_verification_check_var,
                                                                 onvalue=True, offvalue=False)
@@ -305,7 +305,7 @@ class JobTimeCalculator:
         self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Affichage', underline=0)
         self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=20)
 
-        self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=True)
+        self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=False)
         self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:30 PM et 14:15 PM",
                                                   variable=self.break_check_button_var, onvalue=True, offvalue=False)
         self.break_check_button.grid(row=2, column=0)
