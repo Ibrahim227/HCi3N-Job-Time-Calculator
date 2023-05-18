@@ -44,13 +44,16 @@ class JobTimeCalculator:
 
         # create  first name and last name entry widgets
         name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
-                     "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR", "Mme DOUDOU HALIDOU MAIMOUNA",
-                     "GAMATIE BOUBACAR", "Mme RABO MARIA MOHAMED YAROH", "RABIATOU HABIBOU", "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU",
+                     "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
+                     "Mme DOUDOU HALIDOU MAIMOUNA",
+                     "GAMATIE BOUBACAR", "Mme RABO MARIA MOHAMED YAROH", "RABIATOU HABIBOU",
+                     "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU",
                      "OUSMANE FODI", "Mme MOUSTAPHA FOURERA", "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
                      "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
                      "MAHAMADOU MAHAMANE NAFISSATOU", "Mme ABDOUL NASSER MARIA",
                      "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI", "ABDOU MOUSSA OUSMANE",
-                     "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID", "TRAPSIDA ABDOULAY ALAIN",
+                     "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
+                     "TRAPSIDA ABDOULAY ALAIN",
                      "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA", "MA AROUF TIDJANI", "LAWAN DARMANE",
                      "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU", "GN HAROUNA MAAZOU",
                      "GN LAOUALI MAAZOU MAMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU", "BOGARI ZOURKALEINI",
@@ -65,10 +68,16 @@ class JobTimeCalculator:
                      "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"]
 
         self.first_last_name_entry = AutocompleteEntryListbox(self.frame, completevalues=name_list,
-                                                              allow_other_values=True,
-                                                              autohidescrollbar=True)
-        self.first_last_name_entry.grid(row=1, column=2, ipadx=55)
+                                                              allow_other_values=True, autohidescrollbar=True)
+        self.first_last_name_entry.grid(row=1, column=2, ipadx=57)
 
+        # Create the time and minute Combobox
+        self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
+        self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
+        self.hour_spinbox.grid(row=2, column=3)
+        self.minute_spinbox.grid(row=2, column=4)
+
+        #
         # Create the title combo box
         self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
         self.title_combox = ttk.Combobox(self.user_info_frame,
@@ -108,7 +117,7 @@ class JobTimeCalculator:
         self.department_combobox.grid(row=1, column=1, ipadx=20)
 
         # The place/SIEGE combobox
-        self.place_label = ttk.Label(self.user_info_frame, text='Site:', background='lightgrey', underline=0)
+        self.place_label = ttk.Label(self.user_info_frame, text='Lieu:', background='lightgrey', underline=0)
         self.place_label.grid(row=0, column=2)
         self.place_combobox = ttk.Combobox(self.user_info_frame, values=['SIEGE', 'ANNEXE 1', 'ANNEXE 2'],
                                            validate='focus')
@@ -418,8 +427,9 @@ class JobTimeCalculator:
                 time_after_break = datetime.datetime.combine(datetime.date.today(),
                                                              end_time) - datetime.datetime.combine(
                     datetime.date.today(), break_end_time)
-                total_time = time_before_break + time_after_break - (datetime.datetime.combine(datetime.date.today(), break_end_time) -
-                                                                     datetime.datetime.combine(datetime.date.today(), break_start_time))
+                total_time = time_before_break + time_after_break - (
+                        datetime.datetime.combine(datetime.date.today(), break_end_time) -
+                        datetime.datetime.combine(datetime.date.today(), break_start_time))
 
         else:
             total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
@@ -456,7 +466,7 @@ class JobTimeCalculator:
             return
         # Save data to Excel file
         try:
-            file_path = "DATA.xlsx"
+            file_path = "data.xlsx"
             if not os.path.exists(file_path):
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
