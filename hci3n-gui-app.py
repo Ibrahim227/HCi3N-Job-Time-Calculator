@@ -44,20 +44,15 @@ class JobTimeCalculator:
 
         # create  first name and last name entry widgets
         name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
-                     "ABOUBACAR DJIMRAOU",
-                     "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR", "Mme DOUDOU HALIDOU MAIMOUNA",
-                     "GAMATIE BOUBACAR",
-                     "Mme RABO MARIA MOHAMED YAROH", "RABIATOU HABIBOU", "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU",
-                     "OUSMANE FODI",
-                     "Mme MOUSTAPHA FOURERA", "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
-                     "Mme ABDOURAHAMANE FOURERATOU DIALLO",
-                     "Mme DJIBO ZEYNABOU COULIBALY", "MAHAMADOU MAHAMANE NAFISSATOU", "Mme ABDOUL NASSER MARIA",
+                     "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR", "Mme DOUDOU HALIDOU MAIMOUNA",
+                     "GAMATIE BOUBACAR", "Mme RABO MARIA MOHAMED YAROH", "RABIATOU HABIBOU", "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU",
+                     "OUSMANE FODI", "Mme MOUSTAPHA FOURERA", "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
+                     "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
+                     "MAHAMADOU MAHAMANE NAFISSATOU", "Mme ABDOUL NASSER MARIA",
                      "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI", "ABDOU MOUSSA OUSMANE",
-                     "GOUMAR ALHASSANE",
-                     "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID", "TRAPSIDA ABDOULAY ALAIN",
-                     "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA", "MA AROUF TIDJANI", "LAWAN DARMANE"
-                                                                                                    "BABA BAFRAGI BOUBACAR",
-                     "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU", "GN HAROUNA MAAZOU",
+                     "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID", "TRAPSIDA ABDOULAY ALAIN",
+                     "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA", "MA AROUF TIDJANI", "LAWAN DARMANE",
+                     "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU", "GN HAROUNA MAAZOU",
                      "GN LAOUALI MAAZOU MAMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU", "BOGARI ZOURKALEINI",
                      "MOCTAR BACHIR", "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
                      "AMADOU BACHIR", "OUSMANE YERIMA YAHAYA", "MAMOUDOU MAHAMAN BACHAR", "SALAMATOU SOUMANA MOUSSA",
@@ -149,9 +144,9 @@ class JobTimeCalculator:
 
         # Week days combobox entry
         self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
-        self.week_combobox = ttk.Combobox(self.user_info_frame,
-                                          values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi",
-                                                  "Dimanche"])
+        combobox = ttk.Combobox(self.user_info_frame,
+                                values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"])
+        self.week_combobox = combobox
         self.week_label.grid(row=0, column=3)
         self.week_combobox.grid(row=1, column=3)
 
