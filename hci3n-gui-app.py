@@ -2,7 +2,7 @@ import datetime
 import os
 import tkinter as tk
 import webbrowser
-from tkinter import ttk, messagebox, END
+from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
 from ttkwidgets.autocomplete import AutocompleteEntryListbox
@@ -25,12 +25,13 @@ class JobTimeCalculator:
         self.window.title("HCi3N")
         self.window.geometry()
         self.window.iconbitmap('images\\logoHCi3N.ico')
-        # self.window.config(background="#87E990")
+        self.window.config(background="#87E990", highlightthickness=False, relief="groove", border=5,)
+        self.window.iconposition(x=5, y=1)
 
         ######## Main Frame
 
         self.frame = ttk.Frame(self.window)
-        self.frame.pack(anchor='nw', side='left')
+        self.frame.pack(side='top', fill=BOTH)
 
         ################################# Configure First LabelFrame ############################
         # Saving user Information
@@ -40,21 +41,17 @@ class JobTimeCalculator:
         # Create name and last name  labels
         self.first_last_name_label = ttk.Label(self.frame, text='Nom & Prenom:', background="lightgrey",
                                                underline=0)
-        self.first_last_name_label.grid(row=0, column=2)
+        self.first_last_name_label.grid(row=0, column=1)
 
         # create  first name and last name entry widgets
-        name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
+        name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "Mme RABO MARIA MOHAMED YAROH", "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
                      "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
-                     "Mme DOUDOU HALIDOU MAIMOUNA",
-                     "GAMATIE BOUBACAR", "Mme RABO MARIA MOHAMED YAROH", "RABIATOU HABIBOU",
-                     "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU",
-                     "OUSMANE FODI", "Mme MOUSTAPHA FOURERA", "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
+                     "Mme DOUDOU HALIDOU MAIMOUNA", "GAMATIE BOUBACAR", "Mme ABDOUL NASSER MARIA", "RABIATOU HABIBOU",
+                     "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU", "OUSMANE FODI", "Mme MOUSTAPHA FOURERA", "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
                      "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
-                     "MAHAMADOU MAHAMANE NAFISSATOU", "Mme ABDOUL NASSER MARIA",
-                     "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI", "ABDOU MOUSSA OUSMANE",
+                     "MAHAMADOU MAHAMANE NAFISSATOU", "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI", "ABDOU MOUSSA OUSMANE",
                      "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
-                     "TRAPSIDA ABDOULAY ALAIN",
-                     "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA", "MA AROUF TIDJANI", "LAWAN DARMANE",
+                     "TRAPSIDA ABDOULAY ALAIN", "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA", "MA AROUF TIDJANI", "LAWAN DARMANE",
                      "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU", "GN HAROUNA MAAZOU",
                      "GN LAOUALI MAAZOU MAMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU", "BOGARI ZOURKALEINI",
                      "MOCTAR BACHIR", "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
@@ -64,18 +61,28 @@ class JobTimeCalculator:
                      "ISSA HAMANI ABDOULAYE", "ALI OUSSEINI MOUSTAPHA", "ALI SOUMAILA FOUREIRATOU",
                      "YAHAYA RHISSA ZAKARI", "ABDALLAH MAHAMAT YAHAYA", "ABASS ADAM MELLY HADIZA",
                      "SOULEY BOUKAR", "HAMIDOU AMANI SOULEYMANE", "KOUNKOUROU AHAMADOU",
-                     "Mme SEYDOU ABDOULAYE FOUREYRATOU",
-                     "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"]
+                     "Mme SEYDOU ABDOULAYE FOUREYRATOU", "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"]
 
         self.first_last_name_entry = AutocompleteEntryListbox(self.frame, completevalues=name_list,
                                                               allow_other_values=True, autohidescrollbar=True)
-        self.first_last_name_entry.grid(row=1, column=2, ipadx=57)
+        self.first_last_name_entry.grid(row=0, column=2, ipadx=57)
 
         # Create the time and minute Combobox
-        self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
-        self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
-        self.hour_spinbox.grid(row=2, column=3)
-        self.minute_spinbox.grid(row=2, column=4)
+        # self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
+        # self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
+        # self.hour_spinbox.grid(row=2, column=3)
+        # self.minute_spinbox.grid(row=2, column=4)
+
+        # create the observation and date Entry
+        self.observation_entry_label = ttk.Label(self.frame, text="Observation:", background="lightgrey", underline=0)
+        self.date_entry_label = ttk.Label(self.frame, text="Date JJ/MM/ANNEE:", background="lightgrey", underline=0)
+        self.observation_entry = ttk.Entry(self.frame)
+        self.date_entry = ttk.Entry(self.frame)
+
+        self.observation_entry_label.grid(row=1, column=1)
+        self.date_entry_label.grid(row=2, column=1)
+        self.observation_entry.grid(row=1, column=2, ipadx=20)
+        self.date_entry.grid(row=2, column=2, ipadx=20)
 
         #
         # Create the title combo box
@@ -165,6 +172,7 @@ class JobTimeCalculator:
         ############################################### Second LabelFrame ###################################################
 
         # Create the exit/entry label and Buttons from HQ to annexe1-2
+
         self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE1 et ANNEXE2)", underline=0)
         self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=20, pady=20)
 
@@ -213,7 +221,7 @@ class JobTimeCalculator:
 
         ###################################### Configure Third LabelFrame ################################
 
-        # Create the labelFrame
+        # Create the labelFrame annexe 1 to hq and annexe 2
         ################# first check, entries and labels
         self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
         self.verify_frame.grid(row=2, column=0, padx=20, pady=20, sticky="news")
@@ -238,6 +246,7 @@ class JobTimeCalculator:
         self.annexe_exit.grid(row=2, column=1)
 
         ####################
+
         # second check variable, labels and Entries widgets
         self.annexe_to_annexe_var = tk.BooleanVar(self.verify_frame, value=False)
         self.annexe_to_annexe = ttk.Checkbutton(self.verify_frame, text="Verify Presence ANNEXE-2",
@@ -262,6 +271,7 @@ class JobTimeCalculator:
             widget.grid_configure(padx=20, pady=5, sticky="news")
 
         ############################################ Configure Fourth LabelFrame ################################
+
         self.third_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-2 vers (SIEGE-ANNEXE-1)", underline=0)
         self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=10)
 
@@ -353,12 +363,6 @@ class JobTimeCalculator:
         self.menu_.add_cascade(label="Menu", menu=self.menu_bar)
         self.window.config(menu=self.menu_)
 
-        # upload_list = ['Ibrahim', 'Niger', 'Mali', 'Burkina Faso', 'Guinea', 'Afghanistan', 'Iraq', 'Jordan', 'Iraq',
-        #                'Kiribati', 'Kazakhstan', 'Russia',
-        #                'United States', 'United kingdom', 'North Africa', 'Morocco', 'Algeria', 'Tunisia', 'Albania']
-        # entry = AutocompleteEntryListbox(self.frame, completevalues=upload_list)
-        # entry.grid(row=2, column=0)
-
         #
         """
             # Everything about functions
@@ -387,6 +391,13 @@ class JobTimeCalculator:
         self.site_entry_01.delete(0, END)
         self.annexe_exit_01.delete(0, END)
         self.annexe_exit.delete(0, END)
+        self.value_entry_widget.delete(0, END)
+        self.value_exit_widget.delete(0, END)
+        self.second_annexe_entry.delete(0, END)
+        self.second_annexe_exit.delete(0, END)
+        self.week_combobox.delete(0, END)
+        self.observation_entry.delete(0, END)
+        self.date_entry.delete(0, END)
 
         ################################################################
         # Calculate function
@@ -398,15 +409,60 @@ class JobTimeCalculator:
         break_end_time_str = self.break_end_entry.get()  # fixed break end time
         break_taken = self.break_check_button_var.get()
 
-        start_time = datetime.datetime.strptime(start_time_str, "%H:%M %p").time()
-        end_time = datetime.datetime.strptime(end_time_str, "%H:%M %p").time()
-        break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M %p").time()
-        break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M %p").time()
+        start_time = datetime.datetime.strptime(start_time_str, "%H:%M").time()
+        end_time = datetime.datetime.strptime(end_time_str, "%H:%M").time()
+        break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M").time()
+        break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M").time()
+
+        # TEAM HQ TO (ANNEXE"1-2")
+        hq_to_annexe1_entry_str = self.site_entry.get()
+        hq_to_annexe1_exit_str = self.site_exit.get()
+        hq_to_annexe2_entry_str = self.site_entry_01.get()
+        hq_to_annexe2_exit_str = self.site_exit_01.get()
+
+        # Conditional Verification Team HQ
+        hq_to_annexe1_entry = datetime.datetime.strptime(hq_to_annexe1_entry_str, "%H:%M").time()
+        hq_to_annexe1_exit = datetime.datetime.strptime(hq_to_annexe1_exit_str, "%H:%M").time()
+        hq_to_annexe2_entry = datetime.datetime.strptime(hq_to_annexe2_entry_str, "%H:%M").time()
+        hq_to_annexe2_exit = datetime.datetime.strptime(hq_to_annexe2_exit_str, "%H:%M").time()
+        hq_visit_to_annexe1_check = self.exit_entry_status_var_1.get()
+        hq_visit_to_annexe2_check = self.exit_entry_status_var_2.get()
+
+        # Team ANNEXE 1 TO (HQ-ANNEXE 2)
+        annexe1_to_hq_entry_str = self.annexe_entry.get()
+        annexe1_to_hq_exit_str = self.annexe_exit.get()
+        annexe1_to_annexe2_entry_str = self.annexe_entry_01.get()
+        annexe1_to_annexe2_exit_str = self.annexe_exit_01.get()
+
+        # Conditional Verification Team annexe1
+        annexe1_to_hq_entry = datetime.datetime.strptime(annexe1_to_hq_entry_str, "%H:%M").time()
+        annexe1_to_hq_exit = datetime.datetime.strptime(annexe1_to_hq_exit_str, "%H:%M").time()
+        annexe1_to_annexe2_entry = datetime.datetime.strptime(annexe1_to_annexe2_entry_str, "%H:%M").time()
+        annexe1_to_annexe2_exit = datetime.datetime.strptime(annexe1_to_annexe2_exit_str, "%H:%M").time()
+        annexe1_visit_to_hq_check = self.presence_check_var.get()
+        annexe1_visit_to_annexe2_check = self.annexe_to_annexe_var.get()
+
+        # TEAM ANNEXE 2 TO (HQ-ANNEXE 1)
+        annexe2_to_hq_entry_str = self.value_entry_widget.get()
+        annexe2_to_hq_exit_str = self.value_exit_widget.get()
+        annexe2_to_annexe1_entry_str = self.second_annexe_entry.get()
+        annexe2_to_annexe1_exit_str = self.second_annexe_exit.get()
+
+        # Conditional Verification Team Annexe2
+        annexe2_to_hq_entry = datetime.datetime.strptime(annexe2_to_hq_entry_str, "%H:%M").time()
+        annexe2_to_hq_exit = datetime.datetime.strptime(annexe2_to_hq_exit_str, "%H:%M").time()
+        annexe2_to_annexe1_entry = datetime.datetime.strptime(annexe2_to_annexe1_entry_str, "%H:%M").time()
+        annexe2_to_annexe1_exit = datetime.datetime.strptime(annexe2_to_annexe1_exit_str, "%H:%M").time()
+        annexe2_visit_to_hq_check = self.verification_button_var.get()
+        annexe2_visit_to_annexe1_check = self.second_verification_check_var.get()
+
+        # Usage of whole conditionals variables
 
         # total_time = datetime.timedelta()  # Initialize total_time to zero
         # (datetime.datetime.combine(datetime.date.today(), break_end_time) - datetime.datetime.combine(datetime.date.today(), break_start_time))
-        if end_time < start_time:
-            end_time += datetime.timedelta(days=1)
+        if end_time <= start_time:
+            messagebox.showerror("Erreur", message="l'Heure d'Arrivee Trop Grande que l'Heure de Descente")
+            return
 
         if break_taken:
             if start_time < break_start_time and end_time >= break_end_time:
@@ -414,12 +470,15 @@ class JobTimeCalculator:
                     datetime.date.today(), start_time) - (
                                      datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                      datetime.datetime.combine(datetime.date.today(), break_start_time))
+
             elif start_time >= break_end_time:
                 total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time)
+
             elif end_time <= break_start_time:
                 total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time) - (break_end_time - break_start_time)
+
             else:
                 time_before_break = datetime.datetime.combine(datetime.date.today(),
                                                               break_start_time) - datetime.datetime.combine(
@@ -444,7 +503,6 @@ class JobTimeCalculator:
 
     # Excel file generator
     def save_to_excel(self):
-
         nom_prenom = self.first_last_name_entry.get()
         fonction = self.title_combox.get()
         departement = self.department_combobox.get()
@@ -456,13 +514,14 @@ class JobTimeCalculator:
         lieu = self.place_combobox.get()
         total = self.calculate_total_time()
         jour_semaine = self.week_combobox.get()
-        # daily_date = datetime.date.today()
-        # save_date = datetime.date.today()
+        observation = self.observation_entry.get()
+        daily_date = self.date_entry.get()
 
         # Validate input
-        if not (
-                nom_prenom and fonction and departement and lieu and arrivee and debut_pause and retour_pause and descente and total and jour_semaine):
-            messagebox.showerror("Erreur", "Veuillez remplir tout les champs.")
+        if not (nom_prenom and fonction and departement and lieu and arrivee and debut_pause and retour_pause and descente and total and jour_semaine):
+            required_list = ["Nom & Prenom", "Fonction", "Departement", "Lieu", "Heure Arrivee", "Debut Pause", "Retour Pause",
+                             "Descente", "Total", "Jour"]
+            messagebox.showerror(f"Erreur", f"Veuillez remplir tout les champs requis:\n {list(required_list)}")
             return
         # Save data to Excel file
         try:
@@ -471,13 +530,18 @@ class JobTimeCalculator:
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
                 sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "PAUSE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "JOUR", "TEMPS TOTAL", "DATE"])
+                              "RETOUR PAUSE", "DESCENTE", "JOUR", "TEMPS TOTAL JOURNALIER", "DATE", "OBSERVATION"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
             sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, debut_pause, retour_pause, descente,
-                          jour_semaine, total])
+                          jour_semaine, total, daily_date, observation])
+            # for row in range(1, 300):
+            #     sheet.row_dimensions[row].height = 15
+            #
+            # for column in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"]:
+            #     sheet.column_dimensions[column].width = 30
             workbook.save(file_path)
             workbook.close()
 
