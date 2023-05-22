@@ -413,6 +413,7 @@ class JobTimeCalculator:
         # Calculate function
 
     def calculate_total_time(self):
+
         start_time_str = self.time_start_entry.get()
         end_time_str = self.time_end_entry.get()
         break_start_time_str = self.break_start_entry.get()  # fixed break start time
@@ -424,63 +425,78 @@ class JobTimeCalculator:
         break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M").time()
         break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M").time()
 
-        # # TEAM HQ TO (ANNEXE"1-2")
-        # hq_to_annexe1_entry_str = self.site_entry.get()
-        # hq_to_annexe1_exit_str = self.site_exit.get()
-        # hq_to_annexe2_entry_str = self.site_entry_01.get()
-        # hq_to_annexe2_exit_str = self.site_exit_01.get()
-        #
-        # # Conditional Verification Team HQ
-        # hq_to_annexe1_entry = datetime.datetime.strptime(hq_to_annexe1_entry_str, "%H:%M").time()
-        # hq_to_annexe1_exit = datetime.datetime.strptime(hq_to_annexe1_exit_str, "%H:%M").time()
-        # hq_to_annexe2_entry = datetime.datetime.strptime(hq_to_annexe2_entry_str, "%H:%M").time()
-        # hq_to_annexe2_exit = datetime.datetime.strptime(hq_to_annexe2_exit_str, "%H:%M").time()
-        # hq_visit_to_annexe1_check = self.exit_entry_status_var_1.get()
-        # hq_visit_to_annexe2_check = self.exit_entry_status_var_2.get()
-        #
-        # # Team ANNEXE 1 TO (HQ-ANNEXE 2)
-        # annexe1_to_hq_entry_str = self.annexe_entry.get()
-        # annexe1_to_hq_exit_str = self.annexe_exit.get()
-        # annexe1_to_annexe2_entry_str = self.annexe_entry_01.get()
-        # annexe1_to_annexe2_exit_str = self.annexe_exit_01.get()
-        #
-        # # Conditional Verification Team annexe1
-        # annexe1_to_hq_entry = datetime.datetime.strptime(annexe1_to_hq_entry_str, "%H:%M").time()
-        # annexe1_to_hq_exit = datetime.datetime.strptime(annexe1_to_hq_exit_str, "%H:%M").time()
-        # annexe1_to_annexe2_entry = datetime.datetime.strptime(annexe1_to_annexe2_entry_str, "%H:%M").time()
-        # annexe1_to_annexe2_exit = datetime.datetime.strptime(annexe1_to_annexe2_exit_str, "%H:%M").time()
-        # annexe1_visit_to_hq_check = self.presence_check_var.get()
-        # annexe1_visit_to_annexe2_check = self.annexe_to_annexe_var.get()
-        #
-        # # TEAM ANNEXE 2 TO (HQ-ANNEXE 1)
-        # annexe2_to_hq_entry_str = self.value_entry_widget.get()
-        # annexe2_to_hq_exit_str = self.value_exit_widget.get()
-        # annexe2_to_annexe1_entry_str = self.second_annexe_entry.get()
-        # annexe2_to_annexe1_exit_str = self.second_annexe_exit.get()
-        #
-        # # Conditional Verification Team Annexe2
-        # annexe2_to_hq_entry = datetime.datetime.strptime(annexe2_to_hq_entry_str, "%H:%M").time()
-        # annexe2_to_hq_exit = datetime.datetime.strptime(annexe2_to_hq_exit_str, "%H:%M").time()
-        # annexe2_to_annexe1_entry = datetime.datetime.strptime(annexe2_to_annexe1_entry_str, "%H:%M").time()
-        # annexe2_to_annexe1_exit = datetime.datetime.strptime(annexe2_to_annexe1_exit_str, "%H:%M").time()
-        # annexe2_visit_to_hq_check = self.verification_button_var.get()
-        # annexe2_visit_to_annexe1_check = self.second_verification_check_var.get()
+        # TEAM HQ TO (ANNEXE"1-2")
+        hq_to_annexe1_entry_str = self.site_entry.get()
+        hq_to_annexe1_exit_str = self.site_exit.get()
+        hq_to_annexe2_entry_str = self.site_entry_01.get()
+        hq_to_annexe2_exit_str = self.site_exit_01.get()
+
+        # Conditional Verification Team HQ
+        hq_to_annexe1_entry = datetime.datetime.strptime(hq_to_annexe1_entry_str, "%H:%M").time()
+        hq_to_annexe1_exit = datetime.datetime.strptime(hq_to_annexe1_exit_str, "%H:%M").time()
+        hq_to_annexe2_entry = datetime.datetime.strptime(hq_to_annexe2_entry_str, "%H:%M").time()
+        hq_to_annexe2_exit = datetime.datetime.strptime(hq_to_annexe2_exit_str, "%H:%M").time()
+        hq_visit_to_annexe1_check = self.exit_entry_status_var_1.get()
+        hq_visit_to_annexe2_check = self.exit_entry_status_var_2.get()
+
+        # Team ANNEXE 1 TO (HQ-ANNEXE 2)
+        annexe1_to_hq_entry_str = self.annexe_entry.get()
+        annexe1_to_hq_exit_str = self.annexe_exit.get()
+        annexe1_to_annexe2_entry_str = self.annexe_entry_01.get()
+        annexe1_to_annexe2_exit_str = self.annexe_exit_01.get()
+
+        # Conditional Verification Team annexe1
+        annexe1_to_hq_entry = datetime.datetime.strptime(annexe1_to_hq_entry_str, "%H:%M").time()
+        annexe1_to_hq_exit = datetime.datetime.strptime(annexe1_to_hq_exit_str, "%H:%M").time()
+        annexe1_to_annexe2_entry = datetime.datetime.strptime(annexe1_to_annexe2_entry_str, "%H:%M").time()
+        annexe1_to_annexe2_exit = datetime.datetime.strptime(annexe1_to_annexe2_exit_str, "%H:%M").time()
+        annexe1_visit_to_hq_check = self.presence_check_var.get()
+        annexe1_visit_to_annexe2_check = self.annexe_to_annexe_var.get()
+
+        # TEAM ANNEXE 2 TO (HQ-ANNEXE 1)
+        annexe2_to_hq_entry_str = self.value_entry_widget.get()
+        annexe2_to_hq_exit_str = self.value_exit_widget.get()
+        annexe2_to_annexe1_entry_str = self.second_annexe_entry.get()
+        annexe2_to_annexe1_exit_str = self.second_annexe_exit.get()
+
+        # Conditional Verification Team Annexe2
+        annexe2_to_hq_entry = datetime.datetime.strptime(annexe2_to_hq_entry_str, "%H:%M").time()
+        annexe2_to_hq_exit = datetime.datetime.strptime(annexe2_to_hq_exit_str, "%H:%M").time()
+        annexe2_to_annexe1_entry = datetime.datetime.strptime(annexe2_to_annexe1_entry_str, "%H:%M").time()
+        annexe2_to_annexe1_exit = datetime.datetime.strptime(annexe2_to_annexe1_exit_str, "%H:%M").time()
+        annexe2_visit_to_hq_check = self.verification_button_var.get()
+        annexe2_visit_to_annexe1_check = self.second_verification_check_var.get()
 
         # Usage of whole conditionals variables
 
         # total_time = datetime.timedelta()  # Initialize total_time to zero
-        # (datetime.datetime.combine(datetime.date.today(), break_end_time) - datetime.datetime.combine(datetime.date.today(), break_start_time))
         if end_time <= start_time:
-            messagebox.showerror("Erreur", message="l'Heure d'Arrivee Trop Grande que l'Heure de Descente")
+            messagebox.showerror("Erreur", message="l'Heure d'Arrivee Trop Grande que l'Heure de Descente.")
             return
 
-        if break_taken:
+        if not break_taken:
+            total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                datetime.date.today(), start_time)
+            messagebox.showinfo(title="Alerte", message="L'employee n'a pas prit de pause!")
+            if not hq_visit_to_annexe1_check:
+                messagebox.showinfo(title="Alerte", message="L'employee du SIEGE ne s'est pas rendu a l'ANNEXE-1")
+            if not hq_visit_to_annexe2_check:
+                messagebox.showinfo(title="Alerte", message="L'employee du SIEGE  ne s'est pas rendu a l'ANNEXE-2")
+            if not annexe1_visit_to_hq_check:
+                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 ne s'est pas rendu au SIEGE")
+            if not annexe1_visit_to_annexe2_check:
+                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 ne s'est pas rendu a l'ANNEXE-2")
+            if not annexe2_visit_to_hq_check:
+                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu au SIEGE")
+            if not annexe2_visit_to_annexe1_check:
+                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu a l'ANNEXE-1")
+
+        else:
             if start_time < break_start_time and end_time >= break_end_time:
                 total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time) - (
                                      datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                      datetime.datetime.combine(datetime.date.today(), break_start_time))
-
             elif start_time >= break_end_time:
                 total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time)
@@ -490,20 +506,38 @@ class JobTimeCalculator:
                     datetime.date.today(), start_time) - (break_end_time - break_start_time)
 
             else:
-                time_before_break = datetime.datetime.combine(datetime.date.today(),
-                                                              break_start_time) - datetime.datetime.combine(
-                    datetime.date.today(), start_time)
-                time_after_break = datetime.datetime.combine(datetime.date.today(),
-                                                             end_time) - datetime.datetime.combine(
-                    datetime.date.today(), break_end_time)
-                total_time = time_before_break + time_after_break - (
-                        datetime.datetime.combine(datetime.date.today(), break_end_time) -
-                        datetime.datetime.combine(datetime.date.today(), break_start_time))
-
-        else:
-            total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
-                datetime.date.today(), start_time)
-
+                # time_before_break = datetime.datetime.combine(datetime.date.today(),
+                #                                               break_start_time) - datetime.datetime.combine(
+                #     datetime.date.today(), start_time)
+                # time_after_break = datetime.datetime.combine(datetime.date.today(),
+                #                                              end_time) - datetime.datetime.combine(
+                #     datetime.date.today(), break_end_time)
+                # total_time = time_before_break + time_after_break - (
+                #         datetime.datetime.combine(datetime.date.today(), break_end_time) -
+                #         datetime.datetime.combine(datetime.date.today(), break_start_time))
+                total_time = datetime.timedelta()
+                if hq_visit_to_annexe1_check:
+                    total_time += datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_entry)
+                if hq_visit_to_annexe2_check:
+                    total_time += datetime.datetime.combine(datetime.date.today(),
+                                                            hq_to_annexe2_exit) - datetime.datetime.combine(
+                        datetime.date.today(), hq_to_annexe2_entry)
+                if annexe1_visit_to_hq_check:
+                    total_time += datetime.datetime.combine(datetime.date.today(),
+                                                            annexe1_to_hq_exit) - datetime.datetime.combine(
+                        datetime.date.today(), annexe1_to_hq_entry)
+                if annexe1_visit_to_annexe2_check:
+                    total_time += datetime.datetime.combine(datetime.date.today(),
+                                                            annexe1_to_annexe2_exit) - datetime.datetime.combine(
+                        datetime.date.today(), annexe1_to_annexe2_entry)
+                if annexe2_visit_to_hq_check:
+                    total_time += datetime.datetime.combine(datetime.date.today(),
+                                                            annexe2_to_hq_exit) - datetime.datetime.combine(
+                        datetime.date.today(), annexe2_to_hq_entry)
+                if annexe2_visit_to_annexe1_check:
+                    total_time += datetime.datetime.combine(datetime.date.today(),
+                                                            annexe2_to_annexe1_exit) - datetime.datetime.combine(
+                        datetime.date.today(), annexe2_to_annexe1_entry)
         total_time_str = str(total_time)
 
         self.result_label.config(text=total_time_str)
@@ -522,7 +556,7 @@ class JobTimeCalculator:
         # retour_pause = self.break_end_entry.get()
         descente = self.time_end_entry.get()
         lieu = self.place_combobox.get()
-        total = self.calculate_total_time()
+        total = self.calculate_total_time
         jour_semaine = self.week_combobox.get()
         observation = self.observation_entry.get()
         daily_date = self.date_entry.get()
@@ -547,6 +581,11 @@ class JobTimeCalculator:
             sheet = workbook.active
             sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, descente,
                           jour_semaine, total, daily_date, observation])
+            # for row in range(1, 300):
+            #     sheet.row_dimensions[row].height = 15
+            #
+            # for column in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"]:
+            #     sheet.column_dimensions[column].width = 30
             workbook.save(file_path)
             workbook.close()
 
