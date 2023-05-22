@@ -532,9 +532,9 @@ class JobTimeCalculator:
         daily_date = self.date_entry.get()
 
         # Validate input
-        if not (nom_prenom and fonction and departement and lieu and arrivee and descente and total and jour_semaine):
+        if not (nom_prenom and fonction and departement and lieu and arrivee and descente and total and jour_semaine and daily_date):
             required_list = ["Nom & Prenom", "Fonction", "Departement", "Lieu", "Heure Arrivee", "Descente", "Total",
-                             "Jour"]
+                             "Jour", "Date"]
             messagebox.showerror(f"Erreur", f"Veuillez remplir tout les champs requis:\n {list(required_list)}")
             return
         # Save data to Excel file
