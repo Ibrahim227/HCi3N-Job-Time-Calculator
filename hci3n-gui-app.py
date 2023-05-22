@@ -44,38 +44,42 @@ class JobTimeCalculator:
         self.first_last_name_label.grid(row=0, column=1)
 
         # create  first name and last name entry widgets
-        name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "Mme RABO MARIA MOHAMED YAROH",
-                     "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
-                     "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
-                     "Mme DOUDOU HALIDOU MAIMOUNA", "GAMATIE BOUBACAR", "Mme ABDOUL NASSER MARIA", "RABIATOU HABIBOU",
-                     "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU", "OUSMANE FODI", "Mme MOUSTAPHA FOURERA",
-                     "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
-                     "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
-                     "MAHAMADOU MAHAMANE NAFISSATOU", "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI",
-                     "ABDOU MOUSSA OUSMANE",
-                     "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
-                     "TRAPSIDA ABDOULAY ALAIN", "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA",
-                     "MA AROUF TIDJANI", "LAWAN DARMANE",
-                     "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU", "GN HAROUNA MAAZOU LEYO",
-                     "GN LAOUALI MAAZOU MAMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU", "BOGARI ZOURKALEINI",
-                     "MOCTAR BACHIR", "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
-                     "AMADOU BACHIR", "OUSMANE YERIMA YAHAYA", "MAMOUDOU MAHAMAN BACHAR", "SALAMATOU SOUMANA MOUSSA",
-                     "SAHABI ABDOU", "GN KABIROU ABDOUL MOUMOUNI", "GN ADAHIR IDI DJIBAGÉ", "Dr MAHAMADOU ABOUBACAR",
-                     "AMINA IDRISSA BAGNOU", "ABDOU ADAMOU LILWANI", "ABDOUL WAHABOU ZAKARI DAGOU",
-                     "ISSA HAMANI ABDOULAYE", "ALI OUSSEINI MOUSTAPHA", "ALI SOUMAILA FOUREIRATOU",
-                     "YAHAYA RHISSA ZAKARI", "ABDALLAH MAHAMAT YAHAYA", "ABASS ADAM MELLY HADIZA",
-                     "SOULEY BOUKAR", "HAMIDOU AMANI SOULEYMANE", "KOUNKOUROU AHAMADOU",
-                     "Mme SEYDOU ABDOULAYE FOUREYRATOU", "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"]
+        self.name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "Mme RABO MARIA MOHAMED YAROH",
+                          "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
+                          "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
+                          "Mme DOUDOU HALIDOU MAIMOUNA", "GAMATIE BOUBACAR", "Mme ABDOUL NASSER MARIA",
+                          "RABIATOU HABIBOU",
+                          "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU", "OUSMANE FODI", "Mme MOUSTAPHA FOURERA",
+                          "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
+                          "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
+                          "MAHAMADOU MAHAMANE NAFISSATOU", "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI",
+                          "ABDOU MOUSSA OUSMANE",
+                          "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
+                          "TRAPSIDA ABDOULAY ALAIN", "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA",
+                          "MA AROUF TIDJANI", "LAWAN DARMANE",
+                          "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU",
+                          "GN HAROUNA MAAZOU LEYO",
+                          "GN LAOUALI MAAZOU MAMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU", "BOGARI ZOURKALEINI",
+                          "MOCTAR BACHIR", "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
+                          "AMADOU BACHIR", "OUSMANE YERIMA YAHAYA", "MAMOUDOU MAHAMAN BACHAR",
+                          "SALAMATOU SOUMANA MOUSSA",
+                          "SAHABI ABDOU", "GN KABIROU ABDOUL MOUMOUNI", "GN ADAHIR IDI DJIBAGÉ",
+                          "Dr MAHAMADOU ABOUBACAR",
+                          "AMINA IDRISSA BAGNOU", "ABDOU ADAMOU LILWANI", "ABDOUL WAHABOU ZAKARI DAGOU",
+                          "ISSA HAMANI ABDOULAYE", "ALI OUSSEINI MOUSTAPHA", "ALI SOUMAILA FOUREIRATOU",
+                          "YAHAYA RHISSA ZAKARI", "ABDALLAH MAHAMAT YAHAYA", "ABASS ADAM MELLY HADIZA",
+                          "SOULEY BOUKAR", "HAMIDOU AMANI SOULEYMANE", "KOUNKOUROU AHAMADOU",
+                          "Mme SEYDOU ABDOULAYE FOUREYRATOU", "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"]
 
-        self.first_last_name_entry = AutocompleteEntryListbox(self.frame, completevalues=name_list,
+        self.first_last_name_entry = AutocompleteEntryListbox(self.frame, completevalues=self.name_list,
                                                               allow_other_values=True, autohidescrollbar=True)
         self.first_last_name_entry.grid(row=0, column=2, ipadx=57)
 
         # Create the time and minute Combobox
-        # self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
-        # self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
-        # self.hour_spinbox.grid(row=2, column=3)
-        # self.minute_spinbox.grid(row=2, column=4)
+        self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
+        self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
+        self.hour_spinbox.grid(row=2, column=3)
+        self.minute_spinbox.grid(row=2, column=4)
 
         # create the observation and date Entry
         self.observation_entry_label = ttk.Label(self.frame, text="Observation:", background="lightgrey", underline=0)
@@ -175,7 +179,7 @@ class JobTimeCalculator:
 
         # Create message to display
         self.ourmessage = "HCi3N"
-        self.display_message = tk.Message(self.frame, text=self.ourmessage, font='italic')
+        self.display_message = tk.Message(self.frame, text=self.ourmessage, font='italic', relief='raised')
         self.display_message.config(bg="orange")
         self.display_message.grid(row=3, column=1, ipadx=20, ipady=5)
 
@@ -183,7 +187,7 @@ class JobTimeCalculator:
 
         # Create the exit/entry label and Buttons from HQ to annexe1-2
 
-        self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE1 et ANNEXE2)", underline=0)
+        self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE-1 et ANNEXE-2)", underline=0)
         self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=20, pady=20)
 
         self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=False)
@@ -518,8 +522,8 @@ class JobTimeCalculator:
         departement = self.department_combobox.get()
         arrivee = self.time_start_entry.get()
         pause = self.break_check_button_var.get()
-        # debut_pause = self.break_start_entry.get()
-        # retour_pause = self.break_end_entry.get()
+        debut_pause = self.break_start_entry.get()
+        retour_pause = self.break_end_entry.get()
         descente = self.time_end_entry.get()
         lieu = self.place_combobox.get()
         total = self.calculate_total_time()
@@ -540,17 +544,17 @@ class JobTimeCalculator:
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
                 sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "PAUSE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "JOUR", "TEMPS TOTAL JOURNALIER", "DATE", "OBSERVATION"])
+                              "RETOUR PAUSE", "DESCENTE", "TEMPS TOTAL JOURNALIER", "JOUR", "DATE", "OBSERVATION"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, descente,
-                          jour_semaine, total, daily_date, observation])
+            sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, debut_pause, retour_pause, descente,
+                          total, jour_semaine, daily_date, observation])
             workbook.save(file_path)
             workbook.close()
 
-            messagebox.showinfo("Success", "Data saved successfully.")
+            messagebox.showinfo("Succès", "Donnée enregistrée avec succès.")
 
         except Exception as e:
             messagebox.showerror("Error", str(e))

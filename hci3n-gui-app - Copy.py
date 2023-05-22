@@ -475,23 +475,25 @@ class JobTimeCalculator:
             return
 
         if not break_taken:
+            # break_start_time, break_end_time =
             total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                 datetime.date.today(), start_time)
             messagebox.showinfo(title="Alerte", message="L'employee n'a pas prit de pause!")
-            if not hq_visit_to_annexe1_check:
-                messagebox.showinfo(title="Alerte", message="L'employee du SIEGE ne s'est pas rendu a l'ANNEXE-1")
-            if not hq_visit_to_annexe2_check:
-                messagebox.showinfo(title="Alerte", message="L'employee du SIEGE  ne s'est pas rendu a l'ANNEXE-2")
-            if not annexe1_visit_to_hq_check:
-                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 ne s'est pas rendu au SIEGE")
-            if not annexe1_visit_to_annexe2_check:
-                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 ne s'est pas rendu a l'ANNEXE-2")
-            if not annexe2_visit_to_hq_check:
-                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu au SIEGE")
-            if not annexe2_visit_to_annexe1_check:
-                messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu a l'ANNEXE-1")
+            # if not hq_visit_to_annexe1_check:
+            #     messagebox.showinfo(title="Alerte", message="L'employee du SIEGE ne s'est pas rendu a l'ANNEXE-1")
+            # if not hq_visit_to_annexe2_check:
+            #     messagebox.showinfo(title="Alerte", message="L'employee du SIEGE  ne s'est pas rendu a l'ANNEXE-2")
+            # if not annexe1_visit_to_hq_check:
+            #     messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 ne s'est pas rendu au SIEGE")
+            # if not annexe1_visit_to_annexe2_check:
+            #     messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 ne s'est pas rendu a l'ANNEXE-2")
+            # if not annexe2_visit_to_hq_check:
+            #     messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu au SIEGE")
+            # if not annexe2_visit_to_annexe1_check:
+            #     messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu a l'ANNEXE-1")
 
         else:
+            # messagebox.showinfo(title="Notification", message="L'Employee a prit une pause")
             if start_time < break_start_time and end_time >= break_end_time:
                 total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time) - (
@@ -506,15 +508,6 @@ class JobTimeCalculator:
                     datetime.date.today(), start_time) - (break_end_time - break_start_time)
 
             else:
-                # time_before_break = datetime.datetime.combine(datetime.date.today(),
-                #                                               break_start_time) - datetime.datetime.combine(
-                #     datetime.date.today(), start_time)
-                # time_after_break = datetime.datetime.combine(datetime.date.today(),
-                #                                              end_time) - datetime.datetime.combine(
-                #     datetime.date.today(), break_end_time)
-                # total_time = time_before_break + time_after_break - (
-                #         datetime.datetime.combine(datetime.date.today(), break_end_time) -
-                #         datetime.datetime.combine(datetime.date.today(), break_start_time))
                 total_time = datetime.timedelta()
                 if hq_visit_to_annexe1_check:
                     total_time += datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_entry)
@@ -552,8 +545,8 @@ class JobTimeCalculator:
         departement = self.department_combobox.get()
         arrivee = self.time_start_entry.get()
         pause = self.break_check_button_var.get()
-        # debut_pause = self.break_start_entry.get()
-        # retour_pause = self.break_end_entry.get()
+        debut_pause = self.break_start_entry.get()
+        retour_pause = self.break_end_entry.get()
         descente = self.time_end_entry.get()
         lieu = self.place_combobox.get()
         total = self.calculate_total_time
@@ -579,17 +572,12 @@ class JobTimeCalculator:
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, descente,
+            sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, debut_pause, retour_pause, descente,
                           jour_semaine, total, daily_date, observation])
-            # for row in range(1, 300):
-            #     sheet.row_dimensions[row].height = 15
-            #
-            # for column in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"]:
-            #     sheet.column_dimensions[column].width = 30
             workbook.save(file_path)
             workbook.close()
 
-            messagebox.showinfo("Success", "Data saved successfully.")
+            messagebox.showinfo("Succès", "Donnée enregistrée avec succès.")
 
         except Exception as e:
             messagebox.showerror("Error", str(e))
