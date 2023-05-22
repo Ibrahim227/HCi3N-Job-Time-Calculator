@@ -72,7 +72,7 @@ class JobTimeCalculator:
                           "Mme SEYDOU ABDOULAYE FOUREYRATOU", "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"]
 
         self.first_last_name_entry = AutocompleteEntryListbox(self.frame, completevalues=self.name_list,
-                                                              allow_other_values=True, autohidescrollbar=True)
+                                                              allow_other_values=False, autohidescrollbar=True)
         self.first_last_name_entry.grid(row=0, column=2, ipadx=57)
 
         # Create the time and minute Combobox
