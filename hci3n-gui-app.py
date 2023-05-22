@@ -75,11 +75,11 @@ class JobTimeCalculator:
                                                               allow_other_values=False, autohidescrollbar=True)
         self.first_last_name_entry.grid(row=0, column=2, ipadx=57)
 
-        # Create the time and minute Combobox
-        self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
-        self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
-        self.hour_spinbox.grid(row=2, column=3)
-        self.minute_spinbox.grid(row=2, column=4)
+        # # Create the time and minute Combobox
+        # self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
+        # self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
+        # self.hour_spinbox.grid(row=2, column=3)
+        # self.minute_spinbox.grid(row=2, column=4)
 
         # create the observation and date Entry
         self.observation_entry_label = ttk.Label(self.frame, text="Observation:", background="lightgrey", underline=0)
@@ -181,7 +181,7 @@ class JobTimeCalculator:
         self.ourmessage = "HCi3N"
         self.display_message = tk.Message(self.frame, text=self.ourmessage, font='italic', relief='raised')
         self.display_message.config(bg="orange")
-        self.display_message.grid(row=3, column=1, ipadx=20, ipady=5)
+        self.display_message.grid(row=4, column=1, ipadx=20, ipady=5)
 
         ############################################### Second LabelFrame ###################################################
 
