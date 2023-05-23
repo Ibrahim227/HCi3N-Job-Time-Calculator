@@ -420,6 +420,8 @@ class JobTimeCalculator:
         # fill function
     def fill_entries(self):
         value = "00:00"  # Predefined value to fill the entries
+        self.break_start_entry.insert(0, value)
+        self.break_end_entry.insert(0, value)
         self.annexe_entry.insert(0, value)
         self.annexe_entry_01.insert(0, value)
         self.site_exit.insert(0, value)

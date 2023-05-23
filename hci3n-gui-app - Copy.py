@@ -362,6 +362,10 @@ class JobTimeCalculator:
         self.clear_button = ttk.Button(self.registration_frame, text='Effacer Champs', command=self.clear)
         self.clear_button.grid(row=3, column=1)
 
+        ################# Auto fill Button
+        self.auto_fill_button = ttk.Button(self.registration_frame, text='Auto Fill', command=self.fill_entries)
+        self.auto_fill_button.grid(row=3, column=4)
+
         #################################### Configure the Menu #################################
         # Create Menu menubar
         self.menu_ = tk.Menu(self.frame, tearoff=0)
@@ -410,6 +414,23 @@ class JobTimeCalculator:
         self.date_entry.delete(0, END)
 
         ################################################################
+
+        # Auto fill function
+    def fill_entries(self):
+        value = "00:00"  # Predefined value to fill the entries
+        self.annexe_entry.insert(0, value)
+        self.annexe_entry_01.insert(0, value)
+        self.site_exit.insert(0, value)
+        self.site_exit_01.insert(0, value)
+        self.site_entry.insert(0, value)
+        self.site_entry_01.insert(0, value)
+        self.annexe_exit_01.insert(0, value)
+        self.annexe_exit.insert(0, value)
+        self.value_entry_widget.insert(0, value)
+        self.value_exit_widget.insert(0, value)
+        self.second_annexe_entry.insert(0, value)
+        self.second_annexe_exit.insert(0, value)
+        ##############################################
         # Calculate function
 
     def calculate_total_time(self):
