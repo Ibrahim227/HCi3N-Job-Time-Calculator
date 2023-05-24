@@ -416,8 +416,11 @@ class JobTimeCalculator:
         ################################################################
 
         # Auto fill function
+
     def fill_entries(self):
         value = "00:00"  # Predefined value to fill the entries
+        self.break_start_entry.insert(0, value)
+        self.break_end_entry.insert(0, value)
         self.annexe_entry.insert(0, value)
         self.annexe_entry_01.insert(0, value)
         self.site_exit.insert(0, value)
@@ -496,10 +499,14 @@ class JobTimeCalculator:
                 return
 
             if not break_taken:
-                # break_start_time, break_end_time =
                 total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time)
-                messagebox.showinfo(title="Alerte", message="L'employee n'a pas prit de pause!")
+                messagebox.showinfo(title="Alerte", message="L'employee n'a pas prit de pause.")
+                if not (
+                        hq_visit_to_annexe1_check and hq_visit_to_annexe2_check and annexe1_visit_to_hq_check and annexe1_visit_to_annexe2_check and annexe2_visit_to_hq_check and annexe2_visit_to_annexe1_check):
+                    messagebox.showinfo(title='SIEGE-ANNEXE-1-ANNEXE-2', message="Aucune visite effectuee")
+                    # total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                    #     datetime.date.today(), start_time)
                 # if not hq_visit_to_annexe1_check:
                 #     messagebox.showinfo(title="Alerte", message="L'employee du SIEGE ne s'est pas rendu a l'ANNEXE-1")
                 # if not hq_visit_to_annexe2_check:
@@ -514,12 +521,20 @@ class JobTimeCalculator:
                 #     messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu a l'ANNEXE-1")
 
             else:
-                # messagebox.showinfo(title="Notification", message="L'Employee a prit une pause")
+                if break_start_time > break_end_time:
+                    messagebox.showerror(title="Erreur", message="Temps de pause Incorrect.")
+                messagebox.showinfo(title="Alerte", message="L'Employee a prit une pause.")
                 if start_time < break_start_time and end_time >= break_end_time:
                     total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time) - (
                                          datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                          datetime.datetime.combine(datetime.date.today(), break_start_time))
+
+                elif break_start_time == break_end_time:
+                    messagebox.showinfo(title="Alerte", message="Heure Debut pause egal a l'heure de Retour de pause")
+                    total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                        datetime.date.today(), start_time)
+
                 elif start_time >= break_end_time:
                     total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time)
@@ -531,7 +546,10 @@ class JobTimeCalculator:
                 else:
                     total_time = datetime.timedelta()
                     if hq_visit_to_annexe1_check:
-                        total_time += datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_entry)
+                        messagebox.showwarning(message="siege vers annexe 1")
+                        total_time += datetime.datetime.combine(datetime.date.today(),
+                                                                hq_to_annexe1_exit) - datetime.datetime.combine(
+                            datetime.date.today(), hq_to_annexe1_entry)
                     if hq_visit_to_annexe2_check:
                         total_time += datetime.datetime.combine(datetime.date.today(),
                                                                 hq_to_annexe2_exit) - datetime.datetime.combine(
@@ -559,6 +577,7 @@ class JobTimeCalculator:
         except ValueError as e:
             messagebox.showerror(title="Entrer Invalide", message="Vueillez saisir correctement l'heure")
             return e
+
     ############## Excel File Generator function ###############
 
     # Excel file generator

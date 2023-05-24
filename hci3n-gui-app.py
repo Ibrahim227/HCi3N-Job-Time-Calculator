@@ -392,6 +392,7 @@ class JobTimeCalculator:
             self.window.destroy()
 
         # Clear function
+
     def clear(self):
         # self.first_last_name_entry.delete(0, END)
         self.place_combobox.delete(0, END)
@@ -418,6 +419,7 @@ class JobTimeCalculator:
         self.date_entry.delete(0, END)
 
         # fill function
+
     def fill_entries(self):
         value = "00:00"  # Predefined value to fill the entries
         self.break_start_entry.insert(0, value)
@@ -434,8 +436,10 @@ class JobTimeCalculator:
         self.value_exit_widget.insert(0, value)
         self.second_annexe_entry.insert(0, value)
         self.second_annexe_exit.insert(0, value)
+
     ################################################################
-        # Calculate function
+
+    #  Calculate function
 
     def calculate_total_time(self):
         start_time_str = self.time_start_entry.get()
@@ -553,7 +557,8 @@ class JobTimeCalculator:
         daily_date = self.date_entry.get()
 
         # Validate input
-        if not (nom_prenom and fonction and departement and lieu and arrivee and descente and total and jour_semaine and daily_date):
+        if not (
+                nom_prenom and fonction and departement and lieu and arrivee and descente and total and jour_semaine and daily_date):
             required_list = ["Nom & Prenom", "Fonction", "Departement", "Lieu", "Heure Arrivee", "Descente", "Total",
                              "Jour", "Date"]
             messagebox.showerror(f"Erreur", f"Veuillez remplir tout les champs requis:\n {list(required_list)}")
