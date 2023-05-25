@@ -508,6 +508,7 @@ class JobTimeCalculator:
             #         hq_visit_to_annexe1_check and hq_visit_to_annexe2_check and annexe1_visit_to_hq_check and annexe1_visit_to_annexe2_check and annexe2_visit_to_hq_check and annexe2_visit_to_annexe1_check):
             #     messagebox.showinfo(title='SIEGE-ANNEXE-1-ANNEXE-2', message="Aucune visite effectuee")
             #     return
+
             if not break_taken:
                 total_time = datetime.datetime.combine(datetime.date.today(),
                                                        end_time) - datetime.datetime.combine(
@@ -528,42 +529,22 @@ class JobTimeCalculator:
                 #     messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu au SIEGE")
                 # if not annexe2_visit_to_annexe1_check:
                 #     messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 ne s'est pas rendu a l'ANNEXE-1")
-
             else:
-                if break_start_time > break_end_time:
-                    messagebox.showerror(title="Erreur", message="Temps de pause Incorrect.")
-                messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
-                if start_time < break_start_time and end_time >= break_end_time:
+                total_time = datetime.timedelta()
+                if hq_visit_to_annexe1_check:
+                    messagebox.showwarning(title="Alerte", message="siege vers annexe 1")
                     total_time = datetime.datetime.combine(datetime.date.today(),
                                                            end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time) - (
                                          datetime.datetime.combine(datetime.date.today(), break_end_time) -
-                                         datetime.datetime.combine(datetime.date.today(), break_start_time))
+                                         datetime.datetime.combine(datetime.date.today(),
+                                                                   break_start_time)) + (
+                                         datetime.datetime.combine(datetime.date.today(),
+                                                                   hq_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_entry))
 
-                elif break_start_time == break_end_time:
-                    messagebox.showerror(title="Erreur", message="Heure Debut pause est superieure ou egal a l'heure de Retour de pause!")
-                    total_time = datetime.datetime.combine(datetime.date.today(),
-                                                           end_time) - datetime.datetime.combine(
-                        datetime.date.today(), start_time)
-
-                elif start_time >= break_end_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(),
-                                                           end_time) - datetime.datetime.combine(
-                        datetime.date.today(), start_time)
-
-                elif end_time <= break_start_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(),
-                                                           end_time) - datetime.datetime.combine(
-                        datetime.date.today(), start_time) - (break_end_time - break_start_time)
-                # total_time = datetime.timedelta()
-
-                # total_time = datetime.timedelta()
-                # if hq_visit_to_annexe1_check:
-                #     messagebox.showwarning(message="siege vers annexe 1")
-                #     total_time += datetime.datetime.combine(datetime.date.today(),
-                #                                             hq_to_annexe1_exit) - datetime.datetime.combine(
-                #         datetime.date.today(), hq_to_annexe1_entry)
                 # if hq_visit_to_annexe2_check:
+                #     messagebox.showwarning(title="Alerte", message="siege vers annexe 2")
+                #
                 #     total_time += datetime.datetime.combine(datetime.date.today(),
                 #                                             hq_to_annexe2_exit) - datetime.datetime.combine(
                 #         datetime.date.today(), hq_to_annexe2_entry)
@@ -583,6 +564,34 @@ class JobTimeCalculator:
                 #     total_time += datetime.datetime.combine(datetime.date.today(),
                 #                                             annexe2_to_annexe1_exit) - datetime.datetime.combine(
                 #         datetime.date.today(), annexe2_to_annexe1_entry)
+
+                if break_start_time > break_end_time:
+                    messagebox.showerror(title="Erreur", message="Temps de pause Incorrect.")
+                messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
+                if start_time < break_start_time and end_time >= break_end_time:
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
+                        datetime.date.today(), start_time) - (
+                                         datetime.datetime.combine(datetime.date.today(), break_end_time) -
+                                         datetime.datetime.combine(datetime.date.today(), break_start_time))
+
+                elif break_start_time == break_end_time:
+                    messagebox.showerror(title="Erreur",
+                                         message="Heure Debut pause est superieure ou egal a l'heure de Retour de pause!")
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
+                        datetime.date.today(), start_time)
+
+                elif start_time >= break_end_time:
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
+                        datetime.date.today(), start_time)
+
+                elif end_time <= break_start_time:
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
+                        datetime.date.today(), start_time) - (break_end_time - break_start_time)
+                # total_time = datetime.timedelta()
 
             total_time_str = str(total_time)
 
