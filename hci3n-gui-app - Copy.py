@@ -335,7 +335,8 @@ class JobTimeCalculator:
         self.break_check_button.grid(row=2, column=0)
 
         # create calculate button
-        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer", command=self.calculate_total_time)
+        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer",
+                                           command=self.calculate_total_all_time)
         self.calculate_button.grid(row=3, column=2, sticky='news')
 
         # result view label
@@ -436,7 +437,12 @@ class JobTimeCalculator:
         ##############################################
         # Calculate function
 
-    def calculate_total_time(self):
+    def calculate_total_all_time(self):
+
+        """
+            Accept multiple arguments as time format
+        :return: The total time in %H:%M format
+        """
 
         start_time_str = self.time_start_entry.get()
         end_time_str = self.time_end_entry.get()
@@ -498,15 +504,18 @@ class JobTimeCalculator:
                 messagebox.showerror("Erreur", message="l'Heure d'Arrivee Trop Grande que l'Heure de Descente.")
                 return
 
+            # if not (
+            #         hq_visit_to_annexe1_check and hq_visit_to_annexe2_check and annexe1_visit_to_hq_check and annexe1_visit_to_annexe2_check and annexe2_visit_to_hq_check and annexe2_visit_to_annexe1_check):
+            #     messagebox.showinfo(title='SIEGE-ANNEXE-1-ANNEXE-2', message="Aucune visite effectuee")
+            #     return
             if not break_taken:
-                total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                total_time = datetime.datetime.combine(datetime.date.today(),
+                                                       end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time)
-                messagebox.showinfo(title="Alerte", message="L'employee n'a pas prit de pause.")
-                if not (
-                        hq_visit_to_annexe1_check and hq_visit_to_annexe2_check and annexe1_visit_to_hq_check and annexe1_visit_to_annexe2_check and annexe2_visit_to_hq_check and annexe2_visit_to_annexe1_check):
-                    messagebox.showinfo(title='SIEGE-ANNEXE-1-ANNEXE-2', message="Aucune visite effectuee")
-                    # total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
-                    #     datetime.date.today(), start_time)
+                messagebox.showinfo(title="Information", message="L'employee n'a pas prit de pause.")
+
+                # total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                #     datetime.date.today(), start_time)
                 # if not hq_visit_to_annexe1_check:
                 #     messagebox.showinfo(title="Alerte", message="L'employee du SIEGE ne s'est pas rendu a l'ANNEXE-1")
                 # if not hq_visit_to_annexe2_check:
@@ -523,53 +532,58 @@ class JobTimeCalculator:
             else:
                 if break_start_time > break_end_time:
                     messagebox.showerror(title="Erreur", message="Temps de pause Incorrect.")
-                messagebox.showinfo(title="Alerte", message="L'Employee a prit une pause.")
+                messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
                 if start_time < break_start_time and end_time >= break_end_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time) - (
                                          datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                          datetime.datetime.combine(datetime.date.today(), break_start_time))
 
                 elif break_start_time == break_end_time:
-                    messagebox.showinfo(title="Alerte", message="Heure Debut pause egal a l'heure de Retour de pause")
-                    total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                    messagebox.showerror(title="Erreur", message="Heure Debut pause est superieure ou egal a l'heure de Retour de pause!")
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time)
 
                 elif start_time >= break_end_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time)
 
                 elif end_time <= break_start_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(), end_time) - datetime.datetime.combine(
+                    total_time = datetime.datetime.combine(datetime.date.today(),
+                                                           end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time) - (break_end_time - break_start_time)
+                # total_time = datetime.timedelta()
 
-                else:
-                    total_time = datetime.timedelta()
-                    if hq_visit_to_annexe1_check:
-                        messagebox.showwarning(message="siege vers annexe 1")
-                        total_time += datetime.datetime.combine(datetime.date.today(),
-                                                                hq_to_annexe1_exit) - datetime.datetime.combine(
-                            datetime.date.today(), hq_to_annexe1_entry)
-                    if hq_visit_to_annexe2_check:
-                        total_time += datetime.datetime.combine(datetime.date.today(),
-                                                                hq_to_annexe2_exit) - datetime.datetime.combine(
-                            datetime.date.today(), hq_to_annexe2_entry)
-                    if annexe1_visit_to_hq_check:
-                        total_time += datetime.datetime.combine(datetime.date.today(),
-                                                                annexe1_to_hq_exit) - datetime.datetime.combine(
-                            datetime.date.today(), annexe1_to_hq_entry)
-                    if annexe1_visit_to_annexe2_check:
-                        total_time += datetime.datetime.combine(datetime.date.today(),
-                                                                annexe1_to_annexe2_exit) - datetime.datetime.combine(
-                            datetime.date.today(), annexe1_to_annexe2_entry)
-                    if annexe2_visit_to_hq_check:
-                        total_time += datetime.datetime.combine(datetime.date.today(),
-                                                                annexe2_to_hq_exit) - datetime.datetime.combine(
-                            datetime.date.today(), annexe2_to_hq_entry)
-                    if annexe2_visit_to_annexe1_check:
-                        total_time += datetime.datetime.combine(datetime.date.today(),
-                                                                annexe2_to_annexe1_exit) - datetime.datetime.combine(
-                            datetime.date.today(), annexe2_to_annexe1_entry)
+                # total_time = datetime.timedelta()
+                # if hq_visit_to_annexe1_check:
+                #     messagebox.showwarning(message="siege vers annexe 1")
+                #     total_time += datetime.datetime.combine(datetime.date.today(),
+                #                                             hq_to_annexe1_exit) - datetime.datetime.combine(
+                #         datetime.date.today(), hq_to_annexe1_entry)
+                # if hq_visit_to_annexe2_check:
+                #     total_time += datetime.datetime.combine(datetime.date.today(),
+                #                                             hq_to_annexe2_exit) - datetime.datetime.combine(
+                #         datetime.date.today(), hq_to_annexe2_entry)
+                # if annexe1_visit_to_hq_check:
+                #     total_time += datetime.datetime.combine(datetime.date.today(),
+                #                                             annexe1_to_hq_exit) - datetime.datetime.combine(
+                #         datetime.date.today(), annexe1_to_hq_entry)
+                # if annexe1_visit_to_annexe2_check:
+                #     total_time += datetime.datetime.combine(datetime.date.today(),
+                #                                             annexe1_to_annexe2_exit) - datetime.datetime.combine(
+                #         datetime.date.today(), annexe1_to_annexe2_entry)
+                # if annexe2_visit_to_hq_check:
+                #     total_time += datetime.datetime.combine(datetime.date.today(),
+                #                                             annexe2_to_hq_exit) - datetime.datetime.combine(
+                #         datetime.date.today(), annexe2_to_hq_entry)
+                # if annexe2_visit_to_annexe1_check:
+                #     total_time += datetime.datetime.combine(datetime.date.today(),
+                #                                             annexe2_to_annexe1_exit) - datetime.datetime.combine(
+                #         datetime.date.today(), annexe2_to_annexe1_entry)
+
             total_time_str = str(total_time)
 
             self.result_label.config(text=total_time_str)
@@ -591,7 +605,7 @@ class JobTimeCalculator:
         retour_pause = self.break_end_entry.get()
         descente = self.time_end_entry.get()
         lieu = self.place_combobox.get()
-        total = self.calculate_total_time
+        total = self.calculate_total_all_time
         jour_semaine = self.week_combobox.get()
         observation = self.observation_entry.get()
         daily_date = self.date_entry.get()
