@@ -524,7 +524,7 @@ class JobTimeCalculator:
                 return
 
             if not break_taken:
-                messagebox.showinfo(title="Information", message="L'employee n'a pas prit de pause.")
+                messagebox.showinfo(title="Information", message="L'employee n'a pas prit de pause !")
                 total_time = datetime.datetime.combine(datetime.date.today(),
                                                        end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time)
@@ -532,7 +532,7 @@ class JobTimeCalculator:
                 if not (
                         hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
-                                           message="Aucune visite effectuee vers:\n SIEGE; ANNEXE-1; ANNEXE-2;")
+                                           message="Aucune visite effectuee vers:\n\n SIEGE; ANNEXE-1; ANNEXE-2;")
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte', message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
@@ -541,37 +541,39 @@ class JobTimeCalculator:
                         datetime.date.today(), hq_to_annexe1_entry)
 
                 if hq_visit_to_annexe2_check:
-                    messagebox.showinfo(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-2")
+                    messagebox.showwarning(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-2")
                     total_time += datetime.datetime.combine(datetime.date.today(),
                                                             hq_to_annexe2_exit) - datetime.datetime.combine(
                         datetime.date.today(), hq_to_annexe2_entry)
 
                 if annexe1_visit_to_hq_check:
-                    messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 s'est rendu au SIEGE")
+                    messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu au SIEGE")
                     total_time += datetime.datetime.combine(datetime.date.today(),
                                                             annexe1_to_hq_exit) - datetime.datetime.combine(
                         datetime.date.today(), annexe1_to_hq_entry)
 
                 if annexe1_visit_to_annexe2_check:
-                    messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2")
+                    messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2")
                     total_time += datetime.datetime.combine(datetime.date.today(),
                                                             annexe1_to_annexe2_exit) - datetime.datetime.combine(
                         datetime.date.today(), annexe1_to_annexe2_entry)
 
                 if annexe2_visit_to_hq_check:
-                    messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 s'est rendu au SIEGE")
+                    messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu au SIEGE")
                     total_time += datetime.datetime.combine(datetime.date.today(),
                                                             annexe2_to_hq_exit) - datetime.datetime.combine(
                         datetime.date.today(), annexe2_to_hq_entry)
 
                 if annexe2_visit_to_annexe1_check:
-                    messagebox.showinfo(title="Alerte", message="L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1")
+                    messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1")
                     total_time += datetime.datetime.combine(datetime.date.today(),
                                                             annexe2_to_annexe1_exit) - datetime.datetime.combine(
                         datetime.date.today(), annexe2_to_annexe1_entry)
 
             else:
                 total_time = datetime.timedelta()
+                messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
+
                 if not (
                         hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
@@ -579,7 +581,7 @@ class JobTimeCalculator:
 
                 if break_start_time > break_end_time:
                     messagebox.showerror(title="Erreur", message="Temps de pause Incorrect.")
-                messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
+
                 if start_time < break_start_time and end_time >= break_end_time:
                     total_time = datetime.datetime.combine(datetime.date.today(),
                                                            end_time) - datetime.datetime.combine(
@@ -640,14 +642,13 @@ class JobTimeCalculator:
                                                                          annexe2_to_annexe1_exit) - datetime.datetime.combine(
                         datetime.date.today(), annexe2_to_annexe1_entry))
 
-        except ValueError as e:
-            # messagebox.showerror(title="Erreur", message="Entrer Invalide \n vueillez Re-essayer !")
-            return str(e)
+            total_time_str = str(total_time)
 
-        total_time_str = str(total_time)
+            self.result_label.config(text=total_time_str)
+            return total_time  # Return the total_time value
 
-        self.result_label.config(text=total_time_str)
-        return total_time  # Return the total_time value
+        except ValueError:
+            return False
 
     ############## Excel File Generator function ###############
 

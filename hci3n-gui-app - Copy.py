@@ -624,7 +624,7 @@ class JobTimeCalculator:
             self.result_label.config(text=total_time_str)
             return total_time  # Return the total_time value
         except ValueError:
-            print("Error!")
+            print("self.calculate_total_all_time, Error!")
             # messagebox.showerror(title="Entrer Invalide", message="Vueillez saisir correctement l'heure")
 
     ############## Excel File Generator function ###############
