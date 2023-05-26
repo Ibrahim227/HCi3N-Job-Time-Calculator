@@ -12,7 +12,7 @@ from ttkwidgets.autocomplete import AutocompleteEntryListbox
 def on_click():
     """
     Redirect to HCi3N website
-    :return: Open a new tab on the navigator
+    :return: Open a new tab within your default navigator
     """
     url = "http://www.initiative3n.ne/"
     webbrowser.open_new_tab(url)
@@ -20,7 +20,7 @@ def on_click():
 
 ### Class Definition
 
-class JobTimeCalculator:
+class JobTimeCalculator(object):
     # Initialize the class
     def __init__(self):
         super().__init__()  # Allows to inherit from the tkinter class object
@@ -195,9 +195,9 @@ class JobTimeCalculator:
         self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=20, pady=20)
 
         self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=False)
-        self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence ANNEXE-1",
+        self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verifier Presence ANNEXE-1",
                                                          variable=self.exit_entry_status_var_1, onvalue=True,
-                                                         offvalue=False)
+                                                         offvalue=False, underline=9)
         self.exit_entry_status_check_1.grid(row=0, column=0)
 
         # Create Entry widgets for exit/entry from Site
@@ -216,9 +216,9 @@ class JobTimeCalculator:
         ############# second entry/exit Entry widget #############
 
         self.exit_entry_status_var_2 = tk.BooleanVar(self.exit_entry_frame, value=False)
-        self.exit_entry_status_check_2 = ttk.Checkbutton(self.exit_entry_frame, text="Verify Presence Annexe-2",
+        self.exit_entry_status_check_2 = ttk.Checkbutton(self.exit_entry_frame, text="Verifier Presence Annexe-2",
                                                          variable=self.exit_entry_status_var_2, onvalue=True,
-                                                         offvalue=False)
+                                                         offvalue=False, underline=9)
         self.exit_entry_status_check_2.grid(row=0, column=3)
 
         # Create Entry Exit Status from HQ to annexe1-2
@@ -244,12 +244,12 @@ class JobTimeCalculator:
         self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
         self.verify_frame.grid(row=2, column=0, padx=20, pady=20, sticky="news")
         self.presence_check_var = tk.BooleanVar(self.verify_frame, value=False)
-        self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verify Presence SIEGE",
+        self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verifier Presence SIEGE",
                                               variable=self.presence_check_var,
-                                              onvalue=True, offvalue=False)
+                                              onvalue=True, offvalue=False, underline=9)
         self.presence_check.grid(row=0, column=0)
 
-        # Verify presence Entry and Exit / label and entry widgets
+        # Verifier presence Entry and Exit / label and entry widgets
         self.annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entree (HH:MM):",
                                             background="lightgreen",
                                             underline=0)
@@ -267,8 +267,8 @@ class JobTimeCalculator:
 
         # second check variable, labels and Entries widgets
         self.annexe_to_annexe_var = tk.BooleanVar(self.verify_frame, value=False)
-        self.annexe_to_annexe = ttk.Checkbutton(self.verify_frame, text="Verify Presence ANNEXE-2",
-                                                variable=self.annexe_to_annexe_var, onvalue=True, offvalue=False)
+        self.annexe_to_annexe = ttk.Checkbutton(self.verify_frame, text="Verifier Presence ANNEXE-2",
+                                                variable=self.annexe_to_annexe_var, onvalue=True, offvalue=False, underline=9)
         self.annexe_to_annexe.grid(row=0, column=3)
 
         self.check_annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entree (HH:MM):",
@@ -294,9 +294,9 @@ class JobTimeCalculator:
         self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=10)
 
         self.verification_button_var = tk.BooleanVar(self.third_frame, value=False)
-        self.verification_button = ttk.Checkbutton(self.third_frame, text="Verify Presence SIEGE",
+        self.verification_button = ttk.Checkbutton(self.third_frame, text="Verifier Presence SIEGE",
                                                    variable=self.verification_button_var,
-                                                   onvalue=True, offvalue=False)
+                                                   onvalue=True, offvalue=False, underline=9)
         self.verification_button.grid(row=0, column=0)
 
         self.value_entry_label = ttk.Label(self.third_frame, text="Heure Entree (HH:MM):",
@@ -313,9 +313,9 @@ class JobTimeCalculator:
         ###### second verification check button, entries
 
         self.second_verification_check_var = tk.BooleanVar(self.third_frame, value=False)
-        self.second_verification_check_button = ttk.Checkbutton(self.third_frame, text="Verify Presence ANNEXE-1",
+        self.second_verification_check_button = ttk.Checkbutton(self.third_frame, text="Verifier Presence ANNEXE-1",
                                                                 variable=self.second_verification_check_var,
-                                                                onvalue=True, offvalue=False)
+                                                                onvalue=True, offvalue=False, underline=9)
         self.second_verification_check_button.grid(row=0, column=3)
 
         self.second_ver_label1 = ttk.Label(self.third_frame, text="Heure Entree (HH:MM):",
@@ -339,19 +339,19 @@ class JobTimeCalculator:
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=False)
         self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:30 PM et 14:15 PM",
-                                                  variable=self.break_check_button_var, onvalue=True, offvalue=False)
+                                                  variable=self.break_check_button_var, onvalue=True, offvalue=False, underline=0)
         self.break_check_button.grid(row=2, column=0)
 
         # create calculate button
-        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer", command=self.calculate_total_time)
+        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer", command=self.calculate_total_time, underline=0)
         self.calculate_button.grid(row=3, column=2, sticky='news')
 
         # result view label
-        self.result_view = ttk.Label(self.registration_frame, text="Le Temps total est:", underline=0,
+        self.result_view = ttk.Label(self.registration_frame, text="Le Temps Total est --> :", underline=3,
                                      background="lightgrey")
         self.result_view.grid(row=2, column=1, sticky='news')
         self.result_label = ttk.Label(self.registration_frame, background='lightgreen')
-        self.result_label.grid(row=2, column=2, sticky='news')
+        self.result_label.grid(row=2, column=2)
 
         for widget in self.registration_frame.winfo_children():
             widget.grid_configure(padx=10, pady=10, sticky="news")
@@ -363,15 +363,15 @@ class JobTimeCalculator:
         """
 
         ############ Create save_to_excel Button
-        self.entry_button = ttk.Button(self.registration_frame, text='Sauvegarder', command=self.save_to_excel)
+        self.entry_button = ttk.Button(self.registration_frame, text='Sauvegarder', command=self.save_to_excel, underline=0)
         self.entry_button.grid(row=3, column=0, sticky='news', padx=20, pady=7)
 
         ################ add a clear button
-        self.clear_button = ttk.Button(self.registration_frame, text='Effacer Champs', command=self.clear)
+        self.clear_button = ttk.Button(self.registration_frame, text='Effacer Champs', command=self.clear, underline=0)
         self.clear_button.grid(row=3, column=1)
 
         ################# Auto fill Button
-        self.auto_fill_button = ttk.Button(self.registration_frame, text='Auto Fill', command=self.fill_entries)
+        self.auto_fill_button = ttk.Button(self.registration_frame, text='Auto Fill', command=self.fill_entries, underline=0)
         self.auto_fill_button.grid(row=3, column=4)
 
         #################################### Configure the Menu #################################
@@ -380,7 +380,7 @@ class JobTimeCalculator:
         self.menu_bar = tk.Menu(self.menu_, tearoff=0)
         self.menu_bar.add_command(label="A propos HCi3N", command=on_click)
         self.menu_bar.add_separator()
-        self.menu_bar.add_command(label="Quitter", accelerator='Alt+F4', command=self.exit_01)
+        self.menu_bar.add_command(label="Quitter", accelerator='Alt+F4', command=self.exit_01, underline=0)
 
         self.menu_.add_cascade(label="Menu", menu=self.menu_bar)
         self.window.config(menu=self.menu_)
@@ -574,8 +574,8 @@ class JobTimeCalculator:
                 total_time = datetime.timedelta()
                 messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
 
-                if not (
-                        hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
+                if not (hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or
+                        annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
                                            message="Aucune visite effectuee vers:\n SIEGE; ANNEXE-1; ANNEXE-2;")
 
