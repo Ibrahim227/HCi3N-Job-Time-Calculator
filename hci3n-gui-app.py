@@ -33,6 +33,7 @@ class JobTimeCalculator(object):
         self.window.iconbitmap('images\\logoHCi3N.ico')
         self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5, )
         self.window.iconposition(x=5, y=1)
+        # self.window.config(background="black")
 
         ######## Main Frame
 
@@ -54,22 +55,18 @@ class JobTimeCalculator(object):
                           "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
                           "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
                           "Mme DOUDOU HALIDOU MAIMOUNA", "GAMATIE BOUBACAR", "Mme ABDOUL NASSER MARIA",
-                          "RABIATOU HABIBOU",
-                          "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU", "OUSMANE FODI", "Mme MOUSTAPHA FOURERA",
+                          "RABIATOU HABIBOU", "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU", "OUSMANE FODI", "Mme MOUSTAPHA FOURERA",
                           "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
                           "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
                           "MAHAMADOU MAHAMANE NAFISSATOU", "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI",
                           "ABDOU MOUSSA OUSMANE",
                           "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
                           "TRAPSIDA ABDOULAY ALAIN", "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA",
-                          "MA AROUF TIDJANI", "LAWAN DARMANE",
+                          "MA AROUF TIDJANI", "LAWAN DARMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU", "BOGARI ZOURKALEINI",
                           "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU",
-                          "GN HAROUNA MAAZOU LEYO",
-                          "GN LAOUALI MAAZOU MAMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU", "BOGARI ZOURKALEINI",
-                          "MOCTAR BACHIR", "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
+                          "GN HAROUNA MAAZOU LEYO", "GN LAOUALI MAAZOU MAMANE", "MOCTAR BACHIR", "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
                           "AMADOU BACHIR", "OUSMANE YERIMA YAHAYA", "MAMOUDOU MAHAMAN BACHAR",
-                          "SALAMATOU SOUMANA MOUSSA",
-                          "SAHABI ABDOU", "GN KABIROU ABDOUL MOUMOUNI", "GN ADAHIR IDI DJIBAGÉ",
+                          "SALAMATOU SOUMANA MOUSSA", "SAHABI ABDOU", "GN KABIROU ABDOUL MOUMOUNI", "GN ADAHIR IDI DJIBAGÉ",
                           "Dr MAHAMADOU ABOUBACAR",
                           "AMINA IDRISSA BAGNOU", "ABDOU ADAMOU LILWANI", "ABDOUL WAHABOU ZAKARI DAGOU",
                           "ISSA HAMANI ABDOULAYE", "ALI OUSSEINI MOUSTAPHA", "ALI SOUMAILA FOUREIRATOU",
@@ -80,12 +77,6 @@ class JobTimeCalculator(object):
         self.first_last_name_entry = AutocompleteEntryListbox(self.frame, completevalues=self.name_list,
                                                               allow_other_values=False, autohidescrollbar=True)
         self.first_last_name_entry.grid(row=0, column=2, ipadx=57)
-
-        # # Create the time and minute Combobox
-        # self.hour_spinbox = ttk.Spinbox(self.frame, from_=0, to=23, width=10, format="%02.0f")
-        # self.minute_spinbox = ttk.Spinbox(self.frame, from_=0, to=59, width=10, format="%02.0f")
-        # self.hour_spinbox.grid(row=2, column=3)
-        # self.minute_spinbox.grid(row=2, column=4)
 
         # create the observation and date Entry
         self.observation_entry_label = ttk.Label(self.frame, text="Observation:", background="lightgrey", underline=0)
