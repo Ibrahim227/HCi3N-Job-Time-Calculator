@@ -27,7 +27,9 @@ class JobTimeCalculator(object):
         # Main window
         self.window = tk.Tk()
         self.window.title("HCi3N")
-        self.window.geometry()
+        self.window.resizable(True, True)
+        # self.window.bell(displayof=0)
+        self.window.wait_visibility(window=self.window)
         self.window.iconbitmap('images\\logoHCi3N.ico')
         self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5, )
         self.window.iconposition(x=5, y=1)
@@ -378,11 +380,11 @@ class JobTimeCalculator(object):
         # Create Menu menubar
         self.menu_ = tk.Menu(self.frame, tearoff=0)
         self.menu_bar = tk.Menu(self.menu_, tearoff=0)
-        self.menu_bar.add_command(label="A propos HCi3N", command=on_click)
+        self.menu_bar.add_command(label="A propos HC3N", command=on_click)
         self.menu_bar.add_separator()
         self.menu_bar.add_command(label="Quitter", accelerator='Alt+F4', command=self.exit_01, underline=0)
 
-        self.menu_.add_cascade(label="Menu", menu=self.menu_bar)
+        self.menu_.add_cascade(label="Menu", menu=self.menu_bar, hidemargin=True)
         self.window.config(menu=self.menu_)
 
         #
