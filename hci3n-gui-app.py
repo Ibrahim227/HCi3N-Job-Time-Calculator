@@ -11,7 +11,7 @@ from ttkwidgets.autocomplete import AutocompleteEntryListbox
 # redirect to HCi3N website
 def on_click():
     """
-    Redirect to HCi3N website
+    Redirect to HC3N website
     :return: Open a new tab within your default navigator
     """
     url = "http://www.initiative3n.ne/"
@@ -26,7 +26,7 @@ class JobTimeCalculator(object):
         super().__init__()  # Allows to inherit from the tkinter class object
         # Main window
         self.window = tk.Tk()
-        self.window.title("HCi3N")
+        self.window.title("HC3N")
         self.window.resizable(True, True)
         # self.window.bell(displayof=0)
         self.window.wait_visibility(window=self.window)
@@ -175,7 +175,7 @@ class JobTimeCalculator(object):
             widget.grid_configure(padx=20, pady=5, sticky="news")
 
         # Create message to display
-        self.ourmessage = "HCi3N"
+        self.ourmessage = "HC3N"
         self.display_message = tk.Message(self.frame, text=self.ourmessage, font='italic', relief='raised')
         self.display_message.config(bg="orange")
         self.display_message.grid(row=4, column=1, ipadx=20, ipady=5)
