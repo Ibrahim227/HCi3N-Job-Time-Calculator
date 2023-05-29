@@ -79,14 +79,15 @@ class JobTimeCalculator(object):
         self.first_last_name_entry.grid(row=0, column=2, ipadx=57)
 
         # create the observation and date Entry
-        self.observation_entry_label = ttk.Label(self.frame, text="Observation:", background="lightgrey", underline=0)
+        self.observation_list_combobox_label = ttk.Label(self.frame, text="Observation:", background="lightgrey", underline=0)
         self.date_entry_label = ttk.Label(self.frame, text="Date JJ/MM/ANNEE:", background="lightgrey", underline=0)
-        self.observation_entry = ttk.Entry(self.frame)
+        self.observation_list_combobox = ttk.Combobox(self.frame, values=["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1", "Sorti(e) vers ANNEXE-2",
+                                                                          "Consultation Maladie", "Décès", "Maladie", "Mariage", "Congé Maladie", "Congé Maternité", "Non Préciser"])
         self.date_entry = ttk.Entry(self.frame)
 
-        self.observation_entry_label.grid(row=1, column=1)
+        self.observation_list_combobox_label.grid(row=1, column=1)
         self.date_entry_label.grid(row=2, column=1)
-        self.observation_entry.grid(row=1, column=2, ipadx=20)
+        self.observation_list_combobox.grid(row=1, column=2, ipadx=20)
         self.date_entry.grid(row=2, column=2, ipadx=20)
 
         #
@@ -420,7 +421,7 @@ class JobTimeCalculator(object):
         self.second_annexe_entry.delete(0, END)
         self.second_annexe_exit.delete(0, END)
         self.week_combobox.delete(0, END)
-        self.observation_entry.delete(0, END)
+        self.observation_list_combobox.delete(0, END)
         self.date_entry.delete(0, END)
 
         # fill function
@@ -662,7 +663,7 @@ class JobTimeCalculator(object):
         lieu = self.place_combobox.get()
         total = self.calculate_total_time()
         jour_semaine = self.week_combobox.get()
-        observation = self.observation_entry.get()
+        observation = self.observation_list_combobox.get()
         daily_date = self.date_entry.get()
 
         # Validate input
@@ -674,7 +675,7 @@ class JobTimeCalculator(object):
             return
         # Save data to Excel file
         try:
-            file_path = "data.xlsx"
+            file_path = f"Sauvegarde_du_{daily_date}" + "data.xlsx"
             if not os.path.exists(file_path):
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
