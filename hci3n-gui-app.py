@@ -92,8 +92,8 @@ class JobTimeCalculator(object):
         self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
                                           underline=0)
         self.observation_list_combobox = ttk.Combobox(self.lateral_label_frame,
-                                                      values=["Sorti(()e) vers SIEGE", "Sorti(()e) vers ANNEXE-1",
-                                                              "Sorti(()e) vers ANNEXE-2",
+                                                      values=["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1",
+                                                              "Sorti(e) vers ANNEXE-2",
                                                               "Consultation", "Décès", "Maladie", "Mariage",
                                                               "Non Préciser"])
         self.date_entry = ttk.Entry(self.lateral_label_frame)
@@ -412,7 +412,7 @@ class JobTimeCalculator(object):
         self.result_label.grid(row=2, column=2)
 
         for widget in self.registration_frame.winfo_children():
-            widget.grid_configure(padx=10, pady=15, sticky="news")
+            widget.grid_configure(padx=10, pady=12, sticky="news")
 
         ################################################################
 
