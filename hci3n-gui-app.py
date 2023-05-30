@@ -92,8 +92,8 @@ class JobTimeCalculator(object):
         self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
                                           underline=0)
         self.observation_list_combobox = ttk.Combobox(self.lateral_label_frame,
-                                                      values=["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1",
-                                                              "Sorti(e) vers ANNEXE-2",
+                                                      values=["Sorti(()e) vers SIEGE", "Sorti(()e) vers ANNEXE-1",
+                                                              "Sorti(()e) vers ANNEXE-2",
                                                               "Consultation", "Décès", "Maladie", "Mariage",
                                                               "Non Préciser"])
         self.date_entry = ttk.Entry(self.lateral_label_frame)
@@ -161,7 +161,7 @@ class JobTimeCalculator(object):
         self.break_end_label.grid(row=2, column=2)
 
         # Create  start and end time labels
-        self.time_start_label = ttk.Label(self.user_info_frame, text="Heure Entree (HH:MM):",
+        self.time_start_label = ttk.Label(self.user_info_frame, text="Heure Entrée (HH:MM):",
                                           background="lightgreen", underline=0)
         self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM):", background="red",
                                         underline=0)
@@ -198,10 +198,10 @@ class JobTimeCalculator(object):
         self.display_message.grid(row=0, column=2, ipadx=20, ipady=5)
 
         ############################################ Configure new_frame LabelFrame ################################
-        self.new_frame = ttk.LabelFrame(self.frame, text="Sorti & Entrer Complementaire", underline=0)
+        self.new_frame = ttk.LabelFrame(self.frame, text="Sorti( )& Entrer Complementaire", underline=0)
         self.new_frame.grid(row=4, column=1)
 
-        self.new_label = ttk.Label(self.new_frame, text="Heure Entree (HH:MM):", underline=0, background="lightgreen")
+        self.new_label = ttk.Label(self.new_frame, text="Heure Entrée (HH:MM):", underline=0, background="lightgreen")
         self.second_new_label = ttk.Label(self.new_frame, text="Sortie (HH:MM):", underline=0, background="red")
 
         self.new_label.grid(row=0, column=0)
@@ -219,15 +219,28 @@ class JobTimeCalculator(object):
         self.first_btn_checkbutton = ttk.Checkbutton(self.new_frame, text="Cadre du travail",
                                                      variable=self.first_btn_check_var, onvalue=True, offvalue=False,
                                                      underline=0)
-        self.btn_second_checkbutton = ttk.Checkbutton(self.new_frame, text="Non Preciser",
+        self.btn_second_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie: Non Preciser",
                                                       variable=self.second_btn_check_var, onvalue=True, offvalue=False,
                                                       underline=0)
 
         self.first_btn_checkbutton.grid(row=0, column=2)
-        self.btn_second_checkbutton.grid(row=1, column=2)
+        self.btn_second_checkbutton.grid(row=2, column=2)
+
+        self.personal_label = ttk.Label(self.new_frame, text="Heure Entrée (HH:MM):", background="lightgreen",
+                                        underline=0)
+        self.personal_second_label = ttk.Label(self.new_frame, text="Sortie (HH:MM):", background="red", underline=0)
+
+        self.personal_entry = ttk.Entry(self.new_frame)
+        self.personal_exit = ttk.Entry(self.new_frame)
+
+        # Display
+        self.personal_label.grid(row=2, column=0)
+        self.personal_entry.grid(row=3, column=0)
+        self.personal_second_label.grid(row=2, column=1)
+        self.personal_exit.grid(row=3, column=1)
 
         for widget in self.new_frame.winfo_children():
-            widget.grid_configure(padx=10, pady=10, sticky="news")
+            widget.grid_configure(padx=15, pady=5, sticky="news")
 
         ############################################### Second LabelFrame ###################################################
 
@@ -243,7 +256,7 @@ class JobTimeCalculator(object):
         self.exit_entry_status_check_1.grid(row=0, column=0)
 
         # Create Entry widgets for exit/entry from Site
-        self.exit_entry_label_entry = ttk.Label(self.exit_entry_frame, text="Heure Entree (HH:MM):",
+        self.exit_entry_label_entry = ttk.Label(self.exit_entry_frame, text="Heure Entrée (HH:MM):",
                                                 background="lightgreen", underline=0)
         self.exit_entry_label_exit = ttk.Label(self.exit_entry_frame, text="Sortie (HH:MM):",
                                                background="red", underline=0)
@@ -264,7 +277,7 @@ class JobTimeCalculator(object):
         self.exit_entry_status_check_2.grid(row=0, column=3)
 
         # Create Entry Exit Status from HQ to annexe1-2
-        self.exit_entry_label_entry_01 = ttk.Label(self.exit_entry_frame, text="Heure Entree (HH:MM):",
+        self.exit_entry_label_entry_01 = ttk.Label(self.exit_entry_frame, text="Heure Entrée (HH:MM):",
                                                    background="lightgreen", underline=0)
         self.exit_entry_label_exit_01 = ttk.Label(self.exit_entry_frame, text="Sortie (HH:MM):",
                                                   background="red", underline=0)
@@ -277,7 +290,7 @@ class JobTimeCalculator(object):
         self.site_exit_01.grid(row=2, column=4)
 
         for widget in self.exit_entry_frame.winfo_children():
-            widget.grid_configure(padx=20, pady=5, sticky="news")
+            widget.grid_configure(padx=20, pady=6, sticky="news")
 
         ###################################### Configure Third LabelFrame ################################
 
@@ -292,7 +305,7 @@ class JobTimeCalculator(object):
         self.presence_check.grid(row=0, column=0)
 
         # Verifier presence Entry and Exit / label and entry widgets
-        self.annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entree (HH:MM):",
+        self.annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entrée (HH:MM):",
                                             background="lightgreen",
                                             underline=0)
         self.annexe_exit_label = ttk.Label(self.verify_frame, text="Sortie (HH:MM):", background="red",
@@ -314,7 +327,7 @@ class JobTimeCalculator(object):
                                                 underline=9)
         self.annexe_to_annexe.grid(row=0, column=3)
 
-        self.check_annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entree (HH:MM):",
+        self.check_annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entrée (HH:MM):",
                                                   background="lightgreen", underline=0)
         self.check_annexe_exit_label = ttk.Label(self.verify_frame, text="Sortie (HH:MM):", background="red",
                                                  underline=0)
@@ -342,7 +355,7 @@ class JobTimeCalculator(object):
                                                    onvalue=True, offvalue=False, underline=9)
         self.verification_button.grid(row=0, column=0)
 
-        self.value_entry_label = ttk.Label(self.third_frame, text="Heure Entree (HH:MM):",
+        self.value_entry_label = ttk.Label(self.third_frame, text="Heure Entrée (HH:MM):",
                                            background="lightgreen", underline=0)
         self.value_exit_label = ttk.Label(self.third_frame, text="Sortie (HH:MM):", background="red", underline=0)
         self.value_entry_widget = ttk.Entry(self.third_frame)
@@ -361,7 +374,7 @@ class JobTimeCalculator(object):
                                                                 onvalue=True, offvalue=False, underline=9)
         self.second_verification_check_button.grid(row=0, column=3)
 
-        self.second_ver_label1 = ttk.Label(self.third_frame, text="Heure Entree (HH:MM):",
+        self.second_ver_label1 = ttk.Label(self.third_frame, text="Heure Entrée (HH:MM):",
                                            background="lightgreen", underline=0)
         self.second_ver_label2 = ttk.Label(self.third_frame, text="Sortie (HH:MM):", background="red",
                                            underline=0)
@@ -399,7 +412,7 @@ class JobTimeCalculator(object):
         self.result_label.grid(row=2, column=2)
 
         for widget in self.registration_frame.winfo_children():
-            widget.grid_configure(padx=10, pady=10, sticky="news")
+            widget.grid_configure(padx=10, pady=15, sticky="news")
 
         ################################################################
 
@@ -478,7 +491,10 @@ class JobTimeCalculator(object):
         self.date_entry.delete(0, END)
         self.new_entry.delete(0, END)
         self.new_exit.delete(0, END)
+        self.personal_exit.delete(0, END)
+        self.personal_entry.delete(0, END)
 
+        ################################
         # fill function
 
     def fill_entries(self):
@@ -505,6 +521,8 @@ class JobTimeCalculator(object):
         self.new_exit.insert(0, value)
         self.time_start_entry.insert(0, value)
         self.time_end_entry.insert(0, value)
+        self.personal_entry.insert(0, value)
+        self.personal_exit.insert(0, value)
 
     ################################################################
 
@@ -571,10 +589,14 @@ class JobTimeCalculator(object):
         ### Complementary Entry / Exit
         new_entry_str = self.new_entry.get()
         second_exit_str = self.new_exit.get()
+        personal_entry_str = self.personal_entry.get()
+        personal_exit_str = self.personal_exit.get()
 
-        ##
+        #
         new_entry = datetime.datetime.strptime(new_entry_str, "%H:%M").time()
         new_exit = datetime.datetime.strptime(second_exit_str, "%H:%M").time()
+        personal_entry = datetime.datetime.strptime(personal_entry_str, "%H:%M").time()
+        personal_exit = datetime.datetime.strptime(personal_exit_str, "%H:%M").time()
         work_case_exit = self.first_btn_check_var.get()
         personal_case_exit = self.second_btn_check_var.get()
 
@@ -637,10 +659,17 @@ class JobTimeCalculator(object):
                         datetime.date.today(), annexe2_to_annexe1_entry)
 
                 if work_case_exit:
-                    total_time += datetime.datetime.combine(datetime.date.today(), new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry)
+                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail")
+                    total_time += datetime.datetime.combine(datetime.date.today(),
+                                                            new_exit) - datetime.datetime.combine(datetime.date.today(),
+                                                                                                  new_entry)
 
                 if personal_case_exit:
-                    total_time -= datetime.datetime.combine(datetime.date.today(), new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry)
+                    messagebox.showwarning(title="Alerte", message="Sorti(()e) Non Preciser")
+                    total_time -= datetime.datetime.combine(datetime.date.today(),
+                                                            personal_exit) - datetime.datetime.combine(
+                        datetime.date.today(),
+                        personal_entry)
 
             else:
                 total_time = datetime.timedelta()
@@ -683,8 +712,8 @@ class JobTimeCalculator(object):
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
-                    total_time = total_time + (datetime.datetime.combine(datetime.date.today(),
-                                                                         hq_to_annexe1_exit) - datetime.datetime.combine(
+                    total_time += (datetime.datetime.combine(datetime.date.today(),
+                                                             hq_to_annexe1_exit) - datetime.datetime.combine(
                         datetime.date.today(), hq_to_annexe1_entry))
 
                 if hq_visit_to_annexe2_check:
@@ -718,7 +747,18 @@ class JobTimeCalculator(object):
                         datetime.date.today(), annexe2_to_annexe1_entry))
 
                 if work_case_exit:
-                    total_time += datetime.datetime.combine(datetime.date.today(), new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry)
+                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail")
+                    total_time += datetime.datetime.combine(datetime.date.today(),
+                                                            new_exit) - datetime.datetime.combine(datetime.date.today(),
+                                                                                                  new_entry)
+
+                if personal_case_exit:
+                    messagebox.showwarning(title="Alerte", message="Non Preciser")
+                    total_time -= datetime.datetime.combine(datetime.date.today(),
+                                                            personal_exit) - datetime.datetime.combine(
+                        datetime.date.today(),
+                        personal_entry)
+                    return total_time
 
             total_time_str = str(total_time)
 
@@ -728,7 +768,7 @@ class JobTimeCalculator(object):
         except ValueError:
             return False
         except TypeError:
-            messagebox.showerror(title="Erreur", message="Entrer Invalide")
+            messagebox.showerror(title="Erreur", message="Entrée Invalide: Verifier Heure")
 
             ################################
 
