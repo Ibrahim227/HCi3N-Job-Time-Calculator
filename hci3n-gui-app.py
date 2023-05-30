@@ -7,9 +7,6 @@ from tkinter import ttk, messagebox, END, BOTH
 import openpyxl
 
 
-# from ttkwidgets.autocomplete import AutocompleteEntryListbox
-
-
 # redirect to HCi3N website
 def on_click():
     """
@@ -832,5 +829,4 @@ class JobTimeCalculator(object):
 
 if __name__ == "__main__":
     gui = JobTimeCalculator()
-    # unittest.main()
     gui.run()
