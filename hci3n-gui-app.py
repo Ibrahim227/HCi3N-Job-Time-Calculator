@@ -195,7 +195,7 @@ class JobTimeCalculator(object):
         self.display_message.grid(row=0, column=2, ipadx=20, ipady=5)
 
         ############################################ Configure new_frame LabelFrame ################################
-        self.new_frame = ttk.LabelFrame(self.frame, text="Sorti( )& Entrer Complementaire", underline=0)
+        self.new_frame = ttk.LabelFrame(self.frame, text="Sorti(e)& Entrer Complementaire", underline=0)
         self.new_frame.grid(row=4, column=1)
 
         self.new_label = ttk.Label(self.new_frame, text="Heure Entrée (HH:MM):", underline=0, background="lightgreen")
@@ -755,7 +755,6 @@ class JobTimeCalculator(object):
                                                             personal_exit) - datetime.datetime.combine(
                         datetime.date.today(),
                         personal_entry)
-                    return total_time
 
             total_time_str = str(total_time)
 
