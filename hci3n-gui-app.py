@@ -90,9 +90,9 @@ class JobTimeCalculator(object):
                                           underline=0)
         self.observation_list_combobox = ttk.Combobox(self.lateral_label_frame,
                                                       values=["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1",
-                                                              "Sorti(e) vers ANNEXE-2",
+                                                              "Sorti(e) vers ANNEXE-2", "Réunion", "Atelier", "Mission",
                                                               "Consultation", "Décès", "Maladie", "Mariage",
-                                                              "Non Préciser"])
+                                                              "Permission", "Congé", "Autres", "Non Préciser"])
         self.date_entry = ttk.Entry(self.lateral_label_frame)
 
         self.observation_list_combobox_label.grid(row=2, column=0)
@@ -196,7 +196,7 @@ class JobTimeCalculator(object):
 
         ############################################ Configure new_frame LabelFrame ################################
         self.new_frame = ttk.LabelFrame(self.frame, text="Sorti(e)& Entrer Complementaire", underline=0)
-        self.new_frame.grid(row=4, column=1)
+        self.new_frame.grid(row=3, column=1)
 
         self.new_label = ttk.Label(self.new_frame, text="Heure Entrée (HH:MM):", underline=0, background="lightgreen")
         self.second_new_label = ttk.Label(self.new_frame, text="Sortie (HH:MM):", underline=0, background="red")
@@ -213,10 +213,10 @@ class JobTimeCalculator(object):
         self.first_btn_check_var = tk.BooleanVar(self.new_frame, value=False)
         self.second_btn_check_var = tk.BooleanVar(self.new_frame, value=False)
 
-        self.first_btn_checkbutton = ttk.Checkbutton(self.new_frame, text="Cadre du travail",
+        self.first_btn_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie:\nCadre du travail",
                                                      variable=self.first_btn_check_var, onvalue=True, offvalue=False,
                                                      underline=0)
-        self.btn_second_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie: Non Preciser",
+        self.btn_second_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie:\nHors Cadre du travail",
                                                       variable=self.second_btn_check_var, onvalue=True, offvalue=False,
                                                       underline=0)
 
@@ -244,7 +244,7 @@ class JobTimeCalculator(object):
         # Create the exit/entry label and Buttons from HQ to annexe1-2
 
         self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE-1 et ANNEXE-2)", underline=0)
-        self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=20, pady=20)
+        self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=15, pady=15)
 
         self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=False)
         self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verifier Presence ANNEXE-1",
@@ -669,7 +669,12 @@ class JobTimeCalculator(object):
                         personal_entry)
 
             else:
-                total_time = datetime.timedelta()
+                # total_time = datetime.timedelta()
+                total_time = datetime.datetime.combine(datetime.date.today(),
+                                                       end_time) - datetime.datetime.combine(
+                    datetime.date.today(), start_time) - (
+                                     datetime.datetime.combine(datetime.date.today(), break_end_time) -
+                                     datetime.datetime.combine(datetime.date.today(), break_start_time))
                 messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
 
                 if not (hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or
@@ -683,12 +688,7 @@ class JobTimeCalculator(object):
                 if break_start_time > break_end_time:
                     messagebox.showerror(title="Erreur", message="Temps de pause Incorrect.")
 
-                if start_time < break_start_time and end_time >= break_end_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(),
-                                                           end_time) - datetime.datetime.combine(
-                        datetime.date.today(), start_time) - (
-                                         datetime.datetime.combine(datetime.date.today(), break_end_time) -
-                                         datetime.datetime.combine(datetime.date.today(), break_start_time))
+                # if start_time < break_start_time and end_time >= break_end_time:
 
                 elif break_start_time == break_end_time:
                     messagebox.showerror(title="Erreur",
@@ -697,15 +697,15 @@ class JobTimeCalculator(object):
                                                            end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time)
 
-                elif start_time >= break_end_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(),
-                                                           end_time) - datetime.datetime.combine(
-                        datetime.date.today(), start_time)
-
-                elif end_time <= break_start_time:
-                    total_time = datetime.datetime.combine(datetime.date.today(),
-                                                           end_time) - datetime.datetime.combine(
-                        datetime.date.today(), start_time) - (break_end_time - break_start_time)
+                # elif start_time >= break_end_time:
+                #     total_time = datetime.datetime.combine(datetime.date.today(),
+                #                                            end_time) - datetime.datetime.combine(
+                #         datetime.date.today(), start_time)
+                #
+                # elif end_time <= break_start_time:
+                #     total_time = datetime.datetime.combine(datetime.date.today(),
+                #                                            end_time) - datetime.datetime.combine(
+                #         datetime.date.today(), start_time) - (break_end_time - break_start_time)
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
