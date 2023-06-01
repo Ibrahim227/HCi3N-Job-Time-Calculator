@@ -195,11 +195,11 @@ class JobTimeCalculator(object):
         self.display_message.grid(row=0, column=2, ipadx=20, ipady=5)
 
         ############################################ Configure new_frame LabelFrame ################################
-        self.new_frame = ttk.LabelFrame(self.frame, text="Sorti(e)& Entrer Complementaire", underline=0)
+        self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
         self.new_frame.grid(row=3, column=1)
 
-        self.new_label = ttk.Label(self.new_frame, text="Heure Entrée (HH:MM):", underline=0, background="lightgreen")
-        self.second_new_label = ttk.Label(self.new_frame, text="Sortie (HH:MM):", underline=0, background="red")
+        self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="orange")
+        self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0, background="orange")
 
         self.new_label.grid(row=0, column=0)
         self.second_new_label.grid(row=0, column=1)
@@ -213,7 +213,7 @@ class JobTimeCalculator(object):
         self.first_btn_check_var = tk.BooleanVar(self.new_frame, value=False)
         self.second_btn_check_var = tk.BooleanVar(self.new_frame, value=False)
 
-        self.first_btn_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie:\nCadre du travail",
+        self.first_btn_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie:\nCadre du travail/Autorisée",
                                                      variable=self.first_btn_check_var, onvalue=True, offvalue=False,
                                                      underline=0)
         self.btn_second_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie:\nHors Cadre du travail",
@@ -223,9 +223,9 @@ class JobTimeCalculator(object):
         self.first_btn_checkbutton.grid(row=0, column=2)
         self.btn_second_checkbutton.grid(row=2, column=2)
 
-        self.personal_label = ttk.Label(self.new_frame, text="Heure Entrée (HH:MM):", background="lightgreen",
+        self.personal_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", background="orange",
                                         underline=0)
-        self.personal_second_label = ttk.Label(self.new_frame, text="Sortie (HH:MM):", background="red", underline=0)
+        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="orange", underline=0)
 
         self.personal_entry = ttk.Entry(self.new_frame)
         self.personal_exit = ttk.Entry(self.new_frame)
@@ -656,13 +656,22 @@ class JobTimeCalculator(object):
                         datetime.date.today(), annexe2_to_annexe1_entry)
 
                 if work_case_exit:
-                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail")
-                    total_time += datetime.datetime.combine(datetime.date.today(),
-                                                            new_exit) - datetime.datetime.combine(datetime.date.today(),
-                                                                                                  new_entry)
+                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail / Autorisée")
+                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    if new_exit > end_time:
+                        total_time = datetime.datetime.combine(datetime.date.today(),
+                                                               end_time) - datetime.datetime.combine(
+                            datetime.date.today(),
+                            start_time) + (datetime.datetime.combine(datetime.date.today(),
+                                                                     new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry))
+
+                    elif end_time > new_exit:
+                        total_time = datetime.datetime.combine(datetime.date.today(),
+                                                               end_time) - datetime.datetime.combine(
+                            datetime.date.today(), start_time)
 
                 if personal_case_exit:
-                    messagebox.showwarning(title="Alerte", message="Sorti(()e) Non Preciser")
+                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Hors Cadre du Travail")
                     total_time -= datetime.datetime.combine(datetime.date.today(),
                                                             personal_exit) - datetime.datetime.combine(
                         datetime.date.today(),
@@ -680,7 +689,7 @@ class JobTimeCalculator(object):
                 if not (hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or
                         annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
-                                           message="Aucune visite effectuee vers:\n SIEGE; ANNEXE-1; ANNEXE-2;")
+                                           message="Aucune visite effectuee vers:\n SIEGE; ANNEXE-1; ANNEXE-2")
 
                 if not (work_case_exit or personal_case_exit):
                     messagebox.showwarning(title="Alerte", message="Aucune Sortie Signalée")
@@ -744,13 +753,22 @@ class JobTimeCalculator(object):
                         datetime.date.today(), annexe2_to_annexe1_entry))
 
                 if work_case_exit:
-                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail")
-                    total_time += datetime.datetime.combine(datetime.date.today(),
-                                                            new_exit) - datetime.datetime.combine(datetime.date.today(),
-                                                                                                  new_entry)
+                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail / Autorisée")
+                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    if new_exit > end_time:
+                        total_time = datetime.datetime.combine(datetime.date.today(),
+                                                               end_time) - datetime.datetime.combine(
+                            datetime.date.today(),
+                            start_time) + (datetime.datetime.combine(datetime.date.today(),
+                                                                     new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry))
+
+                    elif end_time > new_exit:
+                        total_time = datetime.datetime.combine(datetime.date.today(),
+                                                               end_time) - datetime.datetime.combine(
+                            datetime.date.today(), start_time)
 
                 if personal_case_exit:
-                    messagebox.showwarning(title="Alerte", message="Non Preciser")
+                    messagebox.showwarning(title="Alerte", message="Sortie Signalée: Hors Cadre du Travail")
                     total_time -= datetime.datetime.combine(datetime.date.today(),
                                                             personal_exit) - datetime.datetime.combine(
                         datetime.date.today(),
