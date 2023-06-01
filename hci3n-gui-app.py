@@ -177,13 +177,13 @@ class JobTimeCalculator(object):
         self.break_start_entry.grid(row=3, column=1)
         self.break_end_entry.grid(row=3, column=2)
 
-        # Week days combobox entry
-        self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
-        combobox = ttk.Combobox(self.user_info_frame,
-                                values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"])
-        self.week_combobox = combobox
-        self.week_label.grid(row=0, column=3)
-        self.week_combobox.grid(row=1, column=3)
+        # # Week days combobox entry
+        # self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
+        # combobox = ttk.Combobox(self.user_info_frame,
+        #                         values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"])
+        # self.week_combobox = combobox
+        # self.week_combobox.grid(row=1, column=3)
+        # self.week_label.grid(row=0, column=3)
 
         for widget in self.user_info_frame.winfo_children():
             widget.grid_configure(padx=20, pady=5, sticky="news")
@@ -196,10 +196,11 @@ class JobTimeCalculator(object):
 
         ############################################ Configure new_frame LabelFrame ################################
         self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
-        self.new_frame.grid(row=3, column=1)
+        self.new_frame.grid(row=3, column=1, sticky='news')
 
         self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="orange")
-        self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0, background="orange")
+        self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0,
+                                          background="orange")
 
         self.new_label.grid(row=0, column=0)
         self.second_new_label.grid(row=0, column=1)
@@ -225,7 +226,8 @@ class JobTimeCalculator(object):
 
         self.personal_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", background="orange",
                                         underline=0)
-        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="orange", underline=0)
+        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="orange",
+                                               underline=0)
 
         self.personal_entry = ttk.Entry(self.new_frame)
         self.personal_exit = ttk.Entry(self.new_frame)
@@ -237,14 +239,14 @@ class JobTimeCalculator(object):
         self.personal_exit.grid(row=3, column=1)
 
         for widget in self.new_frame.winfo_children():
-            widget.grid_configure(padx=15, pady=5, sticky="news")
+            widget.grid_configure(padx=20, pady=5, sticky="news")
 
         ############################################### Second LabelFrame ###################################################
 
         # Create the exit/entry label and Buttons from HQ to annexe1-2
 
         self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE-1 et ANNEXE-2)", underline=0)
-        self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=15, pady=15)
+        self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=15, pady=10)
 
         self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=False)
         self.exit_entry_status_check_1 = ttk.Checkbutton(self.exit_entry_frame, text="Verifier Presence ANNEXE-1",
@@ -294,7 +296,7 @@ class JobTimeCalculator(object):
         # Create the labelFrame annexe 1 to hq and annexe 2
         ################# first check, entries and labels
         self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
-        self.verify_frame.grid(row=2, column=0, padx=20, pady=20, sticky="news")
+        self.verify_frame.grid(row=2, column=0, padx=20, pady=15, sticky="news")
         self.presence_check_var = tk.BooleanVar(self.verify_frame, value=False)
         self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verifier Presence SIEGE",
                                               variable=self.presence_check_var,
@@ -344,7 +346,7 @@ class JobTimeCalculator(object):
         ############################################ Configure Fourth LabelFrame ################################
 
         self.third_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-2 vers (SIEGE-ANNEXE-1)", underline=0)
-        self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=10)
+        self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=15)
 
         self.verification_button_var = tk.BooleanVar(self.third_frame, value=False)
         self.verification_button = ttk.Checkbutton(self.third_frame, text="Verifier Presence SIEGE",
@@ -483,7 +485,7 @@ class JobTimeCalculator(object):
         self.value_exit_widget.delete(0, END)
         self.second_annexe_entry.delete(0, END)
         self.second_annexe_exit.delete(0, END)
-        self.week_combobox.delete(0, END)
+        # self.week_combobox.delete(0, END)
         self.observation_list_combobox.delete(0, END)
         self.date_entry.delete(0, END)
         self.new_entry.delete(0, END)
@@ -599,7 +601,7 @@ class JobTimeCalculator(object):
 
         # Usage of whole conditionals variables
         try:
-            # total_time = datetime.timedelta()  # Initialize total_time to zero
+            # total_time = datetime.timedelta(hours=17, minutes=30)  # Initialize total_time to zero
             if end_time <= start_time:
                 messagebox.showerror("Erreur",
                                      message="l'Heure d'Arrivee est superieure ou egal a l'Heure de Descente \n 'Calcule Impossible.'")
@@ -621,9 +623,20 @@ class JobTimeCalculator(object):
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte', message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
-                    total_time += datetime.datetime.combine(datetime.date.today(),
-                                                            hq_to_annexe1_exit) - datetime.datetime.combine(
-                        datetime.date.today(), hq_to_annexe1_entry)
+                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    if hq_to_annexe1_exit >= end_time:
+                        total_time = datetime.datetime.combine(datetime.date.today(),
+                                                               end_time) - datetime.datetime.combine(
+                            datetime.date.today(),
+                            start_time) + datetime.datetime.combine(datetime.date.today(),
+                                                                    hq_to_annexe1_exit) - datetime.datetime.combine(
+                            datetime.date.today(), hq_to_annexe1_entry)
+
+                    elif end_time > hq_to_annexe1_exit:
+                        total_time = datetime.datetime.combine(datetime.date.today(),
+                                                               end_time) - datetime.datetime.combine(
+                            datetime.date.today(),
+                            start_time)
 
                 if hq_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-2")
@@ -780,7 +793,7 @@ class JobTimeCalculator(object):
             return total_time  # Return the total_time value
 
         except ValueError:
-            return False
+            messagebox.showerror(title="Erreur", message="Verifier Valeur")
         except TypeError:
             messagebox.showerror(title="Erreur", message="Entrée Invalide: Verifier Heure")
 
@@ -804,32 +817,32 @@ class JobTimeCalculator(object):
         descente = self.time_end_entry.get()
         lieu = self.place_combobox.get()
         total = self.calculate_total_time()
-        jour_semaine = self.week_combobox.get()
+        # jour_semaine = self.week_combobox.get()
         observation = self.observation_list_combobox.get()
         daily_date = self.date_entry.get()
+        today = datetime.date.today()
 
         # Validate input
         if not (
-                nom_prenom and fonction and departement and lieu and arrivee and descente and total and jour_semaine and daily_date):
-            required_list = ["Nom & Prenom", "Fonction", "Departement", "Lieu", "Heure Arrivee", "Descente", "Total",
-                             "Jour", "Date"]
+                nom_prenom and fonction and departement and lieu and arrivee and descente and total):
+            required_list = ["Nom & Prenom", "Fonction", "Departement", "Lieu", "Heure Arrivee", "Descente", "Total"]
             messagebox.showerror(f"Erreur: Sauvegarde Impossible",
                                  f"Veuillez remplir tout les champs requis:\n {list(required_list)}")
             return
         # Save data to Excel file
         try:
-            file_path = f"Sauvegarde_du_{daily_date}" + "data.xlsx"
+            file_path = f"Sauvegarde_du_{today}_.xlsx"
             if not os.path.exists(file_path):
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
                 sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "PAUSE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "TEMPS TOTAL JOURNALIER", "JOUR", "DATE", "OBSERVATION"])
+                              "RETOUR PAUSE", "DESCENTE", "TEMPS TOTAL JOURNALIER", "DATE", "OBSERVATION"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
             sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, debut_pause, retour_pause, descente,
-                          total, jour_semaine, daily_date, observation])
+                          total, daily_date, observation])
             workbook.save(file_path)
             workbook.close()
 
