@@ -1,6 +1,6 @@
 # HCi3N-Job-Time-Calculator
 
-Cette interface permet de calculer le temps total de travail des employees du HC3N par jour. Enfin, il sauvegarde l'ensemble des informations dans un fichier excel.
+Cette interface permet de calculer le temps total de travail des employees du HC3N par jour. Puis sauvegarde l'ensemble des informations dans un fichier excel.
 
 # A savoir sur l'interface:
 
