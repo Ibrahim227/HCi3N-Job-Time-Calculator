@@ -623,8 +623,8 @@ class JobTimeCalculator(object):
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte', message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
-                    if hq_to_annexe1_exit >= end_time:
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
+                    if hq_to_annexe1_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -640,7 +640,7 @@ class JobTimeCalculator(object):
 
                 if hq_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-2")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe2_exit >= end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
@@ -657,8 +657,8 @@ class JobTimeCalculator(object):
 
                 if annexe1_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu au SIEGE")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
-                    if annexe1_to_hq_exit >= end_time:
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
+                    if annexe1_to_hq_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -675,7 +675,7 @@ class JobTimeCalculator(object):
                 if annexe1_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2")
                     total_time = datetime.timedelta(hours=17, minutes=30)
-                    if annexe1_to_annexe2_exit >= end_time:
+                    if annexe1_to_annexe2_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -692,7 +692,7 @@ class JobTimeCalculator(object):
                 if annexe2_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu au SIEGE")
                     total_time = datetime.timedelta(hours=17, minutes=30)
-                    if annexe2_to_hq_exit >= end_time:
+                    if annexe2_to_hq_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -709,7 +709,7 @@ class JobTimeCalculator(object):
                 if annexe2_visit_to_annexe1_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1")
                     total_time = datetime.timedelta(hours=17, minutes=30)
-                    if annexe2_to_annexe1_exit >= end_time:
+                    if annexe2_to_annexe1_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -725,7 +725,7 @@ class JobTimeCalculator(object):
 
                 if work_case_exit:
                     messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail / Autorisée")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if new_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
@@ -786,8 +786,8 @@ class JobTimeCalculator(object):
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte', message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
-                    if hq_to_annexe1_exit >= end_time:
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
+                    if hq_to_annexe1_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -809,7 +809,7 @@ class JobTimeCalculator(object):
 
                 if hq_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-2")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe2_exit >= end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
@@ -832,8 +832,8 @@ class JobTimeCalculator(object):
 
                 if annexe1_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu au SIEGE")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
-                    if annexe1_to_hq_exit >= end_time:
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
+                    if annexe1_to_hq_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -855,8 +855,8 @@ class JobTimeCalculator(object):
 
                 if annexe1_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
-                    if annexe1_to_annexe2_exit >= end_time:
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
+                    if annexe1_to_annexe2_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -878,8 +878,8 @@ class JobTimeCalculator(object):
 
                 if annexe2_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu aU SIEGE")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
-                    if annexe2_to_hq_exit >= end_time:
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
+                    if annexe2_to_hq_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
@@ -901,7 +901,7 @@ class JobTimeCalculator(object):
 
                 if annexe2_visit_to_annexe1_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_annexe1_exit >= end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
@@ -924,7 +924,7 @@ class JobTimeCalculator(object):
 
                 if work_case_exit:
                     messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail / Autorisée")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if new_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
