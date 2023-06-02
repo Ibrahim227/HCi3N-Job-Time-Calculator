@@ -674,7 +674,7 @@ class JobTimeCalculator(object):
 
                 if annexe1_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe1_to_annexe2_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
@@ -691,31 +691,28 @@ class JobTimeCalculator(object):
 
                 if annexe2_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu au SIEGE")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_hq_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) + datetime.datetime.combine(datetime.date.today(),
-                                                                    annexe2_to_hq_exit) - datetime.datetime.combine(
-                            datetime.date.today(), annexe2_to_hq_entry)
+                            start_time)) + (datetime.datetime.combine(datetime.date.today(),
+                                                                      annexe2_to_hq_exit) - datetime.datetime.combine(datetime.date.today(), annexe2_to_hq_entry))
 
                     elif end_time > annexe2_to_hq_exit:
                         total_time = datetime.datetime.combine(datetime.date.today(),
                                                                end_time) - datetime.datetime.combine(
-                            datetime.date.today(),
-                            start_time)
+                            datetime.date.today(), start_time)
 
                 if annexe2_visit_to_annexe1_check:
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1")
-                    total_time = datetime.timedelta(hours=17, minutes=30)
+                    # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_annexe1_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) + datetime.datetime.combine(datetime.date.today(),
-                                                                    annexe2_to_annexe1_exit) - datetime.datetime.combine(
-                            datetime.date.today(), annexe2_to_annexe1_entry)
+                            start_time)) + (datetime.datetime.combine(datetime.date.today(),
+                                                                      annexe2_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), annexe2_to_annexe1_entry))
 
                     elif end_time > annexe2_to_annexe1_exit:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -727,11 +724,11 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail / Autorisée")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if new_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) + (datetime.datetime.combine(datetime.date.today(),
-                                                                     new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry))
+                            start_time)) + (datetime.datetime.combine(datetime.date.today(),
+                                                                      new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry))
 
                     elif end_time > new_exit:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -747,17 +744,17 @@ class JobTimeCalculator(object):
 
             else:
                 # total_time = datetime.timedelta()
-                total_time = datetime.datetime.combine(datetime.date.today(),
-                                                       end_time) - datetime.datetime.combine(
-                    datetime.date.today(), start_time) - (
+                messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
+                total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                        end_time) - datetime.datetime.combine(
+                    datetime.date.today(), start_time)) - (
                                      datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                      datetime.datetime.combine(datetime.date.today(), break_start_time))
-                messagebox.showinfo(title="Information", message="L'Employee a prit une pause.")
 
                 if not (hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or
                         annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
-                                           message="Aucune visite effectuee vers:\n SIEGE; ANNEXE-1; ANNEXE-2")
+                                           message="Aucune visite effectuée vers:\n SIEGE; ANNEXE-1; ANNEXE-2")
 
                 if not (work_case_exit or personal_case_exit):
                     messagebox.showwarning(title="Alerte", message="Aucune Sortie Signalée")
@@ -788,22 +785,21 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title='Alerte', message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe1_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(),
-                                                                       break_start_time)) + datetime.datetime.combine(
-                            datetime.date.today(),
-                            hq_to_annexe1_exit) - datetime.datetime.combine(
-                            datetime.date.today(), hq_to_annexe1_entry)
+                                                                       break_start_time)) + (
+                                             datetime.datetime.combine(datetime.date.today(),
+                                                                       hq_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_entry))
 
                     elif end_time > hq_to_annexe1_exit:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time))
 
@@ -811,10 +807,10 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title="Alerte", message="L'employee du SIEGE s'est rendu a l'ANNEXE-2")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe2_exit >= end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(),
                                                                        break_start_time)) + datetime.datetime.combine(
@@ -823,10 +819,10 @@ class JobTimeCalculator(object):
                             datetime.date.today(), hq_to_annexe2_entry)
 
                     elif end_time > hq_to_annexe2_exit:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time))
 
@@ -834,10 +830,10 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu au SIEGE")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe1_to_hq_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(),
                                                                        break_start_time)) + datetime.datetime.combine(
@@ -846,10 +842,10 @@ class JobTimeCalculator(object):
                             datetime.date.today(), annexe1_to_hq_entry)
 
                     elif end_time > annexe1_to_hq_exit:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time))
 
@@ -857,10 +853,10 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe1_to_annexe2_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(),
                                                                        break_start_time)) + datetime.datetime.combine(
@@ -869,10 +865,10 @@ class JobTimeCalculator(object):
                             datetime.date.today(), annexe1_to_annexe2_entry)
 
                     elif end_time > annexe1_to_annexe2_exit:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time))
 
@@ -880,10 +876,10 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu aU SIEGE")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_hq_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(),
                                                                        break_start_time)) + datetime.datetime.combine(
@@ -892,10 +888,10 @@ class JobTimeCalculator(object):
                             datetime.date.today(), annexe2_to_hq_entry)
 
                     elif end_time > annexe2_to_hq_exit:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time))
 
@@ -903,10 +899,10 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title="Alerte", message="L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_annexe1_exit >= end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(),
                                                                        break_start_time)) + datetime.datetime.combine(
@@ -915,10 +911,10 @@ class JobTimeCalculator(object):
                             datetime.date.today(), annexe2_to_annexe1_entry)
 
                     elif end_time > annexe2_to_annexe1_exit:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time))
 
@@ -926,27 +922,27 @@ class JobTimeCalculator(object):
                     messagebox.showwarning(title="Alerte", message="Sortie Signalée: Cadre du Travail / Autorisée")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if new_exit > end_time:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
                             datetime.date.today(),
-                            start_time) - (
+                            start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time)) + (
                                              datetime.datetime.combine(datetime.date.today(),
                                                                        new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry))
 
                     elif end_time > new_exit:
-                        total_time = datetime.datetime.combine(datetime.date.today(),
-                                                               end_time) - datetime.datetime.combine(
-                            datetime.date.today(), start_time) - (
+                        total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                                end_time) - datetime.datetime.combine(
+                            datetime.date.today(), start_time)) - (
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time))
 
                 if personal_case_exit:
                     messagebox.showwarning(title="Alerte", message="Sortie Signalée: Hors Cadre du Travail")
-                    total_time = datetime.datetime.combine(datetime.date.today(),
-                                                           end_time) - datetime.datetime.combine(
-                        datetime.date.today(), start_time) - (
+                    total_time = (datetime.datetime.combine(datetime.date.today(),
+                                                            end_time) - datetime.datetime.combine(
+                        datetime.date.today(), start_time)) - (
                                          datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                          datetime.datetime.combine(datetime.date.today(),
                                                                    break_start_time)) - (
