@@ -997,12 +997,12 @@ class JobTimeCalculator(object):
             return
         # Save data to Excel file
         try:
-            file_path = f"Sauvegarde_du_{today}_.xlsx"
+            file_path = f"sauvegarde\\Sauvegarde_du_{today}.xlsx"
             if not os.path.exists(file_path):
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
                 sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "PAUSE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "TEMPS TOTAL JOUR", "DATE", "OBSERVATION"])
+                              "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
