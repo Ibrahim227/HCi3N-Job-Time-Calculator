@@ -30,7 +30,7 @@ class JobTimeCalculator(object):
         # self.window.bell(displayof=0)
         self.window.wait_visibility(window=self.window)
         self.window.iconbitmap('images\\logoHCi3N.ico')
-        self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5, )
+        self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5)
         self.window.iconposition(x=5, y=1)
         # self.window.config(background="black")
 
