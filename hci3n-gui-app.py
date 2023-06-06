@@ -27,16 +27,16 @@ class JobTimeCalculator(object):
         self.window = tk.Tk()
         self.window.title("HC3N")
         self.window.resizable(True, True)
-        # self.window.bell(displayof=0)
+        self.window.bell(displayof=0)
         self.window.wait_visibility(window=self.window)
         self.window.iconbitmap('images\\logoHCi3N.ico')
         self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5)
         self.window.iconposition(x=5, y=1)
-        # self.window.config(background="black")
+        self.window.config(background="lightblue")
 
         ######## Main Frame
 
-        self.frame = ttk.Frame(self.window)
+        self.frame = ttk.Frame(self.window, relief='raised')
         self.frame.pack(side='top', fill=BOTH)
 
         ################################# Configure First LabelFrame ############################
@@ -190,7 +190,7 @@ class JobTimeCalculator(object):
 
         # # Create message to display
         self.ourmessage = "HC3N"
-        self.display_message = tk.Message(self.frame, text=self.ourmessage, font='italic', relief='raised')
+        self.display_message = tk.Message(self.frame, text=self.ourmessage, font='italic', relief='groove')
         self.display_message.config(bg="orange")
         self.display_message.grid(row=4, column=1, ipadx=20, ipady=5)
 
@@ -198,9 +198,9 @@ class JobTimeCalculator(object):
         self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
         self.new_frame.grid(row=3, column=1, sticky='news')
 
-        self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="orange")
+        self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="lightblue")
         self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0,
-                                          background="orange")
+                                          background="lightblue")
 
         self.new_label.grid(row=0, column=0)
         self.second_new_label.grid(row=0, column=1)
@@ -214,19 +214,19 @@ class JobTimeCalculator(object):
         self.first_btn_check_var = tk.BooleanVar(self.new_frame, value=False)
         self.second_btn_check_var = tk.BooleanVar(self.new_frame, value=False)
 
-        self.first_btn_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie:\nCadre du travail/Autorisée",
+        self.first_btn_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie: Cadre du travail / Autorisée",
                                                      variable=self.first_btn_check_var, onvalue=True, offvalue=False,
                                                      underline=0)
-        self.btn_second_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie:\nHors Cadre du travail",
+        self.btn_second_checkbutton = ttk.Checkbutton(self.new_frame, text="Sortie: Hors Cadre du travail",
                                                       variable=self.second_btn_check_var, onvalue=True, offvalue=False,
                                                       underline=0)
 
         self.first_btn_checkbutton.grid(row=0, column=2)
         self.btn_second_checkbutton.grid(row=2, column=2)
 
-        self.personal_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", background="orange",
+        self.personal_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", background="lightblue",
                                         underline=0)
-        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="orange",
+        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="lightblue",
                                                underline=0)
 
         self.personal_entry = ttk.Entry(self.new_frame)
@@ -243,7 +243,7 @@ class JobTimeCalculator(object):
 
         ############################################### Second LabelFrame ###################################################
 
-        # Create the exit/entry label and Buttons from HQ to annexe1-2
+        # Create the exit/entry, label and checkButtons from HQ to annexe1-2
 
         self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE-1 et ANNEXE-2)", underline=0)
         self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=15, pady=10)
@@ -411,7 +411,7 @@ class JobTimeCalculator(object):
         self.result_label.grid(row=2, column=2)
 
         for widget in self.registration_frame.winfo_children():
-            widget.grid_configure(padx=10, pady=12, sticky="news")
+            widget.grid_configure(padx=10, pady=15, sticky="news")
 
         ################################################################
 
@@ -613,7 +613,7 @@ class JobTimeCalculator(object):
                 if not (
                         hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
-                                           message="Aucune visite effectuee vers: \n SIEGE; ANNEXE-1; ANNEXE-2")
+                                           message="Aucune visite effectuee vers:\n 'SIEGE; ANNEXE-1; ANNEXE-2'")
                 if not (work_case_exit or personal_case_exit):
                     messagebox.showwarning(title="Alerte", message="Aucune Sortie Signalée")
 
@@ -754,7 +754,7 @@ class JobTimeCalculator(object):
                 if not (hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or
                         annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
-                                           message="Aucune visite effectuée vers:\n SIEGE; ANNEXE-1; ANNEXE-2")
+                                           message="Aucune visite effectuée vers:\n 'SIEGE; ANNEXE-1; ANNEXE-2'")
 
                 if not (work_case_exit or personal_case_exit):
                     messagebox.showwarning(title="Alerte", message="Aucune Sortie Signalée")
