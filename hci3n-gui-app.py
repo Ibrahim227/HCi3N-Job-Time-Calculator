@@ -2,6 +2,7 @@ import datetime
 import os
 import tkinter as tk
 import webbrowser
+from time import strftime
 from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
@@ -35,7 +36,7 @@ class JobTimeCalculator(object):
         self.window = tk.Tk()
         self.window.title("HC3N")
         self.window.resizable(True, True)
-        self.window.bell(displayof=0)
+        # self.window.bell(displayof=0)
         self.window.wait_visibility(window=self.window)
         self.window.iconbitmap('images\\logoHCi3N.ico')
         self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5)
@@ -197,14 +198,28 @@ class JobTimeCalculator(object):
             widget.grid_configure(padx=20, pady=5, sticky="news")
 
         # # Create message to display
-        self.ourmessage = "HC3N"
-        self.display_message = tk.Message(self.frame, text=self.ourmessage, font='italic', relief='groove')
-        self.display_message.config(bg="orange")
-        self.display_message.grid(row=4, column=1, ipadx=20, ipady=5)
+        ## create labelframe to display the message within it
 
-        ############################################ Configure new_frame LabelFrame ################################
+        self.msg_labelframe = ttk.LabelFrame(self.frame, text='Message & Heure', underline=0)
+        self.msg_labelframe.grid(row=4, column=1, sticky="news", padx=15, pady=10)
+        self.ourmessage = "HC3N"
+        self.display_message = tk.Message(self.msg_labelframe, text=self.ourmessage, font='italic', relief='groove')
+        self.display_message.config(bg="orange", justify="right", bd=5, highlightthickness=0, highlightcolor='blue')
+        self.display_message.grid(row=0, column=0, ipadx=20, ipady=10)
+
+        ### Display time
+        def display_time():
+            string = strftime("%d-%m-%Y %H:%M:%S %p")
+            self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 15, 'italic'), foreground='black',
+                                        background='lightgreen')
+            self.label_text.config(text=string)
+            self.label_text.after(1000, display_time)
+            self.label_text.grid(row=1, column=3)
+        display_time()
+
+    ############################################ Configure new_frame LabelFrame ################################
         self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
-        self.new_frame.grid(row=3, column=1, sticky='news')
+        self.new_frame.grid(row=3, column=1, sticky='news', padx=15, pady=10)
 
         self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="lightblue")
         self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0,
