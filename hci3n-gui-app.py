@@ -6,6 +6,8 @@ from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
 
+from startup_image import mainwindow
+
 
 # redirect to HCi3N website
 def on_click():
@@ -15,6 +17,12 @@ def on_click():
     """
     url = "http://www.initiative3n.ne/"
     webbrowser.open_new_tab(url)
+
+
+###
+def start_up_image():
+    win = mainwindow
+    win()
 
 
 ### Class Definition
@@ -53,7 +61,7 @@ class JobTimeCalculator(object):
                                                underline=0)
         self.first_last_name_label.grid(row=0, column=0)
 
-        # create  first and last name entry widgets
+        # create  function_set and last name entry widgets
         self.name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "Mme RABO MARIA MOHAMED YAROH",
                           "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
                           "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
@@ -294,7 +302,7 @@ class JobTimeCalculator(object):
         ###################################### Configure Third LabelFrame ################################
 
         # Create the labelFrame annexe 1 to hq and annexe 2
-        ################# first check, entries and labels
+        ################# function_set check, entries and labels
         self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
         self.verify_frame.grid(row=2, column=0, padx=20, pady=15, sticky="news")
         self.presence_check_var = tk.BooleanVar(self.verify_frame, value=False)
@@ -494,7 +502,6 @@ class JobTimeCalculator(object):
         self.personal_entry.delete(0, END)
 
         ################################
-        # fill function
 
     def fill_entries(self):
         """
@@ -697,7 +704,8 @@ class JobTimeCalculator(object):
                                                                 end_time) - datetime.datetime.combine(
                             datetime.date.today(),
                             start_time)) + (datetime.datetime.combine(datetime.date.today(),
-                                                                      annexe2_to_hq_exit) - datetime.datetime.combine(datetime.date.today(), annexe2_to_hq_entry))
+                                                                      annexe2_to_hq_exit) -
+                                            datetime.datetime.combine(datetime.date.today(), annexe2_to_hq_entry))
 
                     elif end_time > annexe2_to_hq_exit:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -712,7 +720,8 @@ class JobTimeCalculator(object):
                                                                 end_time) - datetime.datetime.combine(
                             datetime.date.today(),
                             start_time)) + (datetime.datetime.combine(datetime.date.today(),
-                                                                      annexe2_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), annexe2_to_annexe1_entry))
+                                                                      annexe2_to_annexe1_exit) -
+                                            datetime.datetime.combine(datetime.date.today(), annexe2_to_annexe1_entry))
 
                     elif end_time > annexe2_to_annexe1_exit:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -728,7 +737,8 @@ class JobTimeCalculator(object):
                                                                 end_time) - datetime.datetime.combine(
                             datetime.date.today(),
                             start_time)) + (datetime.datetime.combine(datetime.date.today(),
-                                                                      new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry))
+                                                                      new_exit) -
+                                            datetime.datetime.combine(datetime.date.today(), new_entry))
 
                     elif end_time > new_exit:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -793,7 +803,8 @@ class JobTimeCalculator(object):
                                              datetime.datetime.combine(datetime.date.today(),
                                                                        break_start_time)) + (
                                              datetime.datetime.combine(datetime.date.today(),
-                                                                       hq_to_annexe1_exit) - datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_entry))
+                                                                       hq_to_annexe1_exit) -
+                                             datetime.datetime.combine(datetime.date.today(), hq_to_annexe1_entry))
 
                     elif end_time > hq_to_annexe1_exit:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -929,7 +940,8 @@ class JobTimeCalculator(object):
                                              datetime.datetime.combine(datetime.date.today(), break_end_time) -
                                              datetime.datetime.combine(datetime.date.today(), break_start_time)) + (
                                              datetime.datetime.combine(datetime.date.today(),
-                                                                       new_exit) - datetime.datetime.combine(datetime.date.today(), new_entry))
+                                                                       new_exit) -
+                                             datetime.datetime.combine(datetime.date.today(), new_entry))
 
                     elif end_time > new_exit:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -947,7 +959,8 @@ class JobTimeCalculator(object):
                                          datetime.datetime.combine(datetime.date.today(),
                                                                    break_start_time)) - (
                                          datetime.datetime.combine(datetime.date.today(),
-                                                                   personal_exit) - datetime.datetime.combine(datetime.date.today(), personal_entry))
+                                                                   personal_exit) -
+                                         datetime.datetime.combine(datetime.date.today(), personal_entry))
 
             total_time_str = str(total_time)
 
@@ -1018,6 +1031,8 @@ class JobTimeCalculator(object):
     def run(self):
         self.window.mainloop()
 
+
+#
 
 if __name__ == "__main__":
     gui = JobTimeCalculator()

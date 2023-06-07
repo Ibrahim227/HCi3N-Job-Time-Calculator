@@ -1,21 +1,28 @@
-from PIL import Image, ImageTk
-import tkinter
 import tkinter as tk
-from tkinter import PhotoImage, Canvas, YES
-
-root = tk.Tk()
-root.title("HC3N")
-root.geometry("990x500")
-root.iconbitmap("images\\logoHCi3N.ico")
-root.config(background="lightblue")
+from tkinter import PhotoImage, Canvas, BOTH
 
 
-width = 300
-height = 300
-image = PhotoImage(file='images\\zero.png')
-canvas = Canvas(root, width=width, height=height)
-canvas.create_image(width=width/2, height=height/2, image=image)
+def mainwindow():
 
-canvas.pack(expand=YES)
+    root = tk.Tk()
+    root.title("HC3N")
+    root.geometry("980x250+110+100")
+    root.iconbitmap("images\\logoHCi3N.ico")
+    root.config(background="lightblue")
+    root.resizable(height=False, width=False)
+    root.wait_visibility(window=root)
+    root.overrideredirect(False)
 
-root.mainloop()
+    width = 400
+    height = 400
+
+    image_1 = PhotoImage(file='hci3n.png')
+    canvas_1 = Canvas(root, width=width, height=height)
+    canvas_1.create_image(0, 0, image=image_1, anchor='nw')
+    canvas_1.pack(expand=True, fill=BOTH, side='top')
+    # root.after(5000)
+
+    root.mainloop()
+
+
+mainwindow()
