@@ -14,21 +14,24 @@ from startup_image import mainwindow
 def on_click():
     """
     Redirect to HC3N website
-    :return: Open a new tab within your default navigator
+    :return: Open a new tab within your default web-browser
     """
     url = "http://www.initiative3n.ne/"
     webbrowser.open_new_tab(url)
 
 
-###
+####### function for Startup Image
 def start_up_image():
+    """
+    :return: startup image within new window
+    """
     win = mainwindow
     win()
 
 
 ### Class Definition
 
-class JobTimeCalculator(object):
+class JobTimeCalculator:
     # Initialize the class
     def __init__(self):
         super().__init__()  # Allows to inherit from the tkinter class object
@@ -205,7 +208,7 @@ class JobTimeCalculator(object):
         self.ourmessage = "HC3N"
         self.display_message = tk.Message(self.msg_labelframe, text=self.ourmessage, font='italic', relief='groove')
         self.display_message.config(bg="orange", justify="right", bd=5, highlightthickness=0, highlightcolor='blue')
-        self.display_message.grid(row=0, column=0, ipadx=20, ipady=10)
+        self.display_message.grid(row=0, column=0, ipadx=20, ipady=10, sticky='news')
 
         ### Display time
         def display_time():
@@ -213,11 +216,12 @@ class JobTimeCalculator(object):
             self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 15, 'italic'), foreground='black',
                                         background='lightgreen')
             self.label_text.config(text=string)
+            self.label_text.grid(row=1, column=3, sticky='news')
             self.label_text.after(1000, display_time)
-            self.label_text.grid(row=1, column=3)
+
         display_time()
 
-    ############################################ Configure new_frame LabelFrame ################################
+        ############################################ Configure new_frame LabelFrame ################################
         self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
         self.new_frame.grid(row=3, column=1, sticky='news', padx=15, pady=10)
 

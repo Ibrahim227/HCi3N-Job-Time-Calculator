@@ -3,7 +3,9 @@ from tkinter import BOTH
 
 
 def mainwindow():
-
+    """
+    :return: Display startup image
+    """
     root = tk.Tk()
     root.title("HC3N")
     root.geometry("980x250")
@@ -20,8 +22,7 @@ def mainwindow():
     canvas_1.pack(expand=True, fill=BOTH)
     canvas_1.image_1 = tk.PhotoImage(file='images\\hci3n.png')
     canvas_1.create_image(0, 0, image=canvas_1.image_1, anchor='nw')
-    root.after(5000, mainwindow)
-
+    # root.after(5000, mainwindow)
     root.mainloop()
 
 mainwindow()
