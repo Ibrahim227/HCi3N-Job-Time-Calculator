@@ -40,6 +40,7 @@ class JobTimeCalculator:
         self.window.title("HC3N")
         self.window.resizable(True, True)
         # self.window.bell(displayof=0)
+        self.window.geometry()
         self.window.wait_visibility(window=self.window)
         self.window.iconbitmap('images\\logoHCi3N.ico')
         self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5)
@@ -58,7 +59,7 @@ class JobTimeCalculator:
 
         ################# lateral LabelFrame #################
         self.lateral_label_frame = ttk.LabelFrame(self.frame, text="Panneau Lateral", underline=0)
-        self.lateral_label_frame.grid(row=0, column=1)
+        self.lateral_label_frame.grid(row=0, column=1, sticky='news')
 
         # Create name and last name  label
         self.first_last_name_label = ttk.Label(self.lateral_label_frame, text='Nom & Prenom:', background="lightgrey",
@@ -204,19 +205,23 @@ class JobTimeCalculator:
         ## create labelframe to display the message within it
 
         self.msg_labelframe = ttk.LabelFrame(self.frame, text='Message & Heure', underline=0)
-        self.msg_labelframe.grid(row=4, column=1, sticky="news", padx=15, pady=10)
-        self.ourmessage = "HC3N"
-        self.display_message = tk.Message(self.msg_labelframe, text=self.ourmessage, font='italic', relief='groove')
-        self.display_message.config(bg="orange", justify="right", bd=5, highlightthickness=0, highlightcolor='blue')
-        self.display_message.grid(row=0, column=0, ipadx=20, ipady=10, sticky='news')
+        self.msg_labelframe.grid(row=4, column=1, sticky="news", padx=10, pady=10)
+        self.ourmessage = "HAUT COMMISSARIAT A L'INITIATIVE 3N"
+        self.display_message = tk.Message(self.msg_labelframe, text=self.ourmessage, font='italic')
+        self.display_message.config(justify="center", bd=5, highlightthickness=0, highlightcolor='blue', relief='flat')
+        self.display_message.grid(row=0, column=0, ipadx=50)
 
         ### Display time
         def display_time():
+            """
+            Print a clock time
+            :return: A numeric clock
+            """
             string = strftime("%d-%m-%Y %H:%M:%S %p")
             self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 15, 'italic'), foreground='black',
                                         background='lightgreen')
             self.label_text.config(text=string)
-            self.label_text.grid(row=1, column=3, sticky='news')
+            self.label_text.grid(row=0, column=3, sticky='news', ipadx=20)
             self.label_text.after(1000, display_time)
 
         display_time()
