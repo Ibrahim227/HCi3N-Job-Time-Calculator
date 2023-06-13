@@ -14,7 +14,6 @@ def mainwindow():
     root.resizable(height=False, width=False)
     root.wait_visibility(window=root)
     root.overrideredirect(False)
-    root.wm_state(newstate='normal')
 
     width = 400
     height = 400

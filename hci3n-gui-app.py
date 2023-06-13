@@ -43,23 +43,24 @@ class JobTimeCalculator:
         self.window.geometry()
         self.window.wait_visibility(window=self.window)
         self.window.iconbitmap('images\\logoHCi3N.ico')
-        self.window.config(background="lightgreen", highlightthickness=False, relief="groove", border=5)
+        self.window.config(background="lightgrey", highlightthickness=False, relief="groove", border=5)
         self.window.iconposition(x=5, y=1)
-        self.window.config(background="lightblue")
+
+        #
+        ###
 
         ######## Main Frame
-
         self.frame = ttk.Frame(self.window, relief='raised')
         self.frame.pack(side='top', fill=BOTH)
 
         ################################# Configure First LabelFrame ############################
         # Saving user Information
         self.user_info_frame = ttk.Labelframe(self.frame, text='Information Employee', underline=0)
-        self.user_info_frame.grid(row=0, column=0, padx=20, pady=15, sticky='news')
+        self.user_info_frame.grid(row=0, column=0, sticky='news', padx=20, pady=10)
 
         ################# lateral LabelFrame #################
         self.lateral_label_frame = ttk.LabelFrame(self.frame, text="Panneau Lateral", underline=0)
-        self.lateral_label_frame.grid(row=0, column=1, sticky='news')
+        self.lateral_label_frame.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
         # Create name and last name  label
         self.first_last_name_label = ttk.Label(self.lateral_label_frame, text='Nom & Prenom:', background="lightgrey",
@@ -158,7 +159,8 @@ class JobTimeCalculator:
         # The place/SIEGE combobox
         self.place_label = ttk.Label(self.user_info_frame, text='Lieu:', background='lightgrey', underline=0)
         self.place_label.grid(row=0, column=2)
-        self.place_combobox = ttk.Combobox(self.user_info_frame, values=['SIEGE', 'ANNEXE 1', 'ANNEXE 2'],
+        self.site_name_list = ['SIEGE', 'ANNEXE 1', 'ANNEXE 2']
+        self.place_combobox = ttk.Combobox(self.user_info_frame, values=self.site_name_list,
                                            validate='focus')
         self.place_combobox.grid(row=1, column=2)
 
@@ -219,9 +221,9 @@ class JobTimeCalculator:
             """
             string = strftime("%d-%m-%Y %H:%M:%S %p")
             self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 15, 'italic'), foreground='black',
-                                        background='lightgreen')
+                                        background='lightgrey')
             self.label_text.config(text=string)
-            self.label_text.grid(row=0, column=3, sticky='news', ipadx=20)
+            self.label_text.grid(row=0, column=3, sticky='news', ipadx=20, pady=10, padx=10)
             self.label_text.after(1000, display_time)
 
         display_time()
@@ -421,19 +423,14 @@ class JobTimeCalculator:
 
         ############################################ Configure Fifth LabelFrame ################################
 
-        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause & Affichage', underline=0)
-        self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=20)
+        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause, Sauvegarde & Affichage Temps Total', underline=0)
+        self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=10)
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=False)
         self.break_check_button = ttk.Checkbutton(self.registration_frame, text="Pause entre 13:30 PM et 14:15 PM",
                                                   variable=self.break_check_button_var, onvalue=True, offvalue=False,
                                                   underline=0)
         self.break_check_button.grid(row=2, column=0)
-
-        # create calculate button
-        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer", command=self.calculate_total_time,
-                                           underline=0)
-        self.calculate_button.grid(row=3, column=2, sticky='news')
 
         # result view label
         self.result_view = ttk.Label(self.registration_frame, text="Le Temps Total est --> :", underline=3,
@@ -447,25 +444,45 @@ class JobTimeCalculator:
 
         ################################################################
 
+        #### New label for display the duration time at a site
+        self.stay_time_labelframe = ttk.Labelframe(self.frame, text="Affichage Temps Passer sur Site", underline=0)
+        self.stay_time_labelframe.grid(row=1, column=1, sticky='news', padx=20, pady=10)
+
+        self.duration_tion_label = ttk.Label(self.stay_time_labelframe, text="Durée: ", underline=0)
+        self.duration_tion_label.grid(row=0, column=0, sticky='news', padx=20, pady=10)
+        self.display_duration_label = ttk.Label(self.stay_time_labelframe, background='lightgreen')
+        self.display_duration_label.grid(row=0, column=1, sticky='news', padx=20, pady=10)
+
         """
             # Create Buttons
         """
 
+        # create calculate button
+        self.calculate_button = ttk.Button(self.registration_frame, text="Calculer Temps Total",
+                                           command=self.calculate_total_time,
+                                           underline=0)
+        self.calculate_button.grid(row=3, column=2, sticky='news', padx=10)
         ############ Create save_to_excel Button
         self.entry_button = ttk.Button(self.registration_frame, text='Sauvegarder', command=self.save_to_excel,
                                        underline=0)
-        self.entry_button.grid(row=3, column=0, sticky='news', padx=20, pady=7)
+        self.entry_button.grid(row=3, column=0, sticky='news', padx=10)
 
         ################ add a clear button
         self.clear_button = ttk.Button(self.registration_frame, text='Effacer Champs', command=self.clear, underline=0)
-        self.clear_button.grid(row=3, column=1)
+        self.clear_button.grid(row=3, column=1, padx=10)
 
         ################# Auto fill Button
-        self.auto_fill_button = ttk.Button(self.registration_frame, text='Auto Fill', command=self.fill_entries,
+        self.auto_fill_button = ttk.Button(self.registration_frame, text='Remplissage Auto', command=self.fill_entries,
                                            underline=0)
-        self.auto_fill_button.grid(row=3, column=4)
+        self.auto_fill_button.grid(row=3, column=4, padx=10)
+
+        ##### Duration time button
+        self.duration_time_button = ttk.Button(self.stay_time_labelframe, text="Afficher Durée", command=self.display_duration,
+                                               underline=0, )
+        self.duration_time_button.grid(row=1, column=1, sticky='news')
 
         #################################### Configure the Menu #################################
+
         # Create Menu menubar
         self.menu_ = tk.Menu(self.frame, tearoff=0)
         self.menu_bar = tk.Menu(self.menu_, tearoff=0)
@@ -987,17 +1004,139 @@ class JobTimeCalculator:
                                          datetime.datetime.combine(datetime.date.today(), personal_entry))
 
             total_time_str = str(total_time)
-
             self.result_label.config(text=total_time_str)
             return total_time  # Return the total_time value
 
         except ValueError:
-            messagebox.showerror(title="Erreur", message="Verifier Valeur")
+            messagebox.showerror(title="Erreur", message="Verifier Heure")
         except TypeError:
             messagebox.showerror(title="Erreur", message="Entrée Invalide: Verifier Heure")
 
             ################################
 
+    ### display the time spent by an employee at a different site
+    def display_duration(self):
+
+        """
+        :return: The duration of the time spent by an employee
+        """
+        global duration_time
+
+        # Break variables
+        break_start_time_str = self.break_start_entry.get()  # fixed break start time
+        break_end_time_str = self.break_end_entry.get()  # fixed break end time
+        break_taken = self.break_check_button_var.get()
+
+        break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M").time()
+        break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M").time()
+
+        # TEAM HQ TO (ANNEXE"1-2")
+        hq_to_annexe1_entry_str = self.site_entry.get()
+        hq_to_annexe1_exit_str = self.site_exit.get()
+        hq_to_annexe2_entry_str = self.site_entry_01.get()
+        hq_to_annexe2_exit_str = self.site_exit_01.get()
+
+        # Conditional Verification Team HQ
+        hq_to_annexe1_entry = datetime.datetime.strptime(hq_to_annexe1_entry_str, "%H:%M").time()
+        hq_to_annexe1_exit = datetime.datetime.strptime(hq_to_annexe1_exit_str, "%H:%M").time()
+        hq_to_annexe2_entry = datetime.datetime.strptime(hq_to_annexe2_entry_str, "%H:%M").time()
+        hq_to_annexe2_exit = datetime.datetime.strptime(hq_to_annexe2_exit_str, "%H:%M").time()
+        hq_visit_to_annexe1_check = self.exit_entry_status_var_1.get()
+        hq_visit_to_annexe2_check = self.exit_entry_status_var_2.get()
+
+        # Team ANNEXE 1 TO (HQ-ANNEXE 2)
+        annexe1_to_hq_entry_str = self.annexe_entry.get()
+        annexe1_to_hq_exit_str = self.annexe_exit.get()
+        annexe1_to_annexe2_entry_str = self.annexe_entry_01.get()
+        annexe1_to_annexe2_exit_str = self.annexe_exit_01.get()
+
+        # Conditional Verification Team annexe1
+        annexe1_to_hq_entry = datetime.datetime.strptime(annexe1_to_hq_entry_str, "%H:%M").time()
+        annexe1_to_hq_exit = datetime.datetime.strptime(annexe1_to_hq_exit_str, "%H:%M").time()
+        annexe1_to_annexe2_entry = datetime.datetime.strptime(annexe1_to_annexe2_entry_str, "%H:%M").time()
+        annexe1_to_annexe2_exit = datetime.datetime.strptime(annexe1_to_annexe2_exit_str, "%H:%M").time()
+        annexe1_visit_to_hq_check = self.presence_check_var.get()
+        annexe1_visit_to_annexe2_check = self.annexe_to_annexe_var.get()
+
+        # TEAM ANNEXE 2 TO (HQ-ANNEXE 1)
+        annexe2_to_hq_entry_str = self.value_entry_widget.get()
+        annexe2_to_hq_exit_str = self.value_exit_widget.get()
+        annexe2_to_annexe1_entry_str = self.second_annexe_entry.get()
+        annexe2_to_annexe1_exit_str = self.second_annexe_exit.get()
+
+        # Conditional Verification Team Annexe2
+        annexe2_to_hq_entry = datetime.datetime.strptime(annexe2_to_hq_entry_str, "%H:%M").time()
+        annexe2_to_hq_exit = datetime.datetime.strptime(annexe2_to_hq_exit_str, "%H:%M").time()
+        annexe2_to_annexe1_entry = datetime.datetime.strptime(annexe2_to_annexe1_entry_str, "%H:%M").time()
+        annexe2_to_annexe1_exit = datetime.datetime.strptime(annexe2_to_annexe1_exit_str, "%H:%M").time()
+        annexe2_visit_to_hq_check = self.verification_button_var.get()
+        annexe2_visit_to_annexe1_check = self.second_verification_check_var.get()
+
+        ### Complementary Entry / Exit
+        new_entry_str = self.new_entry.get()
+        second_exit_str = self.new_exit.get()
+        personal_entry_str = self.personal_entry.get()
+        personal_exit_str = self.personal_exit.get()
+
+        #
+        new_entry = datetime.datetime.strptime(new_entry_str, "%H:%M").time()
+        new_exit = datetime.datetime.strptime(second_exit_str, "%H:%M").time()
+        personal_entry = datetime.datetime.strptime(personal_entry_str, "%H:%M").time()
+        personal_exit = datetime.datetime.strptime(personal_exit_str, "%H:%M").time()
+        work_case_exit = self.first_btn_check_var.get()
+        personal_case_exit = self.second_btn_check_var.get()
+
+        ###
+
+        if hq_visit_to_annexe1_check:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      hq_to_annexe1_exit) - datetime.datetime.combine(
+                datetime.date.today(), hq_to_annexe1_entry)
+
+        if hq_visit_to_annexe2_check:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      hq_to_annexe2_exit) - datetime.datetime.combine(
+                datetime.date.today(), hq_to_annexe2_entry)
+
+        if annexe1_visit_to_hq_check:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      annexe1_to_hq_exit) - datetime.datetime.combine(
+                datetime.date.today(), annexe1_to_hq_entry)
+
+        if annexe1_visit_to_annexe2_check:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      annexe1_to_annexe2_exit) - datetime.datetime.combine(
+                datetime.date.today(), annexe1_to_annexe2_entry)
+
+        if annexe2_visit_to_hq_check:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      annexe2_to_hq_exit) - datetime.datetime.combine(
+                datetime.date.today(), annexe2_to_hq_entry)
+
+        if annexe2_visit_to_annexe1_check:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      annexe2_to_annexe1_exit) - datetime.datetime.combine(
+                datetime.date.today(), annexe2_to_annexe1_entry)
+
+        if work_case_exit:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      new_exit) - datetime.datetime.combine(datetime.date.today(),
+                                                                                            new_entry)
+
+        if personal_case_exit:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      personal_exit) - datetime.datetime.combine(datetime.date.today(),
+                                                                                                 personal_entry)
+
+        if break_taken:
+            duration_time = datetime.datetime.combine(datetime.date.today(),
+                                                      break_end_time) - datetime.datetime.combine(
+                datetime.date.today(), break_start_time)
+
+        duration_time_str = str(f"{duration_time}")
+        self.display_duration_label.config(text=duration_time_str)
+
+    ##
     ############## Excel File Generator function ###############
 
     # Excel file generator
@@ -1020,6 +1159,18 @@ class JobTimeCalculator:
         observation = self.observation_list_combobox.get()
         daily_date = self.date_entry.get()
         today = datetime.date.today()
+
+        ## Team HQ
+        hq_annexe1 = self.exit_entry_status_var_1.get()
+        hq_annexe2 = self.exit_entry_status_var_2.get()
+
+        ## Team annexe1
+        annexe1_hq = self.verification_button_var.get()
+        annexe1_annexe2 = self.annexe_to_annexe_var.get()
+
+        ## Team annexe2
+        annexe2_hq = self.verification_button_var.get()
+        annexe2_annexe1 = self.second_verification_check_var.get()
 
         # Validate input
         if not (
