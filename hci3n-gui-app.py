@@ -30,7 +30,6 @@ def start_up_image():
 
 
 ### Class Definition
-
 class JobTimeCalculator:
     # Initialize the class
     def __init__(self):
@@ -502,6 +501,7 @@ class JobTimeCalculator:
         """
             # Everything about functions
         """
+    ##### Calendar function
 
     # Exit function
     def exit_01(self):
