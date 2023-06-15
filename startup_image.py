@@ -4,8 +4,15 @@ from tkinter import BOTH
 
 def mainwindow():
     """
-    :return: Display startup image
+    :return: Display startup window
     """
+
+    def destroy_window():
+        """
+        :return: close the startup window
+        """
+        root.destroy()
+
     root = tk.Tk()
     root.title("HC3N")
     root.geometry("980x250")
@@ -13,7 +20,7 @@ def mainwindow():
     root.config(background="lightblue")
     root.resizable(height=False, width=False)
     root.wait_visibility(window=root)
-    root.overrideredirect(False)
+    root.overrideredirect(True)
 
     width = 400
     height = 400
@@ -22,7 +29,7 @@ def mainwindow():
     canvas_1.pack(expand=True, fill=BOTH)
     canvas_1.image_1 = tk.PhotoImage(file='images\\hci3n.png')
     canvas_1.create_image(0, 0, image=canvas_1.image_1, anchor='nw')
-    # root.after(5000, mainwindow)
+    root.after(int(5 * 1000), destroy_window)  # Destroy the window after the specified duration
     root.mainloop()
 
 mainwindow()

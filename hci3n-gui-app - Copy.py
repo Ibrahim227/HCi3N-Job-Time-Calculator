@@ -640,7 +640,7 @@ class JobTimeCalculator:
         retour_pause = self.break_end_entry.get()
         descente = self.time_end_entry.get()
         lieu = self.place_combobox.get()
-        total = self.calculate_total_all_time
+        total = self.calculate_total_all_time()
         jour_semaine = self.week_combobox.get()
         observation = self.observation_entry.get()
         daily_date = self.date_entry.get()
@@ -658,7 +658,7 @@ class JobTimeCalculator:
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
                 sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "PAUSE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "JOUR", "TEMPS TOTAL JOURNALIER", "DATE", "OBSERVATION"])
+                              "RETOUR PAUSE", "DESCENTE", "JOUR", "TEMPS TOTAL JOURNALIER", "DATE", "OBSERVATION", "TEMPS passed"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)

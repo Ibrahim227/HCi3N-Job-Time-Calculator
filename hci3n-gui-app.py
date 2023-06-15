@@ -23,7 +23,7 @@ def on_click():
 ####### function for Startup Image
 def start_up_image():
     """
-    :return: startup image within new window
+    :return: Display the startup window
     """
     win = mainwindow
     win()
@@ -232,9 +232,9 @@ class JobTimeCalculator:
         self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
         self.new_frame.grid(row=3, column=1, sticky='news', padx=15, pady=10)
 
-        self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="lightblue")
+        self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="lightgreen")
         self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0,
-                                          background="lightblue")
+                                          background="red")
 
         self.new_label.grid(row=0, column=0)
         self.second_new_label.grid(row=0, column=1)
@@ -258,9 +258,9 @@ class JobTimeCalculator:
         self.first_btn_checkbutton.grid(row=0, column=2)
         self.btn_second_checkbutton.grid(row=2, column=2)
 
-        self.personal_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", background="lightblue",
+        self.personal_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", background="lightgreen",
                                         underline=0)
-        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="lightblue",
+        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="red",
                                                underline=0)
 
         self.personal_entry = ttk.Entry(self.new_frame)
@@ -423,7 +423,8 @@ class JobTimeCalculator:
 
         ############################################ Configure Fifth LabelFrame ################################
 
-        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause, Sauvegarde & Affichage Temps Total', underline=0)
+        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause, Sauvegarde & Affichage Temps Total',
+                                                 underline=0)
         self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=10)
 
         self.break_check_button_var = tk.BooleanVar(self.registration_frame, value=False)
@@ -477,7 +478,8 @@ class JobTimeCalculator:
         self.auto_fill_button.grid(row=3, column=4, padx=10)
 
         ##### Duration time button
-        self.duration_time_button = ttk.Button(self.stay_time_labelframe, text="Afficher Durée", command=self.display_duration,
+        self.duration_time_button = ttk.Button(self.stay_time_labelframe, text="Afficher Durée",
+                                               command=self.display_duration,
                                                underline=0, )
         self.duration_time_button.grid(row=1, column=1, sticky='news')
 
@@ -1087,6 +1089,11 @@ class JobTimeCalculator:
         personal_case_exit = self.second_btn_check_var.get()
 
         ###
+        try:
+            if not (break_end_time, break_start_time, new_entry, new_exit, personal_exit, personal_entry, annexe2_to_hq_exit, annexe2_to_hq_entry, annexe2_to_annexe1_exit, annexe2_to_annexe1_entry, annexe2_to_hq_exit, annexe1_to_hq_entry, annexe1_to_annexe2_entry, annexe1_to_annexe2_exit, hq_to_annexe2_exit, hq_to_annexe2_entry, hq_to_annexe1_entry, hq_to_annexe1_exit):
+                duration_time = datetime.timedelta()
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
 
         if hq_visit_to_annexe1_check:
             duration_time = datetime.datetime.combine(datetime.date.today(),
@@ -1133,8 +1140,9 @@ class JobTimeCalculator:
                                                       break_end_time) - datetime.datetime.combine(
                 datetime.date.today(), break_start_time)
 
-        duration_time_str = str(f"{duration_time}")
+        duration_time_str = str(duration_time)
         self.display_duration_label.config(text=duration_time_str)
+        return duration_time
 
     ##
     ############## Excel File Generator function ###############
@@ -1149,7 +1157,7 @@ class JobTimeCalculator:
         fonction = self.title_combox.get()
         departement = self.department_combobox.get()
         arrivee = self.time_start_entry.get()
-        pause = self.break_check_button_var.get()
+        # pause = self.break_check_button_var.get()
         debut_pause = self.break_start_entry.get()
         retour_pause = self.break_end_entry.get()
         descente = self.time_end_entry.get()
@@ -1159,44 +1167,52 @@ class JobTimeCalculator:
         observation = self.observation_list_combobox.get()
         daily_date = self.date_entry.get()
         today = datetime.date.today()
+        # duration = self.display_duration()
 
         ## Team HQ
-        hq_annexe1 = self.exit_entry_status_var_1.get()
-        hq_annexe2 = self.exit_entry_status_var_2.get()
-
-        ## Team annexe1
-        annexe1_hq = self.verification_button_var.get()
-        annexe1_annexe2 = self.annexe_to_annexe_var.get()
-
-        ## Team annexe2
-        annexe2_hq = self.verification_button_var.get()
-        annexe2_annexe1 = self.second_verification_check_var.get()
+        # hq_annexe1 = self.exit_entry_status_var_1.get()
+        # hq_annexe2 = self.exit_entry_status_var_2.get()
+        #
+        # ## Team annexe1
+        # annexe1_hq = self.verification_button_var.get()
+        # annexe1_annexe2 = self.annexe_to_annexe_var.get()
+        #
+        # ## Team annexe2
+        # annexe2_hq = self.verification_button_var.get()
+        # annexe2_annexe1 = self.second_verification_check_var.get()
+        #
+        # # supplemental exit
+        # work_exit = self.first_btn_check_var.get()
+        # personal_exit = self.second_btn_check_var.get()
+        #
+        # # Break status
+        # break_status = self.break_check_button_var.get()
 
         # Validate input
-        if not (
-                nom_prenom and fonction and departement and lieu and arrivee and descente and total):
+        if not (nom_prenom and fonction and departement and lieu and arrivee and descente and total):
             required_list = ["Nom & Prenom", "Fonction", "Departement", "Lieu", "Heure Arrivee", "Descente", "Total"]
             messagebox.showerror(f"Erreur: Sauvegarde Impossible",
                                  f"Veuillez remplir tout les champs requis:\n {list(required_list)}")
             return
+
         # Save data to Excel file
         try:
             file_path = f"sauvegarde\\Sauvegarde_du_{today}.xlsx"
             if not os.path.exists(file_path):
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
-                sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "PAUSE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"])
+                sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
+                              "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION", "TEMPS PASSÉ"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([nom_prenom, fonction, departement, lieu, arrivee, pause, debut_pause, retour_pause, descente,
+            sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
                           total, daily_date, observation])
             workbook.save(file_path)
             workbook.close()
 
-            messagebox.showinfo(title="Succès", message="Donnée enregistrée avec succès.")
+            messagebox.showinfo(title="Succès", message="Donnée enregistrée avec succès !!!")
 
         except Exception as e:
             messagebox.showerror("Error", str(e))
