@@ -100,18 +100,21 @@ class JobTimeCalculator:
         self.observation_list_combobox_label = ttk.Label(self.lateral_label_frame, text="Observation:",
                                                          background="lightgrey",
                                                          underline=0)
-        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
-                                          underline=0)
+        self.observation_list_combobox_label.grid(row=2, column=0)
         self.observation_list_combobox = ttk.Combobox(self.lateral_label_frame,
                                                       values=["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1",
                                                               "Sorti(e) vers ANNEXE-2", "Réunion", "Atelier", "Mission",
                                                               "Consultation", "Décès", "Maladie", "Mariage",
                                                               "Permission", "Congé", "Autres", "Non Préciser"])
+        self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
+
+        ### Calendar function
+
+        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
+                                          underline=0)
+        self.date_entry_label.grid(row=3, column=0)
         self.date_entry = ttk.Entry(self.lateral_label_frame)
 
-        self.observation_list_combobox_label.grid(row=2, column=0)
-        self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
-        self.date_entry_label.grid(row=3, column=0)
         self.date_entry.grid(row=3, column=1, ipadx=20)
 
         for widget in self.lateral_label_frame.winfo_children():
@@ -1089,11 +1092,6 @@ class JobTimeCalculator:
         personal_case_exit = self.second_btn_check_var.get()
 
         ###
-        try:
-            if not (break_end_time, break_start_time, new_entry, new_exit, personal_exit, personal_entry, annexe2_to_hq_exit, annexe2_to_hq_entry, annexe2_to_annexe1_exit, annexe2_to_annexe1_entry, annexe2_to_hq_exit, annexe1_to_hq_entry, annexe1_to_annexe2_entry, annexe1_to_annexe2_exit, hq_to_annexe2_exit, hq_to_annexe2_entry, hq_to_annexe1_entry, hq_to_annexe1_exit):
-                duration_time = datetime.timedelta()
-        except ValueError as e:
-            messagebox.showerror("Error", str(e))
 
         if hq_visit_to_annexe1_check:
             duration_time = datetime.datetime.combine(datetime.date.today(),
