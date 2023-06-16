@@ -565,8 +565,12 @@ class JobTimeCalculator:
         :return:
         """
         value = "00:00"  # Predefined value to fill the entries
-        self.break_start_entry.insert(0, value)
-        self.break_end_entry.insert(0, value)
+        second = "08:00"  # Predefined second value to fill the entries
+        third = "17:30"  # Predefined third value to fill the entries
+        fourth = "13:30"  # Predefined fourth value to fill the entries
+        fifth = "14:15"  # Predefined fifth value to fill the entries
+        self.break_start_entry.insert(0, fourth)
+        self.break_end_entry.insert(0, fifth)
         self.annexe_entry.insert(0, value)
         self.annexe_entry_01.insert(0, value)
         self.site_exit.insert(0, value)
@@ -581,8 +585,8 @@ class JobTimeCalculator:
         self.second_annexe_exit.insert(0, value)
         self.new_entry.insert(0, value)
         self.new_exit.insert(0, value)
-        self.time_start_entry.insert(0, value)
-        self.time_end_entry.insert(0, value)
+        self.time_start_entry.insert(0, second)
+        self.time_end_entry.insert(0, third)
         self.personal_entry.insert(0, value)
         self.personal_exit.insert(0, value)
 
@@ -1210,7 +1214,7 @@ class JobTimeCalculator:
                 workbook = openpyxl.Workbook()
                 sheet = workbook.active
                 sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION", "TEMPS PASSÉ"])
+                              "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"])
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
