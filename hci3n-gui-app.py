@@ -50,7 +50,7 @@ class JobTimeCalculator:
         ###
 
         ######## Main Frame
-        self.frame = ttk.Frame(self.window, relief='raised')
+        self.frame = ttk.Frame(self.window, relief='flat')
         self.frame.pack(side='top', fill=BOTH)
 
         ################################# Configure First LabelFrame ############################
@@ -108,9 +108,10 @@ class JobTimeCalculator:
                                                               "Permission", "Congé", "Autres", "Non Préciser"])
         self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
 
-        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
+        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date MM/JJ/ANNEE:", background="lightgrey",
                                           underline=0)
         self.date_entry_label.grid(row=3, column=0)
+
         # self.date_entry = ttk.Entry(self.lateral_label_frame)
         #
         # self.date_entry.grid(row=3, column=1, ipadx=20)
@@ -119,6 +120,7 @@ class JobTimeCalculator:
         def get_selected_date():
             selected_date = self.spinbox.get_date()
             print(selected_date)  # You can replace this line with your desired functionality
+
         self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2)
         self.spinbox.grid(row=3, column=1)
         self.spinbox.bind("<<DateEntrySelected>>", lambda event: get_selected_date())
@@ -127,7 +129,7 @@ class JobTimeCalculator:
             widget.grid_configure(padx=20, pady=10, sticky="news")
         #
         #
-        # Create the title combo box
+        # Create the title combobox
         self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
         self.title_combox = ttk.Combobox(self.user_info_frame,
                                          values=["HAUT-COMMISSAIRE", "SECRETAIRE GENERAL", "SECRETAIRE GENERAL ADJOINT",
@@ -239,7 +241,7 @@ class JobTimeCalculator:
 
         ############################################ Configure new_frame LabelFrame ################################
         self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
-        self.new_frame.grid(row=3, column=1, sticky='news', padx=15, pady=10)
+        self.new_frame.grid(row=3, column=1, sticky='news', padx=15, pady=15)
 
         self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="lightgreen")
         self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0,
@@ -508,6 +510,7 @@ class JobTimeCalculator:
         """
             # Everything about functions
         """
+
     ##### Calendar function
 
     # Exit function
@@ -1172,7 +1175,7 @@ class JobTimeCalculator:
         observation = self.observation_list_combobox.get()
         daily_date = self.spinbox.get_date()
         today = datetime.date.today()
-        duration = self.display_duration()
+        # duration = self.display_duration()
 
         ## Team HQ
         # hq_annexe1 = self.exit_entry_status_var_1.get()
@@ -1213,7 +1216,7 @@ class JobTimeCalculator:
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
             sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
-                          total, daily_date, observation, duration])
+                          total, daily_date, observation])
             workbook.save(file_path)
             workbook.close()
 

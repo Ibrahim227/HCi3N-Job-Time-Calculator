@@ -19,7 +19,7 @@ def mainwindow():
     root.iconbitmap("images\\logoHCi3N.ico")
     root.config(background="lightblue")
     root.resizable(height=False, width=False)
-    root.wait_visibility(window=root)
+    # root.wait_visibility(window=root)
     root.overrideredirect(True)
 
     width = 400
