@@ -6,6 +6,7 @@ from time import strftime
 from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
+from tkcalendar import DateEntry
 
 from startup_image import mainwindow
 
@@ -107,14 +108,20 @@ class JobTimeCalculator:
                                                               "Permission", "Congé", "Autres", "Non Préciser"])
         self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
 
-        ### Calendar function
-
         self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
                                           underline=0)
         self.date_entry_label.grid(row=3, column=0)
-        self.date_entry = ttk.Entry(self.lateral_label_frame)
+        # self.date_entry = ttk.Entry(self.lateral_label_frame)
+        #
+        # self.date_entry.grid(row=3, column=1, ipadx=20)
 
-        self.date_entry.grid(row=3, column=1, ipadx=20)
+        ##### Calendar function
+        def get_selected_date():
+            selected_date = self.spinbox.get_date()
+            print(selected_date)  # You can replace this line with your desired functionality
+        self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2)
+        self.spinbox.grid(row=3, column=1)
+        self.spinbox.bind("<<DateEntrySelected>>", lambda event: get_selected_date())
 
         for widget in self.lateral_label_frame.winfo_children():
             widget.grid_configure(padx=20, pady=10, sticky="news")
@@ -541,7 +548,7 @@ class JobTimeCalculator:
         self.second_annexe_exit.delete(0, END)
         # self.week_combobox.delete(0, END)
         self.observation_list_combobox.delete(0, END)
-        self.date_entry.delete(0, END)
+        self.spinbox.delete(0, END)
         self.new_entry.delete(0, END)
         self.new_exit.delete(0, END)
         self.personal_exit.delete(0, END)
@@ -1163,9 +1170,9 @@ class JobTimeCalculator:
         total = self.calculate_total_time()
         # jour_semaine = self.week_combobox.get()
         observation = self.observation_list_combobox.get()
-        daily_date = self.date_entry.get()
+        daily_date = self.spinbox.get_date()
         today = datetime.date.today()
-        # duration = self.display_duration()
+        duration = self.display_duration()
 
         ## Team HQ
         # hq_annexe1 = self.exit_entry_status_var_1.get()
@@ -1206,7 +1213,7 @@ class JobTimeCalculator:
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
             sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
-                          total, daily_date, observation])
+                          total, daily_date, observation, duration])
             workbook.save(file_path)
             workbook.close()
 
