@@ -7,7 +7,7 @@ from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
 from openpyxl.drawing.image import Image
-from openpyxl.styles import Font, PatternFill, Side, Border, GradientFill, Alignment
+from openpyxl.styles import Font, PatternFill, Alignment
 from tkcalendar import DateEntry
 
 from startup_image import mainwindow
@@ -1217,10 +1217,15 @@ class JobTimeCalculator:
                 workbook.iso_dates = True
                 sheet = workbook.active
 
+                row = sheet.row_dimensions[1]
+                row.height = 150
+
+                # Image
                 img_file = "images\\logoHCi3N.ico"
+                sheet.merge_cells('A1:C1')
                 img = Image(img_file)
-                img.width = 100
-                img.height = 100
+                img.width = 200
+                img.height = 200
                 img.anchor = 'A1'
                 sheet.add_image(img)
 
@@ -1230,18 +1235,14 @@ class JobTimeCalculator:
                 color3 = "00CCFFCC"  # lightgreen color
                 color4 = "00FF6600"  # orange color
                 color5 = "0000FF00"  # green color
+                color6 = "00C0C0C0"  # lightgrey
 
-                sheet.merge_cells('B1:K1')
+                sheet.merge_cells('D1:K1')
                 sheet.title = "Archive du {}".format(today)
                 header_values = "SYNTHESES DES HORAIRES DE SERVICE QUOTIDIEN DES EMPLOYÉ(ES) DU HC3N"
-                top_left_cell = sheet['A1']
+                top_left_cell = sheet['D1']
                 top_left_cell.value = header_values
-                thin = Side(border_style='thin', color='000000')
-                double = Side(border_style='double', color='ff0000')
-
-                top_left_cell.border = Border(top=double, left=thin, right=thin, bottom=double)
-                top_left_cell.fill = PatternFill("solid", fgColor='DDDDDD')
-                top_left_cell.fill = GradientFill(stop=('000000', "FFFFFF"))
+                top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
                 top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
                 list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
                                   "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
@@ -1275,6 +1276,18 @@ class JobTimeCalculator:
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
+            # for row in sheet.iter_rows():
+            #     for cell in row:
+            #         # Get the cell value
+            #         value = cell.value
+            #
+            #         # Resize the row and column
+            #         if value:
+            #             row_dimension = sheet.row_dimensions[cell.row]
+            #             row_dimension.height = max(row_dimension.height, len(str(value)))
+            #
+            #             column_dimension = sheet.column_dimensions[cell.column_letter]
+            #             column_dimension.width = max(column_dimension.width, len(str(value)))
             sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
                           total, daily_date, observation])
             workbook.save(file_path)
