@@ -6,6 +6,7 @@ from time import strftime
 from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
+from openpyxl.styles import Font, PatternFill, Side, Border, GradientFill, Alignment
 from tkcalendar import DateEntry
 
 from startup_image import mainwindow
@@ -34,7 +35,7 @@ def start_up_image():
 class JobTimeCalculator:
     # Initialize the class
     def __init__(self):
-        super().__init__()  # Allows to inherit from the tkinter class object
+        super().__init__()  # Allows inheriting from the tkinter class object
         # Main window
         self.window = tk.Tk()
         self.window.title("HC3N")
@@ -62,12 +63,12 @@ class JobTimeCalculator:
         self.lateral_label_frame = ttk.LabelFrame(self.frame, text="Panneau Lateral", underline=0)
         self.lateral_label_frame.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
-        # Create name and last name  label
+        # Create name and last name label
         self.first_last_name_label = ttk.Label(self.lateral_label_frame, text='Nom & Prenom:', background="lightgrey",
                                                underline=0)
         self.first_last_name_label.grid(row=0, column=0)
 
-        # create  function_set and last name entry widgets
+        # create function_set and last name entry widgets
         self.name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "Mme RABO MARIA MOHAMED YAROH",
                           "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
                           "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
@@ -183,7 +184,7 @@ class JobTimeCalculator:
         self.break_start_label.grid(row=2, column=1)
         self.break_end_label.grid(row=2, column=2)
 
-        # Create  start and end time labels
+        # Create start and end time labels
         self.time_start_label = ttk.Label(self.user_info_frame, text="Heure Entrée (HH:MM):",
                                           background="lightgreen", underline=0)
         self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM):", background="red",
@@ -214,7 +215,7 @@ class JobTimeCalculator:
         for widget in self.user_info_frame.winfo_children():
             widget.grid_configure(padx=20, pady=5, sticky="news")
 
-        # # Create message to display
+        # # Create the message to display
         ## create labelframe to display the message within it
 
         self.msg_labelframe = ttk.LabelFrame(self.frame, text='Message & Heure', underline=0)
@@ -517,7 +518,7 @@ class JobTimeCalculator:
     def exit_01(self):
         """
         Exit function
-        :return: Destroy window and exit the program
+        :return: Destroys window and exit the program
         """
         if messagebox.askokcancel(title='Quitter', message='Voulez-vous quitter ?'):
             self.window.destroy()
@@ -1162,7 +1163,7 @@ class JobTimeCalculator:
     # Excel file generator
     def save_to_excel(self):
         """
-        Allows to save all required inputs through the GUI
+        Allows saving all required inputs through the GUI
         :return: An Excel file
         """
         nom_prenom = self.first_last_name_entry.get()
@@ -1212,9 +1213,56 @@ class JobTimeCalculator:
             file_path = f"sauvegarde\\Sauvegarde_du_{today}.xlsx"
             if not os.path.exists(file_path):
                 workbook = openpyxl.Workbook()
+                workbook.iso_dates = True
                 sheet = workbook.active
-                sheet.append(["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
-                              "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"])
+
+                # Define the Excel sheet fill color
+                color1 = "00FF0000"  # red color
+                color2 = "0000CCFF"  # lightblue color
+                color3 = "00CCFFCC"  # lightgreen color
+                color4 = "00FF6600"  # orange color
+                color5 = "0000FF00"  # green color
+
+                sheet.merge_cells('A1:K1')
+                sheet.title = "Archive du {}".format(today)
+                header_values = "SYNTHESES DES HORAIRES DE SERVICE QUOTIDIEN DES EMPLOYÉ(ES) DU HC3N"
+                top_left_cell = sheet['A1']
+                top_left_cell.value = header_values
+                thin = Side(border_style='thin', color='000000')
+                double = Side(border_style='double', color='ff0000')
+
+                top_left_cell.border = Border(top=double, left=thin, right=thin, bottom=double)
+                top_left_cell.fill = PatternFill("solid", fgColor='DDDDDD')
+                top_left_cell.fill = GradientFill(stop=('000000', "FFFFFF"))
+                top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
+                list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
+                                  "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
+                sheet.append(list_to_append)
+                ft = Font(bold=True)
+                for row in sheet["A2:K2"]:
+                    for cell in row:
+                        cell.font = ft
+
+                for row in sheet["A1:K1"]:
+                    for cell in row:
+                        cell.font = ft
+
+                # for row in sheet["A3:C3"]:
+                #     for cell in row:
+                #         cell.font = ft
+
+                sheet["A2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["B2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["C2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["D2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["E2"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
+                sheet["F2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+                sheet["G2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+                sheet["H2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["I2"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
+                sheet["J2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                sheet["K2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+
                 workbook.save(file_path)
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
