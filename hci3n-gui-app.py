@@ -6,6 +6,7 @@ from time import strftime
 from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
+from openpyxl.drawing.image import Image
 from openpyxl.styles import Font, PatternFill, Side, Border, GradientFill, Alignment
 from tkcalendar import DateEntry
 
@@ -1216,6 +1217,13 @@ class JobTimeCalculator:
                 workbook.iso_dates = True
                 sheet = workbook.active
 
+                img_file = "images\\logoHCi3N.ico"
+                img = Image(img_file)
+                img.width = 100
+                img.height = 100
+                img.anchor = 'A1'
+                sheet.add_image(img)
+
                 # Define the Excel sheet fill color
                 color1 = "00FF0000"  # red color
                 color2 = "0000CCFF"  # lightblue color
@@ -1223,7 +1231,7 @@ class JobTimeCalculator:
                 color4 = "00FF6600"  # orange color
                 color5 = "0000FF00"  # green color
 
-                sheet.merge_cells('A1:K1')
+                sheet.merge_cells('B1:K1')
                 sheet.title = "Archive du {}".format(today)
                 header_values = "SYNTHESES DES HORAIRES DE SERVICE QUOTIDIEN DES EMPLOYÉ(ES) DU HC3N"
                 top_left_cell = sheet['A1']
