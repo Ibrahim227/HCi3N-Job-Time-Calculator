@@ -70,30 +70,31 @@ class JobTimeCalculator:
         self.first_last_name_label.grid(row=0, column=0)
 
         # create function_set and last name entry widgets
-        self.name_list = ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "Mme RABO MARIA MOHAMED YAROH",
-                          "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
-                          "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
-                          "Mme DOUDOU HALIDOU MAIMOUNA", "GAMATIE BOUBACAR", "Mme ABDOUL NASSER MARIA",
-                          "RABIATOU HABIBOU", "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU", "OUSMANE FODI",
-                          "Mme MOUSTAPHA FOURERA", "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
-                          "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
-                          "MAHAMADOU MAHAMANE NAFISSATOU", "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI",
-                          "ABDOU MOUSSA OUSMANE",
-                          "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
-                          "TRAPSIDA ABDOULAY ALAIN", "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA",
-                          "MA AROUF TIDJANI", "LAWAN DARMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU",
-                          "BOGARI ZOURKALEINI",
-                          "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU",
-                          "GN HAROUNA MAAZOU LEYO", "GN LAOUALI MAAZOU MAMANE", "MOCTAR BACHIR",
-                          "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
-                          "AMADOU BACHIR", "OUSMANE YERIMA YAHAYA", "MAMOUDOU MAHAMAN BACHAR",
-                          "SALAMATOU SOUMANA MOUSSA", "SAHABI ABDOU", "GN KABIROU ABDOUL MOUMOUNI",
-                          "GN ADAHIR IDI DJIBAGÉ", "Dr MAHAMADOU ABOUBACAR",
-                          "AMINA IDRISSA BAGNOU", "ABDOU ADAMOU LILWANI", "ABDOUL WAHABOU ZAKARI DAGOU",
-                          "ISSA HAMANI ABDOULAYE", "ALI OUSSEINI MOUSTAPHA", "ALI SOUMAILA FOUREIRATOU",
-                          "YAHAYA RHISSA ZAKARI", "ABDALLAH MAHAMAT YAHAYA", "ABASS ADAM MELLY HADIZA",
-                          "SOULEY BOUKAR", "HAMIDOU AMANI SOULEYMANE", "KOUNKOUROU AHAMADOU",
-                          "Mme SEYDOU ABDOULAYE FOUREYRATOU", "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"]
+        self.name_list = sorted(
+            ["ALI BETY", "ABDOULAYE MAIZAMA", "VINCENT PARAISO MOUSSA", "Mme RABO MARIA MOHAMED YAROH",
+             "BOUKARY ABDOU RAZAK", "ABDOU KASSO",
+             "ABOUBACAR DJIMRAOU", "ABOUBA SAIDOU", "IDRISSA CHIPKAOU", "KORAO ABOUBACAR",
+             "Mme DOUDOU HALIDOU MAIMOUNA", "GAMATIE BOUBACAR", "Mme ABDOUL NASSER MARIA",
+             "RABIATOU HABIBOU", "ALASSANE ABDOU ALMOUSTAPHA", "ALI OUMAROU", "OUSMANE FODI",
+             "Mme MOUSTAPHA FOURERA", "Mme MARIAMA AROUNA ANOUAR", "Mme IDRISSA NANA AICHATOU",
+             "Mme ABDOURAHAMANE FOURERATOU DIALLO", "Mme DJIBO ZEYNABOU COULIBALY",
+             "MAHAMADOU MAHAMANE NAFISSATOU", "Mme AMINATOU MAHAMAN ALTINÉ", "Mme FATIMA ISSA BOUKARI",
+             "ABDOU MOUSSA OUSMANE",
+             "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
+             "TRAPSIDA ABDOULAY ALAIN", "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA",
+             "MA AROUF TIDJANI", "LAWAN DARMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU",
+             "BOGARI ZOURKALEINI",
+             "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU",
+             "GN HAROUNA MAAZOU LEYO", "GN LAOUALI MAAZOU MAMANE", "MOCTAR BACHIR",
+             "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
+             "AMADOU BACHIR", "OUSMANE YERIMA YAHAYA", "MAMOUDOU MAHAMAN BACHAR",
+             "SALAMATOU SOUMANA MOUSSA", "SAHABI ABDOU", "GN KABIROU ABDOUL MOUMOUNI",
+             "GN ADAHIR IDI DJIBAGÉ", "Dr MAHAMADOU ABOUBACAR",
+             "AMINA IDRISSA BAGNOU", "ABDOU ADAMOU LILWANI", "ABDOUL WAHABOU ZAKARI DAGOU",
+             "ISSA HAMANI ABDOULAYE", "ALI OUSSEINI MOUSTAPHA", "ALI SOUMAILA FOUREIRATOU",
+             "YAHAYA RHISSA ZAKARI", "ABDALLAH MAHAMAT YAHAYA", "ABASS ADAM MELLY HADIZA",
+             "SOULEY BOUKAR", "HAMIDOU AMANI SOULEYMANE", "KOUNKOUROU AHAMADOU",
+             "Mme SEYDOU ABDOULAYE FOUREYRATOU", "GN RABIOU ABDOULAYE WACHEL", "GN ALMOUSTAPHA DJIBAGÉ"])
 
         self.first_last_name_entry = ttk.Combobox(self.lateral_label_frame, values=self.name_list)
         self.first_last_name_entry.grid(row=0, column=1, ipadx=60)
@@ -104,10 +105,12 @@ class JobTimeCalculator:
                                                          underline=0)
         self.observation_list_combobox_label.grid(row=2, column=0)
         self.observation_list_combobox = ttk.Combobox(self.lateral_label_frame,
-                                                      values=["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1",
-                                                              "Sorti(e) vers ANNEXE-2", "Réunion", "Atelier", "Mission",
-                                                              "Consultation", "Décès", "Maladie", "Mariage",
-                                                              "Permission", "Congé", "Autres", "Non Préciser"])
+                                                      values=(sorted(["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1",
+                                                                      "Sorti(e) vers ANNEXE-2", "Réunion", "Atelier",
+                                                                      "Mission",
+                                                                      "Consultation", "Décès", "Maladie", "Mariage",
+                                                                      "Permission", "Congé", "Autres",
+                                                                      "Non Préciser"])))
         self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
 
         self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date MM/JJ/ANNEE:", background="lightgrey",
@@ -134,38 +137,40 @@ class JobTimeCalculator:
         # Create the title combobox
         self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
         self.title_combox = ttk.Combobox(self.user_info_frame,
-                                         values=["HAUT-COMMISSAIRE", "SECRETAIRE GENERAL", "SECRETAIRE GENERAL ADJOINT",
-                                                 "DIRECTRICE DAFC", "SECRETAIRE DE DIRECTION",
-                                                 "SECRETAIRE DE DIRECTION/BO", "CONSEILLER TECHNIQUE",
-                                                 "CHEF DE CABINET", "PROTOCOLE", "DIRECTEUR DPSFCI",
-                                                 "CHEF DIV INFORMATIQUE", "CHEF DIV AFFAIRES FINANCIERE",
-                                                 "CHEF DIV. MARCHES PUBLIC/DSP",
-                                                 "GESTIONNAIRE DES CONVENTIONS", "CHEF DIV PATRIMOINE LOGISTIQUE",
-                                                 "APPELEE SERV CIVIQUE", "STAGIAIRE",
-                                                 "CHEF DIV RH", "DIRECTEUR DMRC", "CHEF DIV RENFORCEMENT CAPACITE",
-                                                 "CHEF DIV MOBILISATION SOCIAL", "SECURITÉ RAPPROCHÉ",
-                                                 "DIRECTEUR DSEC", "CHEF DIV CAPITALISATION", "CHEF DIV SISAN",
-                                                 "CHEF DIV SUIVI-EVALUATION STATISTIQUE",
-                                                 "DIRECTEUR DPEP", "CHEF DIV PROGRAMMATION", "COORDINATEUR",
-                                                 "CHEF SERV CARTOGRAPHY", "CHEF SERV COM/CELLULE NUTRITION",
-                                                 "CHEF SERV BIO-STATISTIQUE", "ING STATISTICIEN ECONOMISTE P",
-                                                 "MEDECIN NUTRITIONISTE", "COORDINATRICE Proj NEXUS",
-                                                 "Resp ADMINISTRATIF FINANCE", "Resp SUIVI-EVALUATION",
-                                                 "SECRETAIRE COMPTABLE", "CR/TAHOUA", "AT CRi3N NIAMEY",
-                                                 "ASSISTANTE SG", "ASSISTANTE SGA", "Resp SECURITÉ", "AGENT SECURITÉ",
-                                                 "CHAUFFEUR", "PLANTON"])
+                                         values=(sorted(
+                                             ["HAUT-COMMISSAIRE", "SECRETAIRE GENERAL", "SECRETAIRE GENERAL ADJOINT",
+                                              "DIRECTRICE DAFC", "SECRETAIRE DE DIRECTION",
+                                              "SECRETAIRE DE DIRECTION/BO", "CONSEILLER TECHNIQUE",
+                                              "CHEF DE CABINET", "PROTOCOLE", "DIRECTEUR DPSFCI",
+                                              "CHEF DIV INFORMATIQUE", "CHEF DIV AFFAIRES FINANCIERE",
+                                              "CHEF DIV. MARCHES PUBLIC/DSP",
+                                              "GESTIONNAIRE DES CONVENTIONS", "CHEF DIV PATRIMOINE LOGISTIQUE",
+                                              "APPELEE SERV CIVIQUE", "STAGIAIRE",
+                                              "CHEF DIV RH", "DIRECTEUR DMRC", "CHEF DIV RENFORCEMENT CAPACITE",
+                                              "CHEF DIV MOBILISATION SOCIAL", "SECURITÉ RAPPROCHÉ",
+                                              "DIRECTEUR DSEC", "CHEF DIV CAPITALISATION", "CHEF DIV SISAN",
+                                              "CHEF DIV SUIVI-EVALUATION STATISTIQUE",
+                                              "DIRECTEUR DPEP", "CHEF DIV PROGRAMMATION", "COORDINATEUR",
+                                              "CHEF SERV CARTOGRAPHY", "CHEF SERV COM/CELLULE NUTRITION",
+                                              "CHEF SERV BIO-STATISTIQUE", "ING STATISTICIEN ECONOMISTE P",
+                                              "MEDECIN NUTRITIONISTE", "COORDINATRICE Proj NEXUS",
+                                              "Resp ADMINISTRATIF FINANCE", "Resp SUIVI-EVALUATION",
+                                              "SECRETAIRE COMPTABLE", "CR/TAHOUA", "AT CRi3N NIAMEY",
+                                              "ASSISTANTE SG", "ASSISTANTE SGA", "Resp SECURITÉ", "AGENT SECURITÉ",
+                                              "CHAUFFEUR", "PLANTON"])))
         self.title.grid(row=0, column=0)
         self.title_combox.grid(row=1, column=0, ipadx=50)
 
         # Create department label and combobox
         self.department_label = ttk.Label(self.user_info_frame, text="Departement:", background='lightgrey',
                                           underline=0)
-        self.department_combobox = ttk.Combobox(self.user_info_frame, values=["CABINET", "SECRETARIAT GENERAL", "DAFC",
-                                                                              "DEPARTMENT PARTENARIAT",
-                                                                              "CELLULE NUTRITION", "NEXUS",
-                                                                              "COORDINATION REGIONALE",
-                                                                              "DMRC", "DSEC", "DPEP", "GNN-SECURITY",
-                                                                              "AUXILIAIRES"])
+        self.department_combobox = ttk.Combobox(self.user_info_frame,
+                                                values=(sorted(["CABINET", "SECRETARIAT GENERAL", "DAFC",
+                                                                "DEPARTMENT PARTENARIAT",
+                                                                "CELLULE NUTRITION", "NEXUS",
+                                                                "COORDINATION REGIONALE",
+                                                                "DMRC", "DSEC", "DPEP", "GNN-SECURITY",
+                                                                "AUXILIAIRES"])))
         self.department_label.grid(row=0, column=1)
         self.department_combobox.grid(row=1, column=1, ipadx=20)
 
@@ -232,7 +237,7 @@ class JobTimeCalculator:
             Print a clock time
             :return: A numeric clock
             """
-            string = strftime("%d-%m-%Y %H:%M:%S %p")
+            string = strftime("%d-%m-%Y %H:%M:%S")
             self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 15, 'italic'), foreground='black',
                                         background='lightgrey')
             self.label_text.config(text=string)
@@ -1226,13 +1231,13 @@ class JobTimeCalculator:
                     sheet.column_dimensions[column].width = width
 
                 row = sheet.row_dimensions[1]
-                row.height = 150
+                row.height = 160
 
                 # Image
-                img_file = "images\\logoHCi3N.ico"
+                img_file = "images\\hci3n.png"
                 sheet.merge_cells('A1:C1')
                 img = Image(img_file)
-                img.width = 200
+                img.width = 700
                 img.height = 200
                 img.anchor = 'A1'
                 sheet.add_image(img)
