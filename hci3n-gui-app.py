@@ -1290,10 +1290,18 @@ class JobTimeCalculator:
             workbook.save(file_path)
             workbook.close()
 
-            # # Append the first two-lines from the default sheet
+            # # Load the workbook
+            # workbook = openpyxl.load_workbook(file_path)
+            # sheet = workbook.active
+            # Append the first two-lines from the default sheet
             # default_sheet = openpyxl.load_workbook(file_path).active
             # for row in default_sheet.iter_rows(min_row=1, max_row=2, values_only=True):
             #     sheet.append(row)
+
+            # Save and close the workbook
+            # workbook.save(file_path)
+            # workbook.close()
+
             #
             # # Check for duplication before appending the data
             # data_to_append = [nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
@@ -1311,67 +1319,63 @@ class JobTimeCalculator:
             # for sheet_name in workbook.sheetnames:
             #     sheet = workbook[sheet_name]
             #
-            # workbook.save(file_path)
-            # workbook.close()
-
+            # column_widths = {
+            #     'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 8, 'F': 12, 'G': 14, 'H': 9, 'I': 11, 'J': 12, 'K': 13
+            # }
+            # for column, width in column_widths.items():
+            #     sheet.column_dimensions[column].width = width
             #
-            #     column_widths = {
-            #         'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 8, 'F': 12, 'G': 14, 'H': 9, 'I': 11, 'J': 12, 'K': 13
-            #     }
-            #     for column, width in column_widths.items():
-            #         sheet.column_dimensions[column].width = width
+            # row = sheet.row_dimensions[1]
+            # row.height = 150
             #
-            #         row = sheet.row_dimensions[1]
-            #         row.height = 150
+            # # Image
+            # img_file = "images\\logoHCi3N.ico"
+            # sheet.merge_cells('A1:C1')
+            # img = Image(img_file)
+            # img.width = 200
+            # img.height = 200
+            # img.anchor = 'A1'
+            # sheet.add_image(img)
             #
-            #         # Image
-            #         img_file = "images\\logoHCi3N.ico"
-            #         sheet.merge_cells('A1:C1')
-            #         img = Image(img_file)
-            #         img.width = 200
-            #         img.height = 200
-            #         img.anchor = 'A1'
-            #         sheet.add_image(img)
+            # # Define the Excel sheet fill color
+            # color1 = "00FF0000"  # red color
+            # color2 = "0000CCFF"  # lightblue color
+            # color3 = "00CCFFCC"  # lightgreen color
+            # color4 = "00FF6600"  # orange color
+            # color5 = "0000FF00"  # green color
+            # color6 = "00C0C0C0"  # lightgrey
             #
-            #         # Define the Excel sheet fill color
-            #         color1 = "00FF0000"  # red color
-            #         color2 = "0000CCFF"  # lightblue color
-            #         color3 = "00CCFFCC"  # lightgreen color
-            #         color4 = "00FF6600"  # orange color
-            #         color5 = "0000FF00"  # green color
-            #         color6 = "00C0C0C0"  # lightgrey
+            # sheet.merge_cells('D1:K1')
+            # sheet.title = "Archive du {}".format(today)
+            # header_values = "SYNTHESES DES HORAIRES DE SERVICE QUOTIDIEN DES EMPLOYÉ(ES) DU HC3N"
+            # top_left_cell = sheet['D1']
+            # top_left_cell.value = header_values
+            # top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
+            # top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
+            # list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
+            #                   "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
+            # sheet.append(list_to_append)
             #
-            #         sheet.merge_cells('D1:K1')
-            #         sheet.title = "Archive du {}".format(today)
-            #         header_values = "SYNTHESES DES HORAIRES DE SERVICE QUOTIDIEN DES EMPLOYÉ(ES) DU HC3N"
-            #         top_left_cell = sheet['D1']
-            #         top_left_cell.value = header_values
-            #         top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
-            #         top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
-            #         list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
-            #                           "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
-            #         sheet.append(list_to_append)
+            # ft = Font(bold=True)
+            # for row in sheet["A2:K2"]:
+            #     for cell in row:
+            #         cell.font = ft
             #
-            #         ft = Font(bold=True)
-            #         for row in sheet["A2:K2"]:
-            #             for cell in row:
-            #                 cell.font = ft
+            # for row in sheet["A1:K1"]:
+            #     for cell in row:
+            #         cell.font = ft
             #
-            #         for row in sheet["A1:K1"]:
-            #             for cell in row:
-            #                 cell.font = ft
-            #
-            #         sheet["A2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            #         sheet["B2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            #         sheet["C2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            #         sheet["D2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            #         sheet["E2"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
-            #         sheet["F2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-            #         sheet["G2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-            #         sheet["H2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            #         sheet["I2"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
-            #         sheet["J2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
-            #         sheet["K2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+            # sheet["A2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+            # sheet["B2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+            # sheet["C2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+            # sheet["D2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+            # sheet["E2"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
+            # sheet["F2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+            # sheet["G2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+            # sheet["H2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+            # sheet["I2"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
+            # sheet["J2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+            # sheet["K2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
             #
             # sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
             #               total, daily_date, observation])
