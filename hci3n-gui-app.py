@@ -1217,6 +1217,18 @@ class JobTimeCalculator:
                 workbook.iso_dates = True
                 sheet = workbook.active
 
+                sheet.column_dimensions['A'].width = 40
+                sheet.column_dimensions['B'].width = 37
+                sheet.column_dimensions['C'].width = 25
+                sheet.column_dimensions['D'].width = 10
+                sheet.column_dimensions['E'].width = 8
+                sheet.column_dimensions['F'].width = 12
+                sheet.column_dimensions['G'].width = 14
+                sheet.column_dimensions['H'].width = 9
+                sheet.column_dimensions['I'].width = 11
+                sheet.column_dimensions['J'].width = 12
+                sheet.column_dimensions['K'].width = 13
+
                 row = sheet.row_dimensions[1]
                 row.height = 150
 
@@ -1276,18 +1288,6 @@ class JobTimeCalculator:
                 workbook.close()
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            # for row in sheet.iter_rows():
-            #     for cell in row:
-            #         # Get the cell value
-            #         value = cell.value
-            #
-            #         # Resize the row and column
-            #         if value:
-            #             row_dimension = sheet.row_dimensions[cell.row]
-            #             row_dimension.height = max(row_dimension.height, len(str(value)))
-            #
-            #             column_dimension = sheet.column_dimensions[cell.column_letter]
-            #             column_dimension.width = max(column_dimension.width, len(str(value)))
             sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
                           total, daily_date, observation])
             workbook.save(file_path)
