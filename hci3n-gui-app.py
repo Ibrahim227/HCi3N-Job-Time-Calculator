@@ -8,6 +8,7 @@ from tkinter import ttk, messagebox, END, BOTH
 import openpyxl
 from openpyxl.drawing.image import Image
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl.utils import get_column_letter
 from tkcalendar import DateEntry
 
 from startup_image import mainwindow
@@ -694,7 +695,7 @@ class JobTimeCalculator:
                 if not (
                         hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check):
                     messagebox.showwarning(title="Alerte",
-                                           message="Aucune visite effectuee vers:\n 'SIEGE; ANNEXE-1; ANNEXE-2'")
+                                           message="Aucune visite effectuee vers:\n\n 'SIEGE; ANNEXE-1; ANNEXE-2'")
                 if not (work_case_exit or personal_case_exit):
                     messagebox.showwarning(title="Alerte", message="Aucune Sortie Signalée")
 
@@ -1237,8 +1238,32 @@ class JobTimeCalculator:
                 sheet.page_setup.paperSize = sheet.PAPERSIZE_A4
 
                 # Set the print options to fit all columns on one page
-                sheet.print_options.fitToWidth = 1
-                sheet.print_options.fitToHeight = 0
+                sheet.print_options.fitToWidth = True
+                sheet.print_options.fitToHeight = False
+
+                sheet.page_margins.left = 0.5
+                sheet.page_margins.right = 0.5
+                sheet.page_margins.top = 0.5
+                sheet.page_margins.bottom = 0.5
+                sheet.page_margins.header = 0.3
+                sheet.page_margins.footer = 0.3
+
+                for column in sheet.columns:
+                    max_length = 0
+                    column = [cell for cell in column]
+                    for cell in column:
+                        try:
+                            if len(str(cell.value)) > max_length:
+                                max_length = len(cell.value)
+                        except ValueError:
+                            pass
+                    adjusted_width = (max_length + 2)
+                    sheet.column_dimensions[get_column_letter(column[0].column)].width = adjusted_width
+
+                # Set the scaling options
+                sheet.sheet_properties.pageSetUpPr.fitToPage = True
+                sheet.sheet_properties.pageSetUpPr.fitToWidth = 1
+                sheet.sheet_properties.pageSetUpPr.fitToHeight = 0
 
                 ### Default sheet column dimensions
                 column_widths = {
@@ -1248,15 +1273,6 @@ class JobTimeCalculator:
                 for column, width in column_widths.items():
                     sheet.column_dimensions[column].width = width
                 #
-                # for column in sheet.columns:
-                #     max_length = 0
-                #     column = [cell for cell in column]
-                #     for cell in column:
-                #         if len(str(cell.value)) > max_length:
-                #             max_length = len(cell.value)
-                #     adjusted_width = (max_length + 2)
-                #     sheet.column_dimensions[get_column_letter(column[0].column)].width = adjusted_width
-
                 # Row dimensions
                 row = sheet.row_dimensions[1]
                 row.height = 155
