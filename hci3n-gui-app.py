@@ -1287,10 +1287,10 @@ class JobTimeCalculator:
                 img_file = "images\\hci3n.png"
                 sheet.merge_cells('A1:C1')
                 img = Image(img_file)
-                img.width = 720
-                img.height = 205
-                img.anchor = 'A1'
-                sheet.add_image(img)
+                img.width = 700
+                img.height = 195
+
+                sheet.add_image(img, 'A1')
 
                 # Sheet Dimensions
                 sheet.merge_cells('A2:L2')
@@ -1320,23 +1320,25 @@ class JobTimeCalculator:
                                   "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
                 sheet.append(list_to_append)
                 ft = Font(bold=True, size=12.5)
+                fta = Font(bold=True, size=16)
                 border = Border(left=Side(border_style='thin', color='00000000'),
                                 right=Side(border_style='thin', color='00000000'),
                                 top=Side(border_style='thin', color='00000000'),
                                 bottom=(Side(border_style='thin', color='00000000')))
+
                 for row in sheet["A3:L3"]:
                     for cell in row:
                         cell.font = ft
                         cell.border = border
 
-                for row in sheet["A1:L1"]:
+                for row in sheet["C1:L1"]:
                     for cell in row:
-                        cell.font = ft
-                        cell.border = border
+                        cell.font = fta
+                        # cell.border = border
 
                 for row in sheet["A2:L2"]:
                     for cell in row:
-                        cell.font = ft
+                        cell.font = fta
                         cell.border = border
 
                 sheet["A3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
