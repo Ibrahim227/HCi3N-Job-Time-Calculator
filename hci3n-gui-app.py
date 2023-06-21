@@ -61,7 +61,9 @@ class JobTimeCalculator:
         self.user_info_frame.grid(row=0, column=0, sticky='news', padx=20, pady=10)
 
         ################# lateral LabelFrame #################
-        self.lateral_label_frame = ttk.LabelFrame(self.frame, text="Panneau Lateral (Nom&Prenom, Observation - Calendrier)", underline=0)
+        self.lateral_label_frame = ttk.LabelFrame(self.frame,
+                                                  text="Panneau Lateral (Nom&Prenom, Observation - Calendrier)",
+                                                  underline=0)
         self.lateral_label_frame.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
         # Create name and last name label
@@ -345,7 +347,7 @@ class JobTimeCalculator:
 
         ###################################### Configure Third LabelFrame ################################
 
-        # Create the labelFrame annexe 1 to hq and annexe 2
+        # Create the labelFrame annex 1 to hq and annexe 2
         ################# function_set check, entries and labels
         self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
         self.verify_frame.grid(row=2, column=0, padx=20, pady=15, sticky="news")
@@ -464,7 +466,8 @@ class JobTimeCalculator:
         ################################################################
 
         #### New label for display the duration time at a site
-        self.stay_time_labelframe = ttk.Labelframe(self.frame, text="Affichage Durée (Pause & Entrée-Sortie )", underline=0)
+        self.stay_time_labelframe = ttk.Labelframe(self.frame, text="Affichage Durée (Pause & Entrée-Sortie )",
+                                                   underline=0)
         self.stay_time_labelframe.grid(row=1, column=1, sticky='news', padx=20, pady=10)
 
         self.duration_tion_label = ttk.Label(self.stay_time_labelframe, text="Durée: ", underline=0)
@@ -576,8 +579,12 @@ class JobTimeCalculator:
         third = "17:30"  # Predefined third value to fill the entries
         fourth = "13:30"  # Predefined fourth value to fill the entries
         fifth = "14:15"  # Predefined fifth value to fill the entries
-        self.break_start_entry.insert(0, fourth)
-        self.break_end_entry.insert(0, fifth)
+        if self.break_check_button_var.get():
+            self.break_start_entry.insert(0, fourth)
+            self.break_end_entry.insert(0, fifth)
+        else:
+            self.break_start_entry.insert(0, value)
+            self.break_end_entry.insert(0, value)
         self.annexe_entry.insert(0, value)
         self.annexe_entry_01.insert(0, value)
         self.site_exit.insert(0, value)
@@ -1207,8 +1214,8 @@ class JobTimeCalculator:
         # break_status = self.break_check_button_var.get()
 
         # Validate input
-        if not (nom_prenom and fonction and arrivee and descente and total):
-            required_list = ["Nom & Prenom", "Fonction", "Heure Arrivee", "Heure Descente", "Total"]
+        if not (nom_prenom and arrivee and descente and total):
+            required_list = ["Nom & Prenom", "Heure Arrivee", "Heure Descente", "Total"]
             messagebox.showerror(f"Erreur: Sauvegarde-Archive Impossible",
                                  f"Veuillez remplir tout les champs requis:\n{list(required_list)}")
             return
@@ -1221,13 +1228,34 @@ class JobTimeCalculator:
                 workbook.iso_dates = True
                 sheet = workbook.active
 
-                ### Default sheet column dimensions
+                # Edit print options
+                sheet.print_options_horizontalCentered = True
+                sheet.print_options_verticalCentered = True
 
+                # Edit Page layout and size
+                sheet.page_setup.orientation = sheet.ORIENTATION_LANDSCAPE
+                sheet.page_setup.paperSize = sheet.PAPERSIZE_A4
+
+                # Set the print options to fit all columns on one page
+                sheet.print_options.fitToWidth = 1
+                sheet.print_options.fitToHeight = 0
+
+                ### Default sheet column dimensions
                 column_widths = {
-                    'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 10, 'F': 8, 'G': 15, 'H': 16, 'I': 11, 'J': 13, 'K': 11, 'L': 15
+                    'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 10, 'F': 8, 'G': 15, 'H': 16, 'I': 11, 'J': 13, 'K': 11,
+                    'L': 15
                 }
                 for column, width in column_widths.items():
                     sheet.column_dimensions[column].width = width
+                #
+                # for column in sheet.columns:
+                #     max_length = 0
+                #     column = [cell for cell in column]
+                #     for cell in column:
+                #         if len(str(cell.value)) > max_length:
+                #             max_length = len(cell.value)
+                #     adjusted_width = (max_length + 2)
+                #     sheet.column_dimensions[get_column_letter(column[0].column)].width = adjusted_width
 
                 # Row dimensions
                 row = sheet.row_dimensions[1]
@@ -1251,7 +1279,7 @@ class JobTimeCalculator:
                 # Sheet Dimensions
                 sheet.merge_cells('A2:L2')
                 header_value = 'Temps de Travail du Lundi au Jeudi: 8h-17h30--Total: 9h30/jour |||   Pause: 45min/jour |||  ' \
-                               'Vendredi: 8h-13h--Total Vendredi: 5h/jour  ||| Total Semaine: 40h'
+                               'Vendredi: 8h-13h--Total: 5h/jour  ||| Total Semaine: 40h'
                 second_cell = sheet['A2']
                 second_cell.value = header_value
                 second_cell.fill = PatternFill(start_color="00C0C0C0", end_color="00C0C0C0", fill_type='lightTrellis')
@@ -1276,8 +1304,10 @@ class JobTimeCalculator:
                                   "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
                 sheet.append(list_to_append)
                 ft = Font(bold=True, size=12.5)
-                border = Border(left=Side(border_style='thin', color='00000000'), right=Side(border_style='thin', color='00000000'),
-                                top=Side(border_style='thin', color='00000000'), bottom=(Side(border_style='thin', color='00000000')))
+                border = Border(left=Side(border_style='thin', color='00000000'),
+                                right=Side(border_style='thin', color='00000000'),
+                                top=Side(border_style='thin', color='00000000'),
+                                bottom=(Side(border_style='thin', color='00000000')))
                 for row in sheet["A3:L3"]:
                     for cell in row:
                         cell.font = ft
@@ -1310,116 +1340,25 @@ class JobTimeCalculator:
                 workbook.save(file_path)
                 workbook.close()
 
-                # Load the workbook
+            # Load the workbook
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([nom_prenom, fonction, departement, lieu, jour_semaine, arrivee, debut_pause, retour_pause, descente,
-                          total, daily_date, observation])
+            sheet.append(
+                [nom_prenom, fonction, departement, lieu, jour_semaine, arrivee, debut_pause, retour_pause, descente,
+                 total, daily_date, observation])
 
             # Save and close the workbook
             workbook.save(file_path)
             workbook.close()
 
-            # # Load the workbook
-            # workbook = openpyxl.load_workbook(file_path)
-            # sheet = workbook.active
-            # Append the first two-lines from the default sheet
-            # default_sheet = openpyxl.load_workbook(file_path).active
-            # for row in default_sheet.iter_rows(min_row=1, max_row=2, values_only=True):
-            #     sheet.append(row)
-
-            # Save and close the workbook
-            # workbook.save(file_path)
-            # workbook.close()
-
-            #
-            # # Check for duplication before appending the data
-            # data_to_append = [nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
-            #                   total, daily_date, observation]
-            # existing_data = [cell.value for cell in sheet['A'][3:]]
-            # if data_to_append not in existing_data:
-            #     sheet.append(data_to_append)
-            #
-            # # Save and close the workbook
-            # workbook.save(file_path)
-            # workbook.close()
-
-            # workbook = openpyxl.load_workbook(file_path)
-            # sheet = workbook.active
-            # for sheet_name in workbook.sheetnames:
-            #     sheet = workbook[sheet_name]
-            #
-            # column_widths = {
-            #     'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 8, 'F': 12, 'G': 14, 'H': 9, 'I': 11, 'J': 12, 'K': 13
-            # }
-            # for column, width in column_widths.items():
-            #     sheet.column_dimensions[column].width = width
-            #
-            # row = sheet.row_dimensions[1]
-            # row.height = 150
-            #
-            # # Image
-            # img_file = "images\\logoHCi3N.ico"
-            # sheet.merge_cells('A1:C1')
-            # img = Image(img_file)
-            # img.width = 200
-            # img.height = 200
-            # img.anchor = 'A1'
-            # sheet.add_image(img)
-            #
-            # # Define the Excel sheet fill color
-            # color1 = "00FF0000"  # red color
-            # color2 = "0000CCFF"  # lightblue color
-            # color3 = "00CCFFCC"  # lightgreen color
-            # color4 = "00FF6600"  # orange color
-            # color5 = "0000FF00"  # green color
-            # color6 = "00C0C0C0"  # lightgrey
-            #
-            # sheet.merge_cells('D1:K1')
-            # sheet.title = "Archive du {}".format(today)
-            # header_values = "SYNTHESES DES HORAIRES DE SERVICE QUOTIDIEN DES EMPLOYÉ(ES) DU HC3N"
-            # top_left_cell = sheet['D1']
-            # top_left_cell.value = header_values
-            # top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
-            # top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
-            # list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
-            #                   "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
-            # sheet.append(list_to_append)
-            #
-            # ft = Font(bold=True)
-            # for row in sheet["A2:K2"]:
-            #     for cell in row:
-            #         cell.font = ft
-            #
-            # for row in sheet["A1:K1"]:
-            #     for cell in row:
-            #         cell.font = ft
-            #
-            # sheet["A2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            # sheet["B2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            # sheet["C2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            # sheet["D2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            # sheet["E2"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
-            # sheet["F2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-            # sheet["G2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-            # sheet["H2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-            # sheet["I2"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
-            # sheet["J2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
-            # sheet["K2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
-            #
-            # sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
-            #               total, daily_date, observation])
-            #
-            # workbook.save(file_path)
-            # workbook.close()
-
+            # Message to display after Success
             messagebox.showinfo(title="Succès", message="Donnée enregistrée avec succès !!!")
 
+        # Exception message
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
     ### Running function
-
     def run(self):
         self.window.mainloop()
 
