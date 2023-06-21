@@ -7,7 +7,7 @@ from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
 from openpyxl.drawing.image import Image
-from openpyxl.styles import Font, PatternFill, Alignment
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from tkcalendar import DateEntry
 
 from startup_image import mainwindow
@@ -61,7 +61,7 @@ class JobTimeCalculator:
         self.user_info_frame.grid(row=0, column=0, sticky='news', padx=20, pady=10)
 
         ################# lateral LabelFrame #################
-        self.lateral_label_frame = ttk.LabelFrame(self.frame, text="Panneau Lateral", underline=0)
+        self.lateral_label_frame = ttk.LabelFrame(self.frame, text="Panneau Lateral (Nom&Prenom, Observation - Calendrier)", underline=0)
         self.lateral_label_frame.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
         # Create name and last name label
@@ -210,13 +210,13 @@ class JobTimeCalculator:
         self.break_start_entry.grid(row=3, column=1)
         self.break_end_entry.grid(row=3, column=2)
 
-        # # Week days combobox entry
-        # self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
-        # combobox = ttk.Combobox(self.user_info_frame,
-        #                         values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"])
-        # self.week_combobox = combobox
-        # self.week_combobox.grid(row=1, column=3)
-        # self.week_label.grid(row=0, column=3)
+        # Week days combobox entry
+        self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
+        combobox = ttk.Combobox(self.user_info_frame,
+                                values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"])
+        self.week_combobox = combobox
+        self.week_combobox.grid(row=1, column=3)
+        self.week_label.grid(row=0, column=3)
 
         for widget in self.user_info_frame.winfo_children():
             widget.grid_configure(padx=20, pady=5, sticky="news")
@@ -224,7 +224,7 @@ class JobTimeCalculator:
         # # Create the message to display
         ## create labelframe to display the message within it
 
-        self.msg_labelframe = ttk.LabelFrame(self.frame, text='Message & Heure', underline=0)
+        self.msg_labelframe = ttk.LabelFrame(self.frame, text='HC3N & Heure', underline=0)
         self.msg_labelframe.grid(row=4, column=1, sticky="news", padx=10, pady=10)
         self.ourmessage = "HAUT COMMISSARIAT A L'INITIATIVE 3N"
         self.display_message = tk.Message(self.msg_labelframe, text=self.ourmessage, font='italic')
@@ -441,7 +441,7 @@ class JobTimeCalculator:
 
         ############################################ Configure Fifth LabelFrame ################################
 
-        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause, Sauvegarde & Affichage Temps Total',
+        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause, Sauvegarde-Archive & Affichage Temps Total',
                                                  underline=0)
         self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=10)
 
@@ -464,7 +464,7 @@ class JobTimeCalculator:
         ################################################################
 
         #### New label for display the duration time at a site
-        self.stay_time_labelframe = ttk.Labelframe(self.frame, text="Affichage Temps Passer sur Site", underline=0)
+        self.stay_time_labelframe = ttk.Labelframe(self.frame, text="Affichage Durée (Pause & Entrée-Sortie )", underline=0)
         self.stay_time_labelframe.grid(row=1, column=1, sticky='news', padx=20, pady=10)
 
         self.duration_tion_label = ttk.Label(self.stay_time_labelframe, text="Durée: ", underline=0)
@@ -1182,10 +1182,9 @@ class JobTimeCalculator:
         descente = self.time_end_entry.get()
         lieu = self.place_combobox.get()
         total = self.calculate_total_time()
-        # jour_semaine = self.week_combobox.get()
+        jour_semaine = self.week_combobox.get()
         observation = self.observation_list_combobox.get()
         daily_date = self.spinbox.get_date()
-        today = datetime.date.today()
         # duration = self.display_duration()
 
         ## Team HQ
@@ -1208,15 +1207,15 @@ class JobTimeCalculator:
         # break_status = self.break_check_button_var.get()
 
         # Validate input
-        if not (nom_prenom and fonction and departement and lieu and arrivee and descente and total):
-            required_list = ["Nom & Prenom", "Fonction", "Departement", "Lieu", "Heure Arrivee", "Descente", "Total"]
-            messagebox.showerror(f"Erreur: Sauvegarde Impossible",
-                                 f"Veuillez remplir tout les champs requis:\n {list(required_list)}")
+        if not (nom_prenom and fonction and arrivee and descente and total):
+            required_list = ["Nom & Prenom", "Fonction", "Heure Arrivee", "Heure Descente", "Total"]
+            messagebox.showerror(f"Erreur: Sauvegarde-Archive Impossible",
+                                 f"Veuillez remplir tout les champs requis:\n{list(required_list)}")
             return
 
         # Save data to Excel file
         try:
-            file_path = f"sauvegarde\\Sauvegarde_du_{today}.xlsx"
+            file_path = f"Sauvegarde-Archive\\Archive_de_l'employee_{nom_prenom}.xlsx"
             if not os.path.exists(file_path):
                 workbook = openpyxl.Workbook()
                 workbook.iso_dates = True
@@ -1225,22 +1224,38 @@ class JobTimeCalculator:
                 ### Default sheet column dimensions
 
                 column_widths = {
-                    'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 8, 'F': 12, 'G': 14, 'H': 10, 'I': 11, 'J': 12, 'K': 13
+                    'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 10, 'F': 8, 'G': 15, 'H': 16, 'I': 11, 'J': 13, 'K': 11, 'L': 15
                 }
                 for column, width in column_widths.items():
                     sheet.column_dimensions[column].width = width
 
+                # Row dimensions
                 row = sheet.row_dimensions[1]
-                row.height = 160
+                row.height = 155
 
-                # Image
+                row = sheet.row_dimensions[2]
+                row.height = 25
+
+                row = sheet.row_dimensions[3]
+                row.height = 20
+
+                # Add a header Image to the Excel file
                 img_file = "images\\hci3n.png"
                 sheet.merge_cells('A1:C1')
                 img = Image(img_file)
-                img.width = 700
-                img.height = 200
+                img.width = 720
+                img.height = 205
                 img.anchor = 'A1'
                 sheet.add_image(img)
+
+                # Sheet Dimensions
+                sheet.merge_cells('A2:L2')
+                header_value = 'Temps de Travail du Lundi au Jeudi: 8h-17h30--Total: 9h30/jour |||   Pause: 45min/jour |||  ' \
+                               'Vendredi: 8h-13h--Total Vendredi: 5h/jour  ||| Total Semaine: 40h'
+                second_cell = sheet['A2']
+                second_cell.value = header_value
+                second_cell.fill = PatternFill(start_color="00C0C0C0", end_color="00C0C0C0", fill_type='lightTrellis')
+                second_cell.alignment = Alignment(horizontal='center', vertical='center')
 
                 # Define the Excel sheet fill color
                 color1 = "00FF0000"  # red color
@@ -1250,36 +1265,46 @@ class JobTimeCalculator:
                 color5 = "0000FF00"  # green color
                 color6 = "00C0C0C0"  # lightgrey
 
-                sheet.merge_cells('D1:K1')
-                sheet.title = f"Archive du {today}"
+                sheet.merge_cells('D1:L1')
+                sheet.title = f"Archive du {daily_date}"
                 header_values = "SYNTHESES DES HORAIRES DE SERVICE JOURNALIER DES EMPLOYÉ(ES) DU HC3N"
                 top_left_cell = sheet['D1']
                 top_left_cell.value = header_values
                 top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
                 top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
-                list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "ENTREE", "DEBUT PAUSE",
+                list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "JOUR", "ENTREE", "DEBUT PAUSE",
                                   "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
                 sheet.append(list_to_append)
-                ft = Font(bold=True)
-                for row in sheet["A2:K2"]:
+                ft = Font(bold=True, size=12.5)
+                border = Border(left=Side(border_style='thin', color='00000000'), right=Side(border_style='thin', color='00000000'),
+                                top=Side(border_style='thin', color='00000000'), bottom=(Side(border_style='thin', color='00000000')))
+                for row in sheet["A3:L3"]:
                     for cell in row:
                         cell.font = ft
+                        cell.border = border
 
-                for row in sheet["A1:K1"]:
+                for row in sheet["A1:L1"]:
                     for cell in row:
                         cell.font = ft
+                        cell.border = border
 
-                sheet["A2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["B2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["C2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["D2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["E2"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
-                sheet["F2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-                sheet["G2"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-                sheet["H2"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["I2"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
-                sheet["J2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
-                sheet["K2"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                for row in sheet["A2:L2"]:
+                    for cell in row:
+                        cell.font = ft
+                        cell.border = border
+
+                sheet["A3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["B3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["C3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["D3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["E3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                sheet["F3"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
+                sheet["G3"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+                sheet["H3"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+                sheet["I3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                sheet["J3"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
+                sheet["K3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                sheet["L3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
 
                 # Save and close the workbook
                 workbook.save(file_path)
@@ -1288,7 +1313,7 @@ class JobTimeCalculator:
                 # Load the workbook
             workbook = openpyxl.load_workbook(file_path)
             sheet = workbook.active
-            sheet.append([nom_prenom, fonction, departement, lieu, arrivee, debut_pause, retour_pause, descente,
+            sheet.append([nom_prenom, fonction, departement, lieu, jour_semaine, arrivee, debut_pause, retour_pause, descente,
                           total, daily_date, observation])
 
             # Save and close the workbook
