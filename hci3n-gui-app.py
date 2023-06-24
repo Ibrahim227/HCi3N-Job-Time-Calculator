@@ -1188,7 +1188,7 @@ class JobTimeCalculator:
     def save_to_excel(self):
         """
         Allows saving all required inputs through the GUI
-        :return: An Excel file
+        :return: Save information to an Excel file
         """
         nom_prenom = self.first_last_name_entry.get()
         fonction = self.title_combox.get()
