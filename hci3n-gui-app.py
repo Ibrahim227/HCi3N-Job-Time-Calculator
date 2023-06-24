@@ -8,7 +8,6 @@ from tkinter import ttk, messagebox, END, BOTH
 import openpyxl
 from openpyxl.drawing.image import Image
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.utils import get_column_letter
 from tkcalendar import DateEntry
 
 from startup_image import mainwindow
@@ -1239,9 +1238,6 @@ class JobTimeCalculator:
                 workbook.iso_dates = True
                 sheet = workbook.active
 
-                for sheet_name in workbook.sheetnames:
-                    sheet = workbook[sheet_name]
-
                 # Edit print options
                 sheet.print_options_horizontalCentered = True
                 sheet.print_options_verticalCentered = True
@@ -1261,17 +1257,17 @@ class JobTimeCalculator:
                 # sheet.page_margins.header = 0.3
                 # sheet.page_margins.footer = 0.3
 
-                for column in sheet.columns:
-                    max_length = 0
-                    column = [cell for cell in column]
-                    for cell in column:
-                        try:
-                            if len(str(cell.value)) > max_length:
-                                max_length = len(cell.value)
-                        except ValueError:
-                            pass
-                    adjusted_width = (max_length + 2)
-                    sheet.column_dimensions[get_column_letter(column[0].column)].width = adjusted_width
+                # for column in sheet.columns:
+                #     max_length = 0
+                #     column = [cell for cell in column]
+                #     for cell in column:
+                #         try:
+                #             if len(str(cell.value)) > max_length:
+                #                 max_length = len(cell.value)
+                #         except ValueError:
+                #             pass
+                #     adjusted_width = (max_length + 2)
+                #     sheet.column_dimensions[get_column_letter(column[0].column)].width = adjusted_width
 
                 # Set the scaling options
                 sheet.sheet_properties.pageSetUpPr.fitToPage = True
@@ -1304,8 +1300,7 @@ class JobTimeCalculator:
                 img.height = 185
 
                 first_cell = sheet['A1']
-
-                first_cell.alignment = Alignment(horizontal='center', vertical='center')
+                first_cell.alignment = Alignment(horizontal='center', vertical='center', mergeCell=True)
                 # Add the image to the worksheet
                 sheet.add_image(img)
 
