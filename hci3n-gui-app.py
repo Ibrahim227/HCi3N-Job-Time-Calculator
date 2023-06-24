@@ -401,7 +401,7 @@ class JobTimeCalculator:
         ############################################ Configure Fourth LabelFrame ################################
 
         self.third_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-2 vers (SIEGE-ANNEXE-1)", underline=0)
-        self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=15)
+        self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=10)
 
         self.verification_button_var = tk.BooleanVar(self.third_frame, value=False)
         self.verification_button = ttk.Checkbutton(self.third_frame, text="Verifier Presence SIEGE",
@@ -442,7 +442,7 @@ class JobTimeCalculator:
         for widget in self.third_frame.winfo_children():
             widget.grid_configure(padx=20, pady=5, sticky="news")
 
-        ############################################ Configure Fifth LabelFrame ################################
+        ############################################ Configure break, total autofill, auto-delete LabelFrame ################################
 
         self.registration_frame = ttk.LabelFrame(self.frame, text='Pause, Sauvegarde-Archive & Affichage Temps Total',
                                                  underline=0)
@@ -460,6 +460,12 @@ class JobTimeCalculator:
         self.result_view.grid(row=2, column=1, sticky='news')
         self.result_label = ttk.Label(self.registration_frame, background='lightgreen')
         self.result_label.grid(row=2, column=2)
+
+        self.onsite_check_var = tk.BooleanVar(self.registration_frame, value=False)
+        self.onsite_confirm_presence = ttk.Checkbutton(self.registration_frame, text='En cas d\'Absence',
+                                                       variable=self.onsite_check_var, onvalue=True, offvalue=False,
+                                                       underline=10)
+        self.onsite_confirm_presence.grid(row=2, column=5)
 
         for widget in self.registration_frame.winfo_children():
             widget.grid_configure(padx=10, pady=15, sticky="news")
@@ -586,6 +592,13 @@ class JobTimeCalculator:
         else:
             self.break_start_entry.insert(0, value)
             self.break_end_entry.insert(0, value)
+
+        if self.onsite_check_var.get():
+            self.time_end_entry.insert(0, value)
+            self.time_start_entry.insert(0, value)
+        else:
+            self.time_start_entry.insert(0, second)
+            self.time_end_entry.insert(0, third)
         self.annexe_entry.insert(0, value)
         self.annexe_entry_01.insert(0, value)
         self.site_exit.insert(0, value)
@@ -600,8 +613,6 @@ class JobTimeCalculator:
         self.second_annexe_exit.insert(0, value)
         self.new_entry.insert(0, value)
         self.new_exit.insert(0, value)
-        self.time_start_entry.insert(0, second)
-        self.time_end_entry.insert(0, third)
         self.personal_entry.insert(0, value)
         self.personal_exit.insert(0, value)
 
@@ -684,10 +695,6 @@ class JobTimeCalculator:
         # Usage of whole conditionals variables
         try:
             # total_time = datetime.timedelta()  # Initialize total_time to zero
-            if end_time <= start_time:
-                messagebox.showerror("Erreur",
-                                     message="l'Heure d'Arrivee est superieure ou egal a l'Heure de Descente \n 'Calcule Impossible.'")
-                return
 
             if not break_taken:
                 messagebox.showinfo(title="Information", message="L'employee n'a pas prit de pause !")
@@ -702,6 +709,9 @@ class JobTimeCalculator:
                 total_time = datetime.datetime.combine(datetime.date.today(),
                                                        end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time)
+
+                if end_time <= start_time:
+                    total_time = datetime.timedelta(hours=0, minutes=0, seconds=0)
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte', message="L'employee du SIEGE s'est rendu a l'ANNEXE-1")
@@ -1229,6 +1239,9 @@ class JobTimeCalculator:
                 workbook.iso_dates = True
                 sheet = workbook.active
 
+                for sheet_name in workbook.sheetnames:
+                    sheet = workbook[sheet_name]
+
                 # Edit print options
                 sheet.print_options_horizontalCentered = True
                 sheet.print_options_verticalCentered = True
@@ -1239,14 +1252,14 @@ class JobTimeCalculator:
 
                 # Set the print options to fit all columns on one page
                 sheet.print_options.fitToWidth = True
-                sheet.print_options.fitToHeight = False
+                sheet.print_options.fitToHeight = True
 
-                sheet.page_margins.left = 0.5
-                sheet.page_margins.right = 0.5
-                sheet.page_margins.top = 0.5
-                sheet.page_margins.bottom = 0.5
-                sheet.page_margins.header = 0.3
-                sheet.page_margins.footer = 0.3
+                # sheet.page_margins.left = 0.5
+                # sheet.page_margins.right = 0.5
+                # sheet.page_margins.top = 0.5
+                # sheet.page_margins.bottom = 0.5
+                # sheet.page_margins.header = 0.3
+                # sheet.page_margins.footer = 0.3
 
                 for column in sheet.columns:
                     max_length = 0
@@ -1275,27 +1288,31 @@ class JobTimeCalculator:
                 #
                 # Row dimensions
                 row = sheet.row_dimensions[1]
-                row.height = 155
+                row.height = 150
 
                 row = sheet.row_dimensions[2]
                 row.height = 25
 
                 row = sheet.row_dimensions[3]
-                row.height = 20
+                row.height = 23
 
                 # Add a header Image to the Excel file
                 img_file = "images\\hci3n.png"
                 sheet.merge_cells('A1:C1')
                 img = Image(img_file)
-                img.width = 700
-                img.height = 195
+                img.width = 710
+                img.height = 185
 
-                sheet.add_image(img, 'A1')
+                first_cell = sheet['A1']
+
+                first_cell.alignment = Alignment(horizontal='center', vertical='center')
+                # Add the image to the worksheet
+                sheet.add_image(img)
 
                 # Sheet Dimensions
                 sheet.merge_cells('A2:L2')
-                header_value = 'Temps de Travail du Lundi au Jeudi: 8h-17h30--Total: 9h30/jour |||   Pause: 45min/jour |||  ' \
-                               'Vendredi: 8h-13h--Total: 5h/jour  ||| Total Semaine: 40h'
+                header_value = 'Temps de Travail du Lundi au Jeudi: 8h-17h30--Total: 9h30/jour ||  Pause: 45min/jour |||  ' \
+                               'Vendredi: 8h-13h--Total: 5h/jour  || Total Semaine: 40h'
                 second_cell = sheet['A2']
                 second_cell.value = header_value
                 second_cell.fill = PatternFill(start_color="00C0C0C0", end_color="00C0C0C0", fill_type='lightTrellis')
@@ -1319,7 +1336,7 @@ class JobTimeCalculator:
                 list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "JOUR", "ENTREE", "DEBUT PAUSE",
                                   "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
                 sheet.append(list_to_append)
-                ft = Font(bold=True, size=12.5)
+                ft = Font(bold=True, size=13)
                 fta = Font(bold=True, size=16)
                 border = Border(left=Side(border_style='thin', color='00000000'),
                                 right=Side(border_style='thin', color='00000000'),
