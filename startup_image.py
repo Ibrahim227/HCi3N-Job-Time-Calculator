@@ -4,7 +4,7 @@ from tkinter import BOTH
 
 def mainwindow():
     """
-    :return: Display startup window
+    :return: Display a startup window
     """
 
     def destroy_window():
@@ -22,8 +22,8 @@ def mainwindow():
     # root.wait_visibility(window=root)
     root.overrideredirect(True)
 
-    width = 400
-    height = 400
+    width = 700
+    height = 700
 
     canvas_1 = tk.Canvas(root, width=width, height=height)
     canvas_1.pack(expand=True, fill=BOTH)
