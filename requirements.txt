@@ -1,0 +1,6 @@
+openpyxl~=3.1.2
+pillow
+webbrowser
+future~=0.18.3
+tkcalendar~=1.6.1
+ttkwidgets~=0.13.0
