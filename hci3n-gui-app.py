@@ -7,6 +7,7 @@ from tkinter import ttk, messagebox, END, BOTH
 
 import openpyxl
 from openpyxl.drawing.image import Image
+from openpyxl.reader.excel import load_workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from tkcalendar import DateEntry
 
@@ -585,7 +586,8 @@ class JobTimeCalculator:
         third = "17:30"  # Predefined third value to fill the entries
         fourth = "13:30"  # Predefined fourth value to fill the entries
         fifth = "14:15"  # Predefined fifth value to fill the entries
-        sixth = "00:01"
+        sixth = "00:01"  # Predefined 6th value to fill the entries
+        seventh = "13:00"  # Predefined seventh value to fill the entries
         if self.break_check_button_var.get():
             self.break_start_entry.insert(0, fourth)
             self.break_end_entry.insert(0, fifth)
@@ -596,6 +598,10 @@ class JobTimeCalculator:
         if self.onsite_check_var.get():
             self.time_end_entry.insert(0, sixth)
             self.time_start_entry.insert(0, value)
+
+        elif self.week_combobox.get() == 'Vendredi':
+            self.time_start_entry.insert(0, second)
+            self.time_end_entry.insert(0, seventh)
         else:
             self.time_start_entry.insert(0, second)
             self.time_end_entry.insert(0, third)
@@ -1230,132 +1236,141 @@ class JobTimeCalculator:
         # Save data to Excel file
         try:
             file_path = f"Sauvegarde-Archive\\Archive_de_l'employee_{nom_prenom}.xlsx"
+
             if not os.path.exists(file_path):
+                # Create a workbook if it does not exist
                 workbook = openpyxl.Workbook()
                 workbook.iso_dates = True
-                sheet = workbook.active
-
-                # Edit print options
-                sheet.print_options_horizontalCentered = True
-                sheet.print_options_verticalCentered = True
-
-                # Edit Page layout and size
-                sheet.page_setup.orientation = sheet.ORIENTATION_LANDSCAPE
-                sheet.page_setup.paperSize = sheet.PAPERSIZE_A4
-
-                # Set the print options to fit all columns on one-page
-                sheet.print_options.fitToWidth = True
-                sheet.print_options.fitToHeight = True
+                # sheet = workbook.active
                 #
-                # # Set the scaling options
-                sheet.sheet_properties.pageSetUpPr.fitToPage = True
-                sheet.sheet_properties.pageSetUpPr.fitToWidth = 1
-                sheet.sheet_properties.pageSetUpPr.fitToHeight = 1
-
-                ### Default sheet column dimensions
-                column_widths = {
-                    'A': 40, 'B': 37, 'C': 25, 'D': 10, 'E': 10, 'F': 8, 'G': 15, 'H': 16, 'I': 11, 'J': 13, 'K': 11,
-                    'L': 15
-                }
-                for column, width in column_widths.items():
-                    sheet.column_dimensions[column].width = width
                 #
-                # Row dimensions
-                row = sheet.row_dimensions[1]
-                row.height = 150
+                for sheet_name in workbook.sheetnames:
+                    sheet = workbook[sheet_name]
 
-                row = sheet.row_dimensions[2]
-                row.height = 25
+                    # Edit print options
+                    sheet.print_options_horizontalCentered = True
+                    sheet.print_options_verticalCentered = True
 
-                row = sheet.row_dimensions[3]
-                row.height = 23
+                    # Edit Page layout and size
+                    sheet.page_setup.orientation = sheet.ORIENTATION_LANDSCAPE
+                    sheet.page_setup.paperSize = sheet.PAPERSIZE_A4
 
-                # Add a header Image to the Excel file
-                img_file = "images\\hci3n.png"
-                sheet.merge_cells('A1:C1')
-                img = Image(img_file)
-                img.width = 710
-                img.height = 185
+                    # Set the print options to fit all columns on one-page
+                    sheet.print_options.fitToWidth = True
+                    sheet.print_options.fitToHeight = True
+                    #
+                    # # Set the scaling options
+                    sheet.sheet_properties.pageSetUpPr.fitToPage = True
+                    sheet.sheet_properties.pageSetUpPr.fitToWidth = 1
+                    sheet.sheet_properties.pageSetUpPr.fitToHeight = 1
 
-                first_cell = sheet['A1']
-                first_cell.alignment = Alignment(horizontal='center', vertical='center', mergeCell=True)
-                # Add the image to the worksheet
-                sheet.add_image(img)
+                    ### Default sheet column dimensions
+                    column_widths = {
+                        'A': 40, 'B': 37, 'C': 25, 'D': 11, 'E': 11, 'F': 9, 'G': 16, 'H': 17, 'I': 12, 'J': 14,
+                        'K': 12,
+                        'L': 16
+                    }
+                    for column, width in column_widths.items():
+                        sheet.column_dimensions[column].width = width
+                    #
+                    # Row dimensions
+                    row = sheet.row_dimensions[1]
+                    row.height = 150
 
-                # Sheet Dimensions
-                sheet.merge_cells('A2:L2')
-                header_value = 'Temps de Travail du Lundi au Jeudi: 8h-17h30--Total: 9h30/jour ||  Pause: 45min/jour |||  ' \
-                               'Vendredi: 8h-13h--Total: 5h/jour  || Total Semaine: 40h'
-                second_cell = sheet['A2']
-                second_cell.value = header_value
-                second_cell.fill = PatternFill(start_color="00C0C0C0", end_color="00C0C0C0", fill_type='lightTrellis')
-                second_cell.alignment = Alignment(horizontal='center', vertical='center')
+                    row = sheet.row_dimensions[2]
+                    row.height = 25
 
-                # Define the Excel sheet fill color
-                color1 = "00FF0000"  # red color
-                color2 = "0000CCFF"  # lightblue color
-                color3 = "00CCFFCC"  # lightgreen color
-                color4 = "00FF6600"  # orange color
-                color5 = "0000FF00"  # green color
-                color6 = "00C0C0C0"  # lightgrey
+                    row = sheet.row_dimensions[3]
+                    row.height = 23
 
-                sheet.merge_cells('D1:L1')
-                sheet.title = f"Archive"
-                header_values = "SYNTHESES DES HORAIRES DE SERVICE JOURNALIER DES EMPLOYÉ(ES) DU HC3N"
-                top_left_cell = sheet['D1']
-                top_left_cell.value = header_values
-                top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
-                top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
-                list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "JOUR", "ENTREE", "DEBUT PAUSE",
-                                  "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
-                sheet.append(list_to_append)
-                ft = Font(bold=True, size=13)
-                fta = Font(bold=True, size=16)
-                border = Border(left=Side(border_style='thin', color='00000000'),
-                                right=Side(border_style='thin', color='00000000'),
-                                top=Side(border_style='thin', color='00000000'),
-                                bottom=(Side(border_style='thin', color='00000000')))
+                    # Add a header Image to the Excel file
+                    img_file = "images\\hci3n.png"
+                    sheet.merge_cells('A1:C1')
+                    img = Image(img_file)
+                    img.width = 710
+                    img.height = 185
 
-                for row in sheet["A3:L3"]:
-                    for cell in row:
-                        cell.font = ft
-                        cell.border = border
+                    first_cell = sheet['A1']
+                    first_cell.alignment = Alignment(horizontal='center', vertical='center', mergeCell=True)
+                    # Add the image to the worksheet
+                    sheet.add_image(img)
 
-                for row in sheet["C1:L1"]:
-                    for cell in row:
-                        cell.font = fta
-                        # cell.border = border
+                    # Sheet Dimensions
+                    sheet.merge_cells('A2:L2')
+                    header_value = 'Temps de Travail du Lundi au Jeudi: 8h-17h30--Total: 9h30/jour |<>|  Pause: 45min/jour |<>|  ' \
+                                   'Vendredi: 8h-13h--Total: 5h  |<>| Total Semaine: 40h'
+                    second_cell = sheet['A2']
+                    second_cell.value = header_value
+                    second_cell.fill = PatternFill(start_color="00C0C0C0", end_color="00C0C0C0",
+                                                   fill_type='lightTrellis')
+                    second_cell.alignment = Alignment(horizontal='center', vertical='center')
 
-                for row in sheet["A2:L2"]:
-                    for cell in row:
-                        cell.font = fta
-                        cell.border = border
+                    # Define the Excel sheet fill color
+                    color1 = "00FF0000"  # red color
+                    color2 = "0000CCFF"  # lightblue color
+                    color3 = "00CCFFCC"  # lightgreen color
+                    color4 = "00FF6600"  # orange color
+                    color5 = "0000FF00"  # green color
+                    color6 = "00C0C0C0"  # lightgrey
 
-                sheet["A3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["B3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["C3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["D3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["E3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
-                sheet["F3"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
-                sheet["G3"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-                sheet["H3"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
-                sheet["I3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
-                sheet["J3"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
-                sheet["K3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
-                sheet["L3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                    sheet.merge_cells('D1:L1')
+                    sheet.title = f"Archive"
+                    header_values = "SYNTHESES DES HORAIRES DE SERVICE JOURNALIER DES EMPLOYÉ(ES) DU HC3N"
+                    top_left_cell = sheet['D1']
+                    top_left_cell.value = header_values
+                    top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
+                    top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
+                    list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "JOUR", "ENTREE",
+                                      "DEBUT PAUSE",
+                                      "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
+                    sheet.append(list_to_append)
+
+                    # Save and close the workbook
+                    ft = Font(bold=True, size=13)
+                    fta = Font(bold=True, size=17)
+                    border = Border(left=Side(border_style='thin', color='00000000'),
+                                    right=Side(border_style='thin', color='00000000'),
+                                    top=Side(border_style='thin', color='00000000'),
+                                    bottom=(Side(border_style='thin', color='00000000')))
+
+                    for row in sheet["A3:L3"]:
+                        for cell in row:
+                            cell.font = ft
+                            cell.border = border
+
+                    for row in sheet["D1:L1"]:
+                        for cell in row:
+                            cell.font = fta
+                            cell.border = border
+
+                    for row in sheet["A2:L2"]:
+                        for cell in row:
+                            cell.font = fta
+                            cell.border = border
+
+                    sheet["A3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                    sheet["B3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                    sheet["C3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                    sheet["D3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                    sheet["E3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                    sheet["F3"].fill = PatternFill(start_color=color5, end_color=color5, fill_type='lightTrellis')
+                    sheet["G3"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+                    sheet["H3"].fill = PatternFill(start_color=color4, end_color=color4, fill_type='lightTrellis')
+                    sheet["I3"].fill = PatternFill(start_color=color1, end_color=color1, fill_type='lightTrellis')
+                    sheet["J3"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
+                    sheet["K3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                    sheet["L3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
 
                 # Save and close the workbook
                 workbook.save(file_path)
                 workbook.close()
 
             # Load the workbook
-            workbook = openpyxl.load_workbook(file_path)
+            workbook = load_workbook(file_path)
             sheet = workbook.active
 
-            sheet.append(
-                [nom_prenom, fonction, departement, lieu, jour_semaine, arrivee, debut_pause, retour_pause, descente,
-                 total, daily_date, observation])
-
+            sheet.append([nom_prenom, fonction, departement, lieu, jour_semaine, arrivee, debut_pause, retour_pause,
+                          descente, total, daily_date, observation])
             # Save and close the workbook
             workbook.save(file_path)
             workbook.close()
