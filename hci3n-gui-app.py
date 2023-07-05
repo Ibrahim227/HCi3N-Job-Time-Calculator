@@ -130,7 +130,7 @@ class JobTimeCalculator:
             selected_date = self.spinbox.get_date()
             print(selected_date)  # You can replace this line with your desired functionality
 
-        self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2, date_pattern="dd-mm-yyyy")
+        self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2)
         self.spinbox.grid(row=3, column=1)
         self.spinbox.bind("<<DateEntrySelected>>", lambda event: get_selected_date)
         # def show_calendar():
