@@ -63,7 +63,7 @@ class JobTimeCalculator:
 
         ################# lateral LabelFrame #################
         self.lateral_label_frame = ttk.LabelFrame(self.frame,
-                                                  text="Panneau Lateral (Nom&Prenom, Observation - Calendrier)",
+                                                  text="Panneau Lateral (Nom & Prenom - Observation - Calendrier)",
                                                   underline=0)
         self.lateral_label_frame.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
@@ -86,7 +86,7 @@ class JobTimeCalculator:
              "GOUMAR ALHASSANE", "ABDOULAYE TANKARI AMADOU", "HAMANI TAHIROU SAIDOU RACHID",
              "TRAPSIDA ABDOULAY ALAIN", "BOUBACAR HAMADOU", "IBRAHIM MOUSSA", "IBRAHIM DJIBRILLA",
              "MA AROUF TIDJANI", "LAWAN DARMANE", "ALI OUMAROU", "Mme SALAMATOU AMADOU",
-             "BOGARI ZOURKALEINI",
+             "BOGARI ZOURKALEINI", "Maman Sani Ibrahim",
              "BABA BAFRAGI BOUBACAR", "HAMA AMADOU", "GN ABOUBACAR OUMAROU KAILOU",
              "GN HAROUNA MAAZOU LEYO", "GN LAOUALI MAAZOU MAMANE", "MOCTAR BACHIR",
              "MALAM ROUFAI MAMAN SANI", "ELHADJI SEYBOU DJIBO", "MOUSTAPHA AHMET",
@@ -227,7 +227,7 @@ class JobTimeCalculator:
         # # Create the message to display
         ## create labelframe to display the message within it
 
-        self.msg_labelframe = ttk.LabelFrame(self.frame, text='HC3N & Heure', underline=0)
+        self.msg_labelframe = ttk.LabelFrame(self.frame, text='HC3N', underline=0, labelanchor='n')
         self.msg_labelframe.grid(row=4, column=1, sticky="news", padx=10, pady=10)
         self.ourmessage = "HAUT COMMISSARIAT A L'INITIATIVE 3N"
         self.display_message = tk.Message(self.msg_labelframe, text=self.ourmessage, font='italic')
@@ -444,7 +444,7 @@ class JobTimeCalculator:
 
         ############################################ Configure break, total autofill, auto-delete LabelFrame ################################
 
-        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause, Sauvegarde-Archive & Affichage Temps Total',
+        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause - Sauvegarde-Archive - Affichage Temps Total',
                                                  underline=0)
         self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=10)
 
@@ -462,7 +462,7 @@ class JobTimeCalculator:
         self.result_label.grid(row=2, column=2)
 
         self.onsite_check_var = tk.BooleanVar(self.registration_frame, value=False)
-        self.onsite_confirm_presence = ttk.Checkbutton(self.registration_frame, text='En cas d\'Absence',
+        self.onsite_confirm_presence = ttk.Checkbutton(self.registration_frame, text="En cas d'Absence",
                                                        variable=self.onsite_check_var, onvalue=True, offvalue=False,
                                                        underline=10)
         self.onsite_confirm_presence.grid(row=2, column=5)
