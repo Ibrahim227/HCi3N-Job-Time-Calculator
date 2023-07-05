@@ -4,3 +4,4 @@ webbrowser
 future~=0.18.3
 tkcalendar~=1.6.1
 ttkwidgets~=0.13.0
+Babel~=2.12.1
