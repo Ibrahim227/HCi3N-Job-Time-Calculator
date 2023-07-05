@@ -125,17 +125,21 @@ class JobTimeCalculator:
         # self.date_entry.grid(row=3, column=1, ipadx=20)
 
         ##### Calendar function
-        def get_selected_date(event):
-            selected_date = event.widget.get()
+        ##### Calendar function
+        def get_selected_date():
+            selected_date = self.spinbox.get_date()
             print(selected_date)  # You can replace this line with your desired functionality
 
-        self.spinbox = DateEntry(self.lateral_label_frame, borderwidth=2)
+        self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2, date_pattern="dd-mm-yyyy")
         self.spinbox.grid(row=3, column=1)
-        self.spinbox.bind("<<DateEntrySelected>>", get_selected_date)
-
+        self.spinbox.bind("<<DateEntrySelected>>", lambda event: get_selected_date)
         # def show_calendar():
         #
-        #     calendar = Calendar(self.lateral_label_frame)
+        #     calendar = Calendar(self.lateral_label_frame, margin=(10, 10, 10, 10),
+        #                         padding=(5, 5, 5, 5), widgetAlignment='center', skin="default", focusSkin='focus',
+        #                         showToday=True, showweeknumbers=True, showHolidays=True,
+        #                         onSelect=lambda date: print(date), minDate=datetime.date(2023, 1, 1),
+        #                         maxDate=datetime.date(2050, 12, 31), firstDayOfWeek="Monday")
         #     calendar.grid(row=4, column=1)
         #
         # # Calling the function to display the TkCalendar
@@ -224,7 +228,7 @@ class JobTimeCalculator:
         # Week days combobox entry
         self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
         combobox = ttk.Combobox(self.user_info_frame,
-                                values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"])
+                                values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"])
         self.week_combobox = combobox
         self.week_combobox.grid(row=1, column=3)
         self.week_label.grid(row=0, column=3)
@@ -557,9 +561,10 @@ class JobTimeCalculator:
         self.first_last_name_entry.delete(0, END)
         self.place_combobox.delete(0, END)
         self.title_combox.delete(0, END)
+        self.department_combobox.delete(0, END)
+        self.week_combobox.delete(0, END)
         self.time_start_entry.delete(0, END)
         self.time_end_entry.delete(0, END)
-        self.department_combobox.delete(0, END)
         self.break_start_entry.delete(0, END)
         self.break_end_entry.delete(0, END)
         self.annexe_entry.delete(0, END)
@@ -574,7 +579,6 @@ class JobTimeCalculator:
         self.value_exit_widget.delete(0, END)
         self.second_annexe_entry.delete(0, END)
         self.second_annexe_exit.delete(0, END)
-        # self.week_combobox.delete(0, END)
         self.observation_list_combobox.delete(0, END)
         self.spinbox.delete(0, END)
         self.new_entry.delete(0, END)
