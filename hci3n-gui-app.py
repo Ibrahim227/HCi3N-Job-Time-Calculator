@@ -125,13 +125,21 @@ class JobTimeCalculator:
         # self.date_entry.grid(row=3, column=1, ipadx=20)
 
         ##### Calendar function
-        def get_selected_date():
-            selected_date = self.spinbox.get_date()
+        def get_selected_date(event):
+            selected_date = event.widget.get()
             print(selected_date)  # You can replace this line with your desired functionality
 
         self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2)
         self.spinbox.grid(row=3, column=1)
-        self.spinbox.bind("<<DateEntrySelected>>", lambda event: get_selected_date())
+        self.spinbox.bind("<<DateEntrySelected>>", get_selected_date)
+
+        # def show_calendar():
+        #
+        #     calendar = Calendar(self.lateral_label_frame)
+        #     calendar.grid(row=4, column=1)
+        #
+        # # Calling the function to display the TkCalendar
+        # show_calendar()
 
         for widget in self.lateral_label_frame.winfo_children():
             widget.grid_configure(padx=20, pady=10, sticky="news")
