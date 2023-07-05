@@ -705,7 +705,7 @@ class JobTimeCalculator:
         try:
             # total_time = datetime.timedelta()  # Initialize total_time to zero
             if not_present:
-                messagebox.showwarning(title='Abscence Signalée!', message="L'employee a été absent(e)!")
+                messagebox.showwarning(title='Abscence Signalée!', message="L'employé(e) a été absent(e)!")
             if not break_taken:
                 if not (
                         hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check or work_case_exit or personal_case_exit):
