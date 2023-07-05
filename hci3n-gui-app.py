@@ -129,7 +129,7 @@ class JobTimeCalculator:
             selected_date = event.widget.get()
             print(selected_date)  # You can replace this line with your desired functionality
 
-        self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2)
+        self.spinbox = DateEntry(self.lateral_label_frame, borderwidth=2)
         self.spinbox.grid(row=3, column=1)
         self.spinbox.bind("<<DateEntrySelected>>", get_selected_date)
 
