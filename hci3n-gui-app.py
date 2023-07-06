@@ -9,7 +9,6 @@ import openpyxl
 from openpyxl.drawing.image import Image
 from openpyxl.reader.excel import load_workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from tkcalendar import DateEntry
 
 from startup_image import mainwindow
 
@@ -116,7 +115,7 @@ class JobTimeCalculator:
                                                                       "Non Préciser"])))
         self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
 
-        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date MM/JJ/ANNEE:", background="lightgrey",
+        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
                                           underline=0)
         self.date_entry_label.grid(row=3, column=0)
 
@@ -126,25 +125,14 @@ class JobTimeCalculator:
 
         ##### Calendar function
         ##### Calendar function
-        def get_selected_date():
-            selected_date = self.spinbox.get_date()
-            print(selected_date)  # You can replace this line with your desired functionality
+        # def get_selected_date():
+        #     self.spinbox.get_date()
+        # self.spinbox = DateEntry(self.lateral_label_frame,background='darkblue',foreground='white',borderwidth=2)
+        # self.spinbox.grid(row=3, column=1)
+        # self.spinbox.bind("<<DateEntrySelected>>", lambda event: get_selected_date)
 
-        self.spinbox = DateEntry(self.lateral_label_frame, background='darkblue', foreground='white', borderwidth=2)
-        self.spinbox.grid(row=3, column=1)
-        self.spinbox.bind("<<DateEntrySelected>>", lambda event: get_selected_date)
-        # def show_calendar():
-        #
-        #     calendar = Calendar(self.lateral_label_frame, margin=(10, 10, 10, 10),
-        #                         padding=(5, 5, 5, 5), widgetAlignment='center', skin="default", focusSkin='focus',
-        #                         showToday=True, showweeknumbers=True, showHolidays=True,
-        #                         onSelect=lambda date: print(date), minDate=datetime.date(2023, 1, 1),
-        #                         maxDate=datetime.date(2050, 12, 31), firstDayOfWeek="Monday")
-        #     calendar.grid(row=4, column=1)
-        #
-        # # Calling the function to display the TkCalendar
-        # show_calendar()
-
+        self.date_entry = ttk.Entry(self.lateral_label_frame)
+        self.date_entry.grid(row=3, column=1)
         for widget in self.lateral_label_frame.winfo_children():
             widget.grid_configure(padx=20, pady=10, sticky="news")
         #
@@ -580,7 +568,7 @@ class JobTimeCalculator:
         self.second_annexe_entry.delete(0, END)
         self.second_annexe_exit.delete(0, END)
         self.observation_list_combobox.delete(0, END)
-        self.spinbox.delete(0, END)
+        self.date_entry.delete(0, END)
         self.new_entry.delete(0, END)
         self.new_exit.delete(0, END)
         self.personal_exit.delete(0, END)
@@ -1235,7 +1223,7 @@ class JobTimeCalculator:
         total = self.calculate_total_time()
         jour_semaine = self.week_combobox.get()
         observation = self.observation_list_combobox.get()
-        daily_date = self.spinbox.get_date()
+        daily_date = self.date_entry.get()
         # duration = self.display_duration()
 
         # Validate input
