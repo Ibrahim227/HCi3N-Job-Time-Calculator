@@ -143,7 +143,7 @@ class JobTimeCalculator:
         self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
         self.title_combox = ttk.Combobox(self.user_info_frame,
                                          values=(sorted(
-                                             ["HAUT-COMMISSAIRE", "SECRETAIRE GENERAL", "SECRETAIRE GENERAL ADJOINT",
+                                             ["HAUT-COMMISSAIRE", "SG", "SGA",
                                               "DIRECTRICE DAFC", "SECRETAIRE DE DIRECTION",
                                               "SECRETAIRE DE DIRECTION/BO", "CONSEILLER TECHNIQUE",
                                               "CHEF DE CABINET", "PROTOCOLE", "DIRECTEUR DPSFCI",
@@ -170,10 +170,10 @@ class JobTimeCalculator:
         self.department_label = ttk.Label(self.user_info_frame, text="Departement:", background='lightgrey',
                                           underline=0)
         self.department_combobox = ttk.Combobox(self.user_info_frame,
-                                                values=(sorted(["CABINET", "SECRETARIAT GENERAL", "DAFC",
-                                                                "DEPARTMENT PARTENARIAT",
+                                                values=(sorted(["CABINET", "SECRETARIAT", "DAFC",
+                                                                "PARTENARIAT",
                                                                 "CELLULE NUTRITION", "NEXUS",
-                                                                "COORDINATION REGIONALE",
+                                                                "COORDINATION REG",
                                                                 "DMRC", "DSEC", "DPEP", "GNN-SECURITY",
                                                                 "AUXILIAIRES"])))
         self.department_label.grid(row=0, column=1)
@@ -218,7 +218,7 @@ class JobTimeCalculator:
         # Week days combobox entry
         self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
         combobox = ttk.Combobox(self.user_info_frame,
-                                values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"])
+                                values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"])
         self.week_combobox = combobox
         self.week_combobox.grid(row=1, column=3)
         self.week_label.grid(row=0, column=3)
@@ -233,7 +233,7 @@ class JobTimeCalculator:
         self.msg_labelframe.grid(row=4, column=1, sticky="news", padx=10, pady=10)
         self.ourmessage = "HAUT COMMISSARIAT A L'INITIATIVE 3N"
         self.display_message = tk.Message(self.msg_labelframe, text=self.ourmessage, font='italic')
-        self.display_message.config(justify="center", bd=5, highlightthickness=0, highlightcolor='blue', relief='flat')
+        self.display_message.config(justify="center", bd=5, highlightthickness=0, highlightcolor='blue', relief='sunken')
         self.display_message.grid(row=0, column=0, ipadx=50)
 
         ### Display time
@@ -244,7 +244,7 @@ class JobTimeCalculator:
             """
             string = strftime("%d-%m-%Y %H:%M:%S")
             self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 15, 'italic'), foreground='black',
-                                        background='lightgrey')
+                                        background='lightgrey', relief='sunken')
             self.label_text.config(text=string)
             self.label_text.grid(row=0, column=3, sticky='news', ipadx=20, pady=10, padx=10)
             self.label_text.after(1000, display_time)
@@ -464,9 +464,9 @@ class JobTimeCalculator:
         self.result_label.grid(row=2, column=2)
 
         self.onsite_check_var = tk.BooleanVar(self.registration_frame, value=False)
-        self.onsite_confirm_presence = ttk.Checkbutton(self.registration_frame, text="En cas d'Absence",
+        self.onsite_confirm_presence = ttk.Checkbutton(self.registration_frame, text="Absence / Congé",
                                                        variable=self.onsite_check_var, onvalue=True, offvalue=False,
-                                                       underline=10)
+                                                       underline=9)
         self.onsite_confirm_presence.grid(row=2, column=5)
 
         for widget in self.registration_frame.winfo_children():
@@ -476,16 +476,16 @@ class JobTimeCalculator:
 
         #### New label for display the duration time at a site
         self.stay_time_labelframe = ttk.Labelframe(self.frame,
-                                                   text="Affichage Durée 'Pause & Entrée-Sortie - Deplacement vers: SIEGE; ANNEXE-1, ANNEXE-2'",
+                                                   text="Affichage Durée 'Pause & Entrée-Sortie - Deplacement Equipe'",
                                                    underline=0)
         self.stay_time_labelframe.grid(row=1, column=1, sticky='news', padx=20, pady=10)
 
-        self.duration_tion_label = ttk.Label(self.stay_time_labelframe, text="Durée: ", underline=0)
-        self.duration_tion_label.grid(row=0, column=0, sticky='news', padx=20, pady=10)
+        # self.duration_tion_label = ttk.Label(self.stay_time_labelframe)
+        # self.duration_tion_label.grid(row=0, column=0, sticky='news', padx=20, pady=10)
         self.display_duration_label = ttk.Label(self.stay_time_labelframe, background='lightgreen')
         self.display_duration_label.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
-        self.standard_duration_label = ttk.Label(self.stay_time_labelframe, text="Temps Standard a passer au Bureau:")
+        self.standard_duration_label = ttk.Label(self.stay_time_labelframe, text="Temps Standard a passer au Bureau:", background='lightgrey', underline=0)
         self.standard_duration_label.grid(row=2, column=0)
 
         self.standard_duration_entry = ttk.Entry(self.stay_time_labelframe)
@@ -515,7 +515,7 @@ class JobTimeCalculator:
         self.clear_button.grid(row=3, column=1, padx=10)
 
         ################# Auto fill Button
-        self.auto_fill_button = ttk.Button(self.registration_frame, text='Remplissage Auto', command=self.fill_entries,
+        self.auto_fill_button = ttk.Button(self.registration_frame, text='Remplissage Automatique', command=self.fill_entries,
                                            underline=0)
         self.auto_fill_button.grid(row=3, column=4, padx=10)
 
@@ -523,7 +523,7 @@ class JobTimeCalculator:
         self.duration_time_button = ttk.Button(self.stay_time_labelframe, text="Afficher Durée",
                                                command=self.display_duration,
                                                underline=0, )
-        self.duration_time_button.grid(row=0, column=3, sticky='news', padx=10, pady=10)
+        self.duration_time_button.grid(row=0, column=0, sticky='news', padx=10, pady=10)
 
         #################################### Configure the Menu #################################
 
@@ -735,7 +735,7 @@ class JobTimeCalculator:
                 if not (
                         hq_visit_to_annexe1_check or hq_visit_to_annexe2_check or annexe1_visit_to_hq_check or annexe1_visit_to_annexe2_check or annexe2_visit_to_hq_check or annexe2_visit_to_annexe1_check or work_case_exit or personal_case_exit):
                     messagebox.showwarning(title="Alerte",
-                                           message="1.L'employee n'a pas prit de pause ! \n\n 2.Aucun deplacement effectuee vers: \n\n 'SIEGE;  ANNEXE-1;  ANNEXE-2'; \n\n 3.Aucune Sortie Signalée!")
+                                           message="1.L'employé(e) n'a pas prit de pause ! \n\n 2.Aucun deplacement effectué vers: \n\n 'SIEGE;  ANNEXE-1;  ANNEXE-2'; \n\n 3.Aucune Sortie Signalée!")
 
                 total_time = datetime.datetime.combine(datetime.date.today(),
                                                        end_time) - datetime.datetime.combine(
@@ -746,7 +746,7 @@ class JobTimeCalculator:
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte',
-                                           message=f"L'employee du SIEGE s'est rendu a l'ANNEXE-1 entre: \n\n{hq_to_annexe1_entry} et {hq_to_annexe1_exit}")
+                                           message=f"L'employé(e) du SIEGE s'est rendu a l'ANNEXE-1 entre: \n\n{hq_to_annexe1_entry} et {hq_to_annexe1_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe1_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -764,7 +764,7 @@ class JobTimeCalculator:
 
                 if hq_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee du SIEGE s'est rendu a l'ANNEXE-2 entre: \n\n{hq_to_annexe2_entry} et {hq_to_annexe2_exit}")
+                                           message=f"L'employé(e) du SIEGE s'est rendu a l'ANNEXE-2 entre: \n\n{hq_to_annexe2_entry} et {hq_to_annexe2_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe2_exit >= end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -782,7 +782,7 @@ class JobTimeCalculator:
 
                 if annexe1_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-1 s'est rendu au SIEGE entre: \n\n{annexe1_to_hq_entry} et {annexe1_to_hq_exit}")
+                                           message=f"L'employé(e) ANNEXE-1 s'est rendu au SIEGE entre: \n\n{annexe1_to_hq_entry} et {annexe1_to_hq_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe1_to_hq_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -800,7 +800,7 @@ class JobTimeCalculator:
 
                 if annexe1_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2 entre: \n\n{annexe1_to_annexe2_entry} et {annexe1_to_annexe2_exit}")
+                                           message=f"L'employé(e) ANNEXE-1 s'est rendu a l'ANNEXE-2 entre: \n\n{annexe1_to_annexe2_entry} et {annexe1_to_annexe2_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe1_to_annexe2_exit > end_time:
                         total_time = datetime.datetime.combine(datetime.date.today(),
@@ -818,7 +818,7 @@ class JobTimeCalculator:
 
                 if annexe2_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-2 s'est rendu au SIEGE entre: \n\n{annexe2_to_hq_entry} et {annexe2_to_hq_exit}")
+                                           message=f"L'employé(e) ANNEXE-2 s'est rendu au SIEGE entre: \n\n{annexe2_to_hq_entry} et {annexe2_to_hq_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_hq_exit > end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -835,7 +835,7 @@ class JobTimeCalculator:
 
                 if annexe2_visit_to_annexe1_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1 entre: \n\n{annexe2_to_annexe1_entry} et {annexe2_to_annexe1_exit}")
+                                           message=f"L'employé(e) ANNEXE-2 s'est rendu a l'ANNEXE-1 entre: \n\n{annexe2_to_annexe1_entry} et {annexe2_to_annexe1_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_annexe1_exit > end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -879,7 +879,7 @@ class JobTimeCalculator:
             else:
                 # total_time = datetime.timedelta()
                 messagebox.showinfo(title="Information",
-                                    message=f"L'Employee a prit une pause entre: \n\n{break_start_time} et {break_end_time}")
+                                    message=f"L'Employé(e) a prit une pause entre: \n\n{break_start_time} et {break_end_time}")
                 total_time = (datetime.datetime.combine(datetime.date.today(),
                                                         end_time) - datetime.datetime.combine(
                     datetime.date.today(), start_time)) - (
@@ -899,7 +899,7 @@ class JobTimeCalculator:
 
                 elif break_start_time == break_end_time:
                     messagebox.showerror(title="Erreur",
-                                         message="Heure Debut pause est superieure ou egal a l'heure de Retour de pause!")
+                                         message="Heure Debut pause est supérieure ou égal a l'heure de Retour de pause!")
                     total_time = datetime.datetime.combine(datetime.date.today(),
                                                            end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time)
@@ -916,7 +916,7 @@ class JobTimeCalculator:
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte',
-                                           message=f"L'employee du SIEGE s'est rendu a l'ANNEXE-1 entre: \n\n{hq_to_annexe1_entry} et {hq_to_annexe1_exit}")
+                                           message=f"L'employé(e) du SIEGE s'est rendu a l'ANNEXE-1 entre: \n\n{hq_to_annexe1_entry} et {hq_to_annexe1_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe1_exit > end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -940,7 +940,7 @@ class JobTimeCalculator:
 
                 if hq_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee du SIEGE s'est rendu a l'ANNEXE-2 entre: \n\n{hq_to_annexe2_entry} et {hq_to_annexe2_exit}")
+                                           message=f"L'employé(e) du SIEGE s'est rendu a l'ANNEXE-2 entre: \n\n{hq_to_annexe2_entry} et {hq_to_annexe2_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if hq_to_annexe2_exit >= end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -964,7 +964,7 @@ class JobTimeCalculator:
 
                 if annexe1_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-1 s'est rendu au SIEGE entre: \n\n{annexe1_to_hq_entry} et {annexe1_to_hq_exit}")
+                                           message=f"L'employé(e) ANNEXE-1 s'est rendu au SIEGE entre: \n\n{annexe1_to_hq_entry} et {annexe1_to_hq_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe1_to_hq_exit > end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -988,7 +988,7 @@ class JobTimeCalculator:
 
                 if annexe1_visit_to_annexe2_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-1 s'est rendu a l'ANNEXE-2 entre: \n\n{annexe1_to_annexe2_entry} et {annexe1_to_annexe2_exit}")
+                                           message=f"L'employé(e) ANNEXE-1 s'est rendu a l'ANNEXE-2 entre: \n\n{annexe1_to_annexe2_entry} et {annexe1_to_annexe2_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe1_to_annexe2_exit > end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -1012,7 +1012,7 @@ class JobTimeCalculator:
 
                 if annexe2_visit_to_hq_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-2 s'est rendu aU SIEGE entre: \n\n{annexe2_to_hq_entry} et {annexe2_to_hq_exit}")
+                                           message=f"L'employé(e) ANNEXE-2 s'est rendu aU SIEGE entre: \n\n{annexe2_to_hq_entry} et {annexe2_to_hq_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_hq_exit > end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -1036,7 +1036,7 @@ class JobTimeCalculator:
 
                 if annexe2_visit_to_annexe1_check:
                     messagebox.showwarning(title="Alerte",
-                                           message=f"L'employee ANNEXE-2 s'est rendu a l'ANNEXE-1 entre: \n\n{annexe2_to_annexe1_entry} et {annexe2_to_annexe1_exit}")
+                                           message=f"L'employé(e) ANNEXE-2 s'est rendu a l'ANNEXE-1 entre: \n\n{annexe2_to_annexe1_entry} et {annexe2_to_annexe1_exit}")
                     # total_time = datetime.timedelta(hours=17, minutes=30)
                     if annexe2_to_annexe1_exit >= end_time:
                         total_time = (datetime.datetime.combine(datetime.date.today(),
@@ -1292,10 +1292,8 @@ class JobTimeCalculator:
 
                     ### Default sheet column dimensions
                     column_widths = {
-                        'A': 35, 'B': 33, 'C': 20, 'D': 11, 'E': 11, 'F': 9, 'G': 14, 'H': 15, 'I': 12, 'J': 19,
-                        'K': 26,
-                        'L': 15, 'M': 16
-                    }
+                        'A': 40, 'B': 33, 'C': 18, 'D': 11, 'E': 11, 'F': 9, 'G': 14, 'H': 15, 'I': 12, 'J': 20,
+                        'K': 28, 'L': 15, 'M': 16}
                     for column, width in column_widths.items():
                         sheet.column_dimensions[column].width = width
                     #
@@ -1341,7 +1339,7 @@ class JobTimeCalculator:
 
                     sheet.merge_cells('F1:M1')
                     sheet.title = f"Archive"
-                    header_values = "SYNTHESES DES HORAIRES DE SERVICE JOURNALIER DES EMPLOYÉ(ES) DU HC3N"
+                    header_values = "SYNTHESES DES HORAIRES DE SERVICE DES EMPLOYÉ(ES) DU HC3N"
                     top_left_cell = sheet['F1']
                     top_left_cell.value = header_values
                     top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
