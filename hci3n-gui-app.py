@@ -112,10 +112,11 @@ class JobTimeCalculator:
                                                                       "Mission", "Abscence",
                                                                       "Consultation", "Décès", "Maladie", "Mariage",
                                                                       "Permission", "Congé", "Autres",
-                                                                      "Non Préciser"])))
+                                                                      "Non Préciser", "Congé maternité"])))
         self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
 
-        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date JJ/MM/ANNEE:", background="lightgrey",
+        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date Jour/Mois/ANNEE:",
+                                          background="lightgrey",
                                           underline=0)
         self.date_entry_label.grid(row=3, column=0)
 
@@ -474,7 +475,8 @@ class JobTimeCalculator:
         ################################################################
 
         #### New label for display the duration time at a site
-        self.stay_time_labelframe = ttk.Labelframe(self.frame, text="Affichage Durée (Pause & Entrée-Sortie )",
+        self.stay_time_labelframe = ttk.Labelframe(self.frame,
+                                                   text="Affichage Durée 'Pause & Entrée-Sortie - Deplacement vers: SIEGE; ANNEXE-1, ANNEXE-2'",
                                                    underline=0)
         self.stay_time_labelframe.grid(row=1, column=1, sticky='news', padx=20, pady=10)
 
@@ -482,6 +484,17 @@ class JobTimeCalculator:
         self.duration_tion_label.grid(row=0, column=0, sticky='news', padx=20, pady=10)
         self.display_duration_label = ttk.Label(self.stay_time_labelframe, background='lightgreen')
         self.display_duration_label.grid(row=0, column=1, sticky='news', padx=20, pady=10)
+
+        self.standard_duration_label = ttk.Label(self.stay_time_labelframe, text="Temps Standard a passer au Bureau:")
+        self.standard_duration_label.grid(row=2, column=0)
+
+        self.standard_duration_entry = ttk.Entry(self.stay_time_labelframe)
+        self.standard_duration_entry.grid(row=2, column=1)
+
+        for widget in self.stay_time_labelframe.winfo_children():
+            widget.grid_configure(padx=10, pady=15, sticky="news")
+
+        #############################
 
         """
             # Create Buttons
@@ -510,7 +523,7 @@ class JobTimeCalculator:
         self.duration_time_button = ttk.Button(self.stay_time_labelframe, text="Afficher Durée",
                                                command=self.display_duration,
                                                underline=0, )
-        self.duration_time_button.grid(row=1, column=1, sticky='news')
+        self.duration_time_button.grid(row=0, column=3, sticky='news', padx=10, pady=10)
 
         #################################### Configure the Menu #################################
 
@@ -574,6 +587,7 @@ class JobTimeCalculator:
         self.new_exit.delete(0, END)
         self.personal_exit.delete(0, END)
         self.personal_entry.delete(0, END)
+        self.standard_duration_entry.delete(0, END)
 
         ################################
 
@@ -589,6 +603,9 @@ class JobTimeCalculator:
         fifth = "14:15"  # Predefined fifth value to fill the entries
         sixth = "00:01"  # Predefined 6th value to fill the entries
         seventh = "13:00"  # Predefined seventh value to fill the entries
+        eighth = "08:45:00"  # Predefined eighth to fill the entries
+        nineth = "05:00:00"  # Predefined nineth to fill the entries
+
         if self.break_check_button_var.get():
             self.break_start_entry.insert(0, fourth)
             self.break_end_entry.insert(0, fifth)
@@ -599,13 +616,18 @@ class JobTimeCalculator:
         if self.onsite_check_var.get():
             self.time_end_entry.insert(0, sixth)
             self.time_start_entry.insert(0, value)
-
         elif self.week_combobox.get() == 'Vendredi':
             self.time_start_entry.insert(0, second)
             self.time_end_entry.insert(0, seventh)
         else:
             self.time_start_entry.insert(0, second)
             self.time_end_entry.insert(0, third)
+
+        if self.week_combobox.get() == 'Vendredi':
+            self.standard_duration_entry.insert(0, nineth)
+        else:
+            self.standard_duration_entry.insert(0, eighth)
+
         self.annexe_entry.insert(0, value)
         self.annexe_entry_01.insert(0, value)
         self.site_exit.insert(0, value)
@@ -637,11 +659,13 @@ class JobTimeCalculator:
         break_start_time_str = self.break_start_entry.get()  # fixed break start time
         break_end_time_str = self.break_end_entry.get()  # fixed break end time
         break_taken = self.break_check_button_var.get()
+        # standard_time_str = self.standard_duration_entry.get()
 
         start_time = datetime.datetime.strptime(start_time_str, "%H:%M").time()
         end_time = datetime.datetime.strptime(end_time_str, "%H:%M").time()
         break_start_time = datetime.datetime.strptime(break_start_time_str, "%H:%M").time()
         break_end_time = datetime.datetime.strptime(break_end_time_str, "%H:%M").time()
+        # standard_time = datetime.datetime.strptime(standard_time_str, "%H:%M:%S").time()
 
         # TEAM HQ TO (ANNEXE"1-2")
         hq_to_annexe1_entry_str = self.site_entry.get()
@@ -1226,6 +1250,7 @@ class JobTimeCalculator:
         observation = self.observation_list_combobox.get()
         daily_date = self.date_entry.get()
         # duration = self.display_duration()
+        standard_display = self.standard_duration_entry.get()
 
         # Validate input
         if not (nom_prenom and arrivee and descente and total):
@@ -1267,9 +1292,9 @@ class JobTimeCalculator:
 
                     ### Default sheet column dimensions
                     column_widths = {
-                        'A': 40, 'B': 37, 'C': 25, 'D': 11, 'E': 11, 'F': 9, 'G': 16, 'H': 17, 'I': 12, 'J': 14,
-                        'K': 12,
-                        'L': 16
+                        'A': 35, 'B': 33, 'C': 20, 'D': 11, 'E': 11, 'F': 9, 'G': 14, 'H': 15, 'I': 12, 'J': 19,
+                        'K': 26,
+                        'L': 15, 'M': 16
                     }
                     for column, width in column_widths.items():
                         sheet.column_dimensions[column].width = width
@@ -1286,9 +1311,9 @@ class JobTimeCalculator:
 
                     # Add a header Image to the Excel file
                     img_file = "images\\hci3n.png"
-                    sheet.merge_cells('A1:C1')
+                    sheet.merge_cells('A1:E1')
                     img = Image(img_file)
-                    img.width = 710
+                    img.width = 745
                     img.height = 185
 
                     first_cell = sheet['A1']
@@ -1297,7 +1322,7 @@ class JobTimeCalculator:
                     sheet.add_image(img)
 
                     # Sheet Dimensions
-                    sheet.merge_cells('A2:L2')
+                    sheet.merge_cells('A2:M2')
                     header_value = 'Temps de Travail du Lundi au Jeudi: 8h-17h30--Total: 9h30/jour |<>|  Pause: 45min/jour |<>|  ' \
                                    'Vendredi: 8h-13h--Total: 5h  |<>| Total Semaine: 40h'
                     second_cell = sheet['A2']
@@ -1314,16 +1339,17 @@ class JobTimeCalculator:
                     color5 = "0000FF00"  # green color
                     color6 = "00C0C0C0"  # lightgrey
 
-                    sheet.merge_cells('D1:L1')
+                    sheet.merge_cells('F1:M1')
                     sheet.title = f"Archive"
                     header_values = "SYNTHESES DES HORAIRES DE SERVICE JOURNALIER DES EMPLOYÉ(ES) DU HC3N"
-                    top_left_cell = sheet['D1']
+                    top_left_cell = sheet['F1']
                     top_left_cell.value = header_values
                     top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
                     top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
                     list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "JOUR", "ENTREE",
-                                      "DEBUT PAUSE",
-                                      "RETOUR PAUSE", "DESCENTE", "TOTAL JOUR", "DATE", "OBSERVATION"]
+                                      "DEB PAUSE",
+                                      "RET PAUSE", "DESCENTE", "TOTAL HEURE/Jr", "TOTAL HEURE A PASSER/Jr", "DATE",
+                                      "OBSERVATION"]
                     sheet.append(list_to_append)
 
                     # Save and close the workbook
@@ -1334,17 +1360,17 @@ class JobTimeCalculator:
                                     top=Side(border_style='thin', color='00000000'),
                                     bottom=(Side(border_style='thin', color='00000000')))
 
-                    for row in sheet["A3:L3"]:
+                    for row in sheet["A3:M3"]:
                         for cell in row:
                             cell.font = ft
                             cell.border = border
 
-                    for row in sheet["D1:L1"]:
+                    for row in sheet["F1:M1"]:
                         for cell in row:
                             cell.font = fta
                             cell.border = border
 
-                    for row in sheet["A2:L2"]:
+                    for row in sheet["A2:M2"]:
                         for cell in row:
                             cell.font = fta
                             cell.border = border
@@ -1361,6 +1387,7 @@ class JobTimeCalculator:
                     sheet["J3"].fill = PatternFill(start_color=color3, end_color=color3, fill_type='lightTrellis')
                     sheet["K3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
                     sheet["L3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
+                    sheet["M3"].fill = PatternFill(start_color=color2, end_color=color2, fill_type='lightTrellis')
 
                 # Save and close the workbook
                 workbook.save(file_path)
@@ -1371,7 +1398,7 @@ class JobTimeCalculator:
             sheet = workbook.active
 
             sheet.append([nom_prenom, fonction, departement, lieu, jour_semaine, arrivee, debut_pause, retour_pause,
-                          descente, total, daily_date, observation])
+                          descente, total, standard_display, daily_date, observation])
             # Save and close the workbook
             workbook.save(file_path)
             workbook.close()
