@@ -133,6 +133,7 @@ class JobTimeCalculator:
 
         self.date_entry = ttk.Entry(self.lateral_label_frame)
         self.date_entry.grid(row=3, column=1)
+
         for widget in self.lateral_label_frame.winfo_children():
             widget.grid_configure(padx=20, pady=10, sticky="news")
         #
