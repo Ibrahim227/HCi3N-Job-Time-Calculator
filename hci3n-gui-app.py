@@ -107,8 +107,8 @@ class JobTimeCalculator:
                                                          underline=0)
         self.observation_list_combobox_label.grid(row=2, column=0)
         self.observation_list_combobox = ttk.Combobox(self.lateral_label_frame,
-                                                      values=(sorted(["Sorti(e) vers SIEGE", "Sorti(e) vers ANNEXE-1",
-                                                                      "Sorti(e) vers ANNEXE-2", "Réunion", "Atelier",
+                                                      values=(sorted(["Sorti(e) pour SIEGE", "Sorti(e) pour ANNEXE-1",
+                                                                      "Sorti(e) pour ANNEXE-2", "Réunion", "Atelier",
                                                                       "Mission", "Abscence",
                                                                       "Consultation", "Décès", "Maladie", "Mariage",
                                                                       "Permission", "Congé", "Autres",
@@ -1292,8 +1292,8 @@ class JobTimeCalculator:
 
                     ### Default sheet column dimensions
                     column_widths = {
-                        'A': 40, 'B': 33, 'C': 18, 'D': 11, 'E': 11, 'F': 9, 'G': 14, 'H': 15, 'I': 12, 'J': 20,
-                        'K': 28, 'L': 15, 'M': 16}
+                        'A': 40, 'B': 33, 'C': 18, 'D': 11, 'E': 11, 'F': 9, 'G': 14, 'H': 15, 'I': 12, 'J': 30,
+                        'K': 32, 'L': 10, 'M': 19}
                     for column, width in column_widths.items():
                         sheet.column_dimensions[column].width = width
                     #
@@ -1346,7 +1346,7 @@ class JobTimeCalculator:
                     top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
                     list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "JOUR", "ENTREE",
                                       "DEB PAUSE",
-                                      "RET PAUSE", "DESCENTE", "TOTAL HEURE/Jr", "TOTAL HEURE A PASSER/Jr", "DATE",
+                                      "RET PAUSE", "DESCENTE", "TOTAL HEURE DE TRAVAIL/Jr", "TOTAL HEURE A EFFECTUER/Jr", "DATE",
                                       "OBSERVATION"]
                     sheet.append(list_to_append)
 
