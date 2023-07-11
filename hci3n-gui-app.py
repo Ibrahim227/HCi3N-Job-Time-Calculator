@@ -26,7 +26,7 @@ def on_click():
 ####### function for Startup Image
 def start_up_image():
     """
-    :return: Display the startup window
+    :return: Display the startup image
     """
     win = mainwindow
     win()
@@ -57,17 +57,17 @@ class JobTimeCalculator:
 
         ################################# Configure First LabelFrame ############################
         # Saving user Information
-        self.user_info_frame = ttk.Labelframe(self.frame, text='Information Employee', underline=0)
+        self.user_info_frame = ttk.Labelframe(self.frame, text='INFORMATION EMPLOYEE', underline=0)
         self.user_info_frame.grid(row=0, column=0, sticky='news', padx=20, pady=10)
 
         ################# lateral LabelFrame #################
         self.lateral_label_frame = ttk.LabelFrame(self.frame,
-                                                  text="Panneau Lateral (Nom & Prenom - Observation - Calendrier)",
+                                                  text="NOM & PRENOM - OBSERVATION - CALENDRIER",
                                                   underline=0)
         self.lateral_label_frame.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
         # Create name and last name label
-        self.first_last_name_label = ttk.Label(self.lateral_label_frame, text='Nom & Prenom:', background="lightgrey",
+        self.first_last_name_label = ttk.Label(self.lateral_label_frame, text='NOM & PRENOM:', background="lightgrey",
                                                underline=0)
         self.first_last_name_label.grid(row=0, column=0)
 
@@ -102,7 +102,7 @@ class JobTimeCalculator:
         self.first_last_name_entry.grid(row=0, column=1, ipadx=60)
 
         # create the observation and date Entry
-        self.observation_list_combobox_label = ttk.Label(self.lateral_label_frame, text="Observation:",
+        self.observation_list_combobox_label = ttk.Label(self.lateral_label_frame, text="OBSERVATION:",
                                                          background="lightgrey",
                                                          underline=0)
         self.observation_list_combobox_label.grid(row=2, column=0)
@@ -115,7 +115,7 @@ class JobTimeCalculator:
                                                                       "Non Préciser", "Congé maternité"])))
         self.observation_list_combobox.grid(row=2, column=1, ipadx=20)
 
-        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="Date Jour/Mois/ANNEE:",
+        self.date_entry_label = ttk.Label(self.lateral_label_frame, text="DATE JOUR/MOIS/ANNEE:",
                                           background="lightgrey",
                                           underline=0)
         self.date_entry_label.grid(row=3, column=0)
@@ -140,7 +140,7 @@ class JobTimeCalculator:
         #
         #
         # Create the title combobox
-        self.title = ttk.Label(self.user_info_frame, text='Fonction:', background="lightgrey", underline=0)
+        self.title = ttk.Label(self.user_info_frame, text='FONCTION:', background="lightgrey", underline=0)
         self.title_combox = ttk.Combobox(self.user_info_frame,
                                          values=(sorted(
                                              ["HAUT-COMMISSAIRE", "SG", "SGA",
@@ -167,7 +167,7 @@ class JobTimeCalculator:
         self.title_combox.grid(row=1, column=0, ipadx=50)
 
         # Create department label and combobox
-        self.department_label = ttk.Label(self.user_info_frame, text="Departement:", background='lightgrey',
+        self.department_label = ttk.Label(self.user_info_frame, text="DEPARTEMENT:", background='lightgrey',
                                           underline=0)
         self.department_combobox = ttk.Combobox(self.user_info_frame,
                                                 values=(sorted(["CABINET", "SECRETARIAT", "DAFC",
@@ -180,7 +180,7 @@ class JobTimeCalculator:
         self.department_combobox.grid(row=1, column=1, ipadx=20)
 
         # The place/SIEGE combobox
-        self.place_label = ttk.Label(self.user_info_frame, text='Lieu:', background='lightgrey', underline=0)
+        self.place_label = ttk.Label(self.user_info_frame, text='LIEU:', background='lightgrey', underline=0)
         self.place_label.grid(row=0, column=2)
         self.site_name_list = ['SIEGE', 'ANNEXE 1', 'ANNEXE 2']
         self.place_combobox = ttk.Combobox(self.user_info_frame, values=self.site_name_list,
@@ -188,17 +188,17 @@ class JobTimeCalculator:
         self.place_combobox.grid(row=1, column=2)
 
         # Create break time start and end labels
-        self.break_start_label = ttk.Label(self.user_info_frame, text="Debut Pause (HH:MM):", background="orange",
+        self.break_start_label = ttk.Label(self.user_info_frame, text="DEBUT PAUSE (HH:MM):", background="orange",
                                            underline=0)
-        self.break_end_label = ttk.Label(self.user_info_frame, text="Retour Pause (HH:MM):", background="orange",
+        self.break_end_label = ttk.Label(self.user_info_frame, text="RETOUR PAUSE (HH:MM):", background="orange",
                                          underline=0)
         self.break_start_label.grid(row=2, column=1)
         self.break_end_label.grid(row=2, column=2)
 
         # Create start and end time labels
-        self.time_start_label = ttk.Label(self.user_info_frame, text="Heure Entrée (HH:MM):",
+        self.time_start_label = ttk.Label(self.user_info_frame, text="HEURE ENTREE (HH:MM):",
                                           background="lightgreen", underline=0)
-        self.time_end_label = ttk.Label(self.user_info_frame, text="Descente (HH:MM):", background="red",
+        self.time_end_label = ttk.Label(self.user_info_frame, text="DESCENTE (HH:MM):", background="red",
                                         underline=0)
         self.time_start_label.grid(row=2, column=0)
         self.time_end_label.grid(row=2, column=3)
@@ -216,7 +216,7 @@ class JobTimeCalculator:
         self.break_end_entry.grid(row=3, column=2)
 
         # Week days combobox entry
-        self.week_label = ttk.Label(self.user_info_frame, text="Jour de Semaine:", underline=0, background="lightgrey")
+        self.week_label = ttk.Label(self.user_info_frame, text="JOUR DE SEMAINE:", underline=0, background="lightgrey")
         combobox = ttk.Combobox(self.user_info_frame,
                                 values=["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"])
         self.week_combobox = combobox
@@ -243,7 +243,7 @@ class JobTimeCalculator:
             :return: A numeric clock
             """
             string = strftime("%d-%m-%Y %H:%M:%S")
-            self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 15, 'italic'), foreground='black',
+            self.label_text = ttk.Label(self.msg_labelframe, font=("arial nova", 14, 'italic'), foreground='black',
                                         background='lightgrey', relief='sunken')
             self.label_text.config(text=string)
             self.label_text.grid(row=0, column=3, sticky='news', ipadx=20, pady=10, padx=10)
@@ -252,11 +252,11 @@ class JobTimeCalculator:
         display_time()
 
         ############################################ Configure new_frame LabelFrame ################################
-        self.new_frame = ttk.LabelFrame(self.frame, text="Sortie & Entrée Supplémentaire", underline=0)
+        self.new_frame = ttk.LabelFrame(self.frame, text="SORTIE & ENTREE SUPPLEMENTAIRE", underline=0)
         self.new_frame.grid(row=3, column=1, sticky='news', padx=15, pady=15)
 
-        self.new_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", underline=0, background="lightgreen")
-        self.second_new_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", underline=0,
+        self.new_label = ttk.Label(self.new_frame, text="HEURE DEPART (HH:MM):", underline=0, background="lightgreen")
+        self.second_new_label = ttk.Label(self.new_frame, text="HEURE RETOUR (HH:MM):", underline=0,
                                           background="red")
 
         self.new_label.grid(row=0, column=0)
@@ -281,9 +281,9 @@ class JobTimeCalculator:
         self.first_btn_checkbutton.grid(row=0, column=2)
         self.btn_second_checkbutton.grid(row=2, column=2)
 
-        self.personal_label = ttk.Label(self.new_frame, text="Heure Depart (HH:MM):", background="lightgreen",
+        self.personal_label = ttk.Label(self.new_frame, text="HEURE DEPART (HH:MM):", background="lightgreen",
                                         underline=0)
-        self.personal_second_label = ttk.Label(self.new_frame, text="Heure Retour (HH:MM):", background="red",
+        self.personal_second_label = ttk.Label(self.new_frame, text="HEURE RETOUR (HH:MM):", background="red",
                                                underline=0)
 
         self.personal_entry = ttk.Entry(self.new_frame)
@@ -302,7 +302,7 @@ class JobTimeCalculator:
 
         # Create the exit/entry, label and checkButtons from HQ to annexe1-2
 
-        self.exit_entry_frame = ttk.LabelFrame(self.frame, text="Equipe SIEGE vers (ANNEXE-1 et ANNEXE-2)", underline=0)
+        self.exit_entry_frame = ttk.LabelFrame(self.frame, text="EQUIPE SIEGE vers (ANNEXE-1 et ANNEXE-2)", underline=0)
         self.exit_entry_frame.grid(row=1, column=0, sticky="news", padx=15, pady=10)
 
         self.exit_entry_status_var_1 = tk.BooleanVar(self.exit_entry_frame, value=False)
@@ -312,9 +312,9 @@ class JobTimeCalculator:
         self.exit_entry_status_check_1.grid(row=0, column=0)
 
         # Create Entry widgets for exit/entry from Site
-        self.exit_entry_label_entry = ttk.Label(self.exit_entry_frame, text="Heure Entrée (HH:MM):",
+        self.exit_entry_label_entry = ttk.Label(self.exit_entry_frame, text="HEURE ENTREE (HH:MM):",
                                                 background="lightgreen", underline=0)
-        self.exit_entry_label_exit = ttk.Label(self.exit_entry_frame, text="Sortie (HH:MM):",
+        self.exit_entry_label_exit = ttk.Label(self.exit_entry_frame, text="SORTIE (HH:MM):",
                                                background="red", underline=0)
         self.exit_entry_label_entry.grid(row=1, column=0)
         self.exit_entry_label_exit.grid(row=1, column=1)
@@ -333,9 +333,9 @@ class JobTimeCalculator:
         self.exit_entry_status_check_2.grid(row=0, column=3)
 
         # Create Entry Exit Status from HQ to annexe1-2
-        self.exit_entry_label_entry_01 = ttk.Label(self.exit_entry_frame, text="Heure Entrée (HH:MM):",
+        self.exit_entry_label_entry_01 = ttk.Label(self.exit_entry_frame, text="HEURE ENTREE (HH:MM):",
                                                    background="lightgreen", underline=0)
-        self.exit_entry_label_exit_01 = ttk.Label(self.exit_entry_frame, text="Sortie (HH:MM):",
+        self.exit_entry_label_exit_01 = ttk.Label(self.exit_entry_frame, text="SORTIE (HH:MM):",
                                                   background="red", underline=0)
         self.exit_entry_label_entry_01.grid(row=1, column=3)
         self.exit_entry_label_exit_01.grid(row=1, column=4)
@@ -352,7 +352,7 @@ class JobTimeCalculator:
 
         # Create the labelFrame annex 1 to hq and annexe 2
         ################# function_set check, entries and labels
-        self.verify_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
+        self.verify_frame = ttk.LabelFrame(self.frame, text="EQUIPE ANNEXE-1 vers (SIEGE et ANNEXE-2)", underline=0)
         self.verify_frame.grid(row=2, column=0, padx=20, pady=15, sticky="news")
         self.presence_check_var = tk.BooleanVar(self.verify_frame, value=False)
         self.presence_check = ttk.Checkbutton(self.verify_frame, text="Verifier Presence SIEGE",
@@ -361,10 +361,10 @@ class JobTimeCalculator:
         self.presence_check.grid(row=0, column=0)
 
         # Verifier presence Entry and Exit / label and entry widgets
-        self.annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entrée (HH:MM):",
+        self.annexe_entry_label = ttk.Label(self.verify_frame, text="HEURE ENTREE (HH:MM):",
                                             background="lightgreen",
                                             underline=0)
-        self.annexe_exit_label = ttk.Label(self.verify_frame, text="Sortie (HH:MM):", background="red",
+        self.annexe_exit_label = ttk.Label(self.verify_frame, text="SORTIE (HH:MM):", background="red",
                                            underline=0)
         self.annexe_entry_label.grid(row=1, column=0)
         self.annexe_exit_label.grid(row=1, column=1)
@@ -383,9 +383,9 @@ class JobTimeCalculator:
                                                 underline=9)
         self.annexe_to_annexe.grid(row=0, column=3)
 
-        self.check_annexe_entry_label = ttk.Label(self.verify_frame, text="Heure Entrée (HH:MM):",
+        self.check_annexe_entry_label = ttk.Label(self.verify_frame, text="HEURE ENTREE (HH:MM):",
                                                   background="lightgreen", underline=0)
-        self.check_annexe_exit_label = ttk.Label(self.verify_frame, text="Sortie (HH:MM):", background="red",
+        self.check_annexe_exit_label = ttk.Label(self.verify_frame, text="SORTIE (HH:MM):", background="red",
                                                  underline=0)
 
         self.check_annexe_entry_label.grid(row=1, column=3)
@@ -402,7 +402,7 @@ class JobTimeCalculator:
 
         ############################################ Configure Fourth LabelFrame ################################
 
-        self.third_frame = ttk.LabelFrame(self.frame, text="Equipe ANNEXE-2 vers (SIEGE-ANNEXE-1)", underline=0)
+        self.third_frame = ttk.LabelFrame(self.frame, text="EQUIPE ANNEXE-2 vers (SIEGE-ANNEXE-1)", underline=0)
         self.third_frame.grid(row=3, column=0, sticky="news", padx=20, pady=10)
 
         self.verification_button_var = tk.BooleanVar(self.third_frame, value=False)
@@ -411,9 +411,9 @@ class JobTimeCalculator:
                                                    onvalue=True, offvalue=False, underline=9)
         self.verification_button.grid(row=0, column=0)
 
-        self.value_entry_label = ttk.Label(self.third_frame, text="Heure Entrée (HH:MM):",
+        self.value_entry_label = ttk.Label(self.third_frame, text="HEURE ENTREE (HH:MM):",
                                            background="lightgreen", underline=0)
-        self.value_exit_label = ttk.Label(self.third_frame, text="Sortie (HH:MM):", background="red", underline=0)
+        self.value_exit_label = ttk.Label(self.third_frame, text="SORTIE (HH:MM):", background="red", underline=0)
         self.value_entry_widget = ttk.Entry(self.third_frame)
         self.value_exit_widget = ttk.Entry(self.third_frame)
 
@@ -430,9 +430,9 @@ class JobTimeCalculator:
                                                                 onvalue=True, offvalue=False, underline=9)
         self.second_verification_check_button.grid(row=0, column=3)
 
-        self.second_ver_label1 = ttk.Label(self.third_frame, text="Heure Entrée (HH:MM):",
+        self.second_ver_label1 = ttk.Label(self.third_frame, text="HEURE ENTREE (HH:MM):",
                                            background="lightgreen", underline=0)
-        self.second_ver_label2 = ttk.Label(self.third_frame, text="Sortie (HH:MM):", background="red",
+        self.second_ver_label2 = ttk.Label(self.third_frame, text="SORTIE (HH:MM):", background="red",
                                            underline=0)
         self.second_annexe_entry = ttk.Entry(self.third_frame)
         self.second_annexe_exit = ttk.Entry(self.third_frame)
@@ -446,7 +446,7 @@ class JobTimeCalculator:
 
         ############################################ Configure break, total autofill, auto-delete LabelFrame ################################
 
-        self.registration_frame = ttk.LabelFrame(self.frame, text='Pause - Sauvegarde-Archive - Affichage Temps Total',
+        self.registration_frame = ttk.LabelFrame(self.frame, text='PAUSE - SAUVEGARDE - CALCUL TEMPS TOTAL',
                                                  underline=0)
         self.registration_frame.grid(row=4, column=0, sticky='news', padx=20, pady=10)
 
@@ -476,7 +476,7 @@ class JobTimeCalculator:
 
         #### New label for display the duration time at a site
         self.stay_time_labelframe = ttk.Labelframe(self.frame,
-                                                   text="Affichage Durée 'Pause & Entrée-Sortie - Deplacement Equipe'",
+                                                   text="AFFICHAGE DUREE: 'PAUSE - ENTREE-SORTIE - DEPLACEMENT EQUIPE'",
                                                    underline=0)
         self.stay_time_labelframe.grid(row=1, column=1, sticky='news', padx=20, pady=10)
 
@@ -485,7 +485,7 @@ class JobTimeCalculator:
         self.display_duration_label = ttk.Label(self.stay_time_labelframe, background='lightgreen')
         self.display_duration_label.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
-        self.standard_duration_label = ttk.Label(self.stay_time_labelframe, text="Temps Standard a passer au Bureau:", background='lightgrey', underline=0)
+        self.standard_duration_label = ttk.Label(self.stay_time_labelframe, text="TEMPS STANDARD A PASSER AU BUREAU:", background='lightgrey', underline=0)
         self.standard_duration_label.grid(row=2, column=0)
 
         self.standard_duration_entry = ttk.Entry(self.stay_time_labelframe)
@@ -603,8 +603,8 @@ class JobTimeCalculator:
         fifth = "14:15"  # Predefined fifth value to fill the entries
         sixth = "00:01"  # Predefined 6th value to fill the entries
         seventh = "13:00"  # Predefined seventh value to fill the entries
-        eighth = "08:45:00"  # Predefined eighth to fill the entries
-        nineth = "05:00:00"  # Predefined nineth to fill the entries
+        eighth = str(datetime.timedelta(hours=8, minutes=45))  # Predefined eighth to fill the entries
+        nineth = str(datetime.timedelta(hours=5, minutes=0))  # Predefined nineth to fill the entries
 
         if self.break_check_button_var.get():
             self.break_start_entry.insert(0, fourth)
@@ -903,16 +903,6 @@ class JobTimeCalculator:
                     total_time = datetime.datetime.combine(datetime.date.today(),
                                                            end_time) - datetime.datetime.combine(
                         datetime.date.today(), start_time)
-
-                # elif start_time >= break_end_time:
-                #     total_time = datetime.datetime.combine(datetime.date.today(),
-                #                                            end_time) - datetime.datetime.combine(
-                #         datetime.date.today(), start_time)
-                #
-                # elif end_time <= break_start_time:
-                #     total_time = datetime.datetime.combine(datetime.date.today(),
-                #                                            end_time) - datetime.datetime.combine(
-                #         datetime.date.today(), start_time) - (break_end_time - break_start_time)
 
                 if hq_visit_to_annexe1_check:
                     messagebox.showwarning(title='Alerte',
@@ -1261,7 +1251,7 @@ class JobTimeCalculator:
 
         # Save data to Excel file
         try:
-            file_path = f"Sauvegarde-Archive\\Archive_de_l'employee_{nom_prenom}.xlsx"
+            file_path = f"Archive-Employee\\Archive_Employee_{nom_prenom}.xlsx"
 
             if not os.path.exists(file_path):
                 # Create a workbook if it does not exist
@@ -1292,7 +1282,7 @@ class JobTimeCalculator:
 
                     ### Default sheet column dimensions
                     column_widths = {
-                        'A': 40, 'B': 33, 'C': 18, 'D': 11, 'E': 11, 'F': 9, 'G': 14, 'H': 15, 'I': 12, 'J': 30,
+                        'A': 40, 'B': 33, 'C': 18, 'D': 11, 'E': 11, 'F': 9, 'G': 16, 'H': 16, 'I': 12, 'J': 40,
                         'K': 32, 'L': 10, 'M': 19}
                     for column, width in column_widths.items():
                         sheet.column_dimensions[column].width = width
@@ -1345,8 +1335,8 @@ class JobTimeCalculator:
                     top_left_cell.fill = PatternFill(start_color=color6, end_color=color6, fill_type='lightTrellis')
                     top_left_cell.alignment = Alignment(horizontal='center', vertical='center')
                     list_to_append = ["NOM & PRENOM", "FONCTION", "DEPARTEMENT", "LIEU", "JOUR", "ENTREE",
-                                      "DEB PAUSE",
-                                      "RET PAUSE", "DESCENTE", "TOTAL HEURE DE TRAVAIL/Jr", "TOTAL HEURE A EFFECTUER/Jr", "DATE",
+                                      "DEBUT PAUSE",
+                                      "RETOUR PAUSE", "DESCENTE", "TOTAL HEURE TRAVAIL EFFECTUER/Jr", "TOTAL HEURE A EFFECTUER/Jr", "DATE",
                                       "OBSERVATION"]
                     sheet.append(list_to_append)
 
