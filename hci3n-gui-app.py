@@ -62,7 +62,7 @@ class JobTimeCalculator:
 
         ################# lateral LabelFrame #################
         self.lateral_label_frame = ttk.LabelFrame(self.frame,
-                                                  text="NOM & PRENOM - OBSERVATION - CALENDRIER",
+                                                  text="NOM & PRENOM - OBSERVATION - DATE",
                                                   underline=0)
         self.lateral_label_frame.grid(row=0, column=1, sticky='news', padx=20, pady=10)
 
@@ -1246,7 +1246,7 @@ class JobTimeCalculator:
         if not (nom_prenom and arrivee and descente and total):
             required_list = ["Nom & Prenom", "Heure Arrivee", "Heure Descente", "Total"]
             messagebox.showerror(f"Erreur: Sauvegarde-Archive Impossible",
-                                 f"Veuillez remplir tout les champs requis:\n{list(required_list)}")
+                                 f"Veuillez remplir tout les champs requis:\n\n{list(required_list)}")
             return
 
         # Save data to Excel file
@@ -1301,7 +1301,7 @@ class JobTimeCalculator:
                     img_file = "images\\hci3n.png"
                     sheet.merge_cells('A1:E1')
                     img = Image(img_file)
-                    img.width = 745
+                    img.width = 780
                     img.height = 185
 
                     first_cell = sheet['A1']
